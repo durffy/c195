@@ -9,11 +9,11 @@
 
 <AnchorPane id="AnchorPane" prefHeight="549.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.CalendarViewController">
    <children>
-      <Button fx:id="ButtonReportView" layoutX="132.0" layoutY="17.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="75.0" text="Reports" />
-      <Button fx:id="ButtonCustomerView" layoutX="44.0" layoutY="17.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="75.0" text="Customers" />
+      <Button fx:id="buttonReportView" layoutX="132.0" layoutY="17.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="75.0" text="Reports" />
+      <Button fx:id="buttonCustomerView" layoutX="44.0" layoutY="17.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="75.0" text="Customers" />
       <TabPane layoutX="38.0" layoutY="58.0" prefHeight="425.0" prefWidth="525.0" tabClosingPolicy="UNAVAILABLE">
         <tabs>
-          <Tab fx:id="TablMonthly" text="Monthly View">
+          <Tab fx:id="tablMonthly" text="Monthly View">
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="500.0" prefWidth="500.0">
                      <children>
@@ -32,11 +32,11 @@
                   </AnchorPane>
             </content>
           </Tab>
-          <Tab fx:id="TabWeekly" text="Weekly View">
+          <Tab fx:id="tabWeekly" text="Weekly View">
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <TableView fx:id="TableWeekly" layoutY="-4.0" prefHeight="400.0" prefWidth="525.0">
+                        <TableView fx:id="tableWeekly" layoutY="-4.0" prefHeight="400.0" prefWidth="525.0">
                            <columns>
                               <TableColumn fx:id="ColWeek" prefWidth="75.0" text="Week" />
                               <TableColumn fx:id="ColDateTime" prefWidth="117.0" text="Date and Time" />
