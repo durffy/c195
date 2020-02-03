@@ -1,11 +1,39 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import com.gluonhq.charm.glisten.control.DropdownButton?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.CustomerViewController">
-    
+
+<AnchorPane id="AnchorPane" prefHeight="500.0" prefWidth="873.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/11.0.1" fx:controller="Controller.CustomerViewController">
+   <children>
+      <TableView layoutX="309.0" layoutY="37.0" prefHeight="340.0" prefWidth="546.0">
+        <columns>
+          <TableColumn fx:id="colCustomerID" prefWidth="100.0" text="CustomerID" />
+          <TableColumn fx:id="colCustomerName" prefWidth="124.0" text="CustomerName" />
+            <TableColumn fx:id="colAddress" prefWidth="200.0" text="Address" />
+            <TableColumn fx:id="colActive" prefWidth="121.0" text="Active" />
+        </columns>
+      </TableView>
+      <Button layoutX="621.0" layoutY="411.0" mnemonicParsing="false" text="Add/Modify" />
+      <Button cancelButton="true" layoutX="798.0" layoutY="411.0" mnemonicParsing="false" text="Cancel" />
+      <Button disable="true" layoutX="719.0" layoutY="411.0" mnemonicParsing="false" text="Remove" />
+      <TextField disable="true" editable="false" layoutX="55.0" layoutY="47.0" prefHeight="25.0" prefWidth="212.0" promptText="CustomerID" />
+      <TextField layoutX="55.0" layoutY="83.0" prefHeight="25.0" prefWidth="212.0" />
+      <DropdownButton layoutX="55.0" layoutY="129.0" prefHeight="27.0" prefWidth="239.0">
+          <items>
+              <MenuItem text="Select An Address" />
+          </items>
+      </DropdownButton>
+      <DropdownButton layoutX="55.0" layoutY="165.0" prefHeight="27.0" prefWidth="239.0">
+         <items>
+            <MenuItem text="Active" />
+            <MenuItem text="Inactive" />
+         </items>
+      </DropdownButton>
+   </children>
 </AnchorPane>
