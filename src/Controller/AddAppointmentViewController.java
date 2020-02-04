@@ -14,7 +14,7 @@ import javafx.fxml.Initializable;
  *
  * @author cjd
  */
-public class AddModifyAppointmentViewController implements Initializable {
+public class AddAppointmentViewController implements Initializable {
 
     /**
      * Initializes the controller class.
