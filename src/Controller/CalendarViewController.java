@@ -9,11 +9,15 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.stage.Stage;
 
 /**
@@ -23,7 +27,29 @@ import javafx.stage.Stage;
  */
 public class CalendarViewController implements Initializable {
 
+    @FXML private Button ButtonCustomerView;
+    @FXML private Button ButtonReportsView;
+    @FXML private Button ButtonAddAppointmentView;
+    @FXML private Button ButtonModifyAppointmentView;
     
+    //monthly table view
+    @FXML private TableView TableViewMonthly;
+    @FXML private TableColumn TableMonthlyColumnSunday;
+    @FXML private TableColumn TableMonthlyColumnMonday;
+    @FXML private TableColumn TableMonthlyColumnTuesday;
+    @FXML private TableColumn TableMonthlyColumnWednesday;
+    @FXML private TableColumn TableMonthlyColumnThursday;
+    @FXML private TableColumn TableMonthlyColumnFriday;
+    @FXML private TableColumn TableMonthlyColumnSaturday;
+    
+    //weekly table view
+    @FXML private TableView TableViewWeekly;
+    @FXML private TableColumn TableWeeklyColumnWeek;
+    @FXML private TableColumn TableWeeklyColumnDateTime;
+    @FXML private TableColumn TableWeeklyColumnTitle;
+    @FXML private TableColumn TableWeeklyColumnDescription;
+    @FXML private TableColumn TableWeeklyColumnLocation;
+    @FXML private TableColumn TableWeeklyColumnContact;
     
     public void clickButtonCustomerView(ActionEvent event)throws IOException{
         
