@@ -1,17 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.ModifyAppointmentViewController">
+<AnchorPane id="AnchorPane" prefHeight="487.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/11.0.1" fx:controller="Controller.ModifyAppointmentViewController">
    <children>
-      <TextField fx:id="fieldAppointmentID" disable="true" editable="false" layoutX="25.0" layoutY="14.0" promptText="AppointmentID" AnchorPane.leftAnchor="25.0" AnchorPane.rightAnchor="25.0">
-         <opaqueInsets>
-            <Insets />
-         </opaqueInsets></TextField>
+      <TextField fx:id="fieldAppointmentID" disable="true" editable="false" layoutX="25.0" layoutY="14.0" promptText="AppointmentID" AnchorPane.leftAnchor="25.0" AnchorPane.rightAnchor="25.0"></TextField>
       <TextField fx:id="fieldTitle" layoutX="25.0" layoutY="83.0" prefWidth="250.0" promptText="Title" AnchorPane.leftAnchor="25.0" AnchorPane.rightAnchor="25.0" />
       <TextArea fx:id="fieldDescription" layoutX="25.0" layoutY="340.0" prefHeight="91.0" prefWidth="250.0" promptText="Description" AnchorPane.leftAnchor="25.0" AnchorPane.rightAnchor="25.0" />
       <TextField fx:id="fieldLocation" layoutX="25.0" layoutY="119.0" promptText="Location" AnchorPane.leftAnchor="25.0" AnchorPane.rightAnchor="25.0" />
