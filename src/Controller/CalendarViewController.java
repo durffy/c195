@@ -60,6 +60,19 @@ public class CalendarViewController implements Initializable {
 
     }
     
+    public void clickButtonAddAppointmentView(ActionEvent event)throws IOException{
+        
+        Parent root = FXMLLoader.load(getClass().getResource("/View/AddAppointmentView.fxml"));
+        Scene scene = new Scene(root);
+
+        Stage window = (Stage) ((Node)event.getSource()).getScene().getWindow();
+        window.setScene(scene);
+        window.show();
+
+    }
+    
+    
+    
     /**
      * Initializes the controller class.
      */

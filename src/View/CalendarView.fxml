@@ -55,6 +55,6 @@
       <Button fx:id="ButtonModifyAppointmentView" disable="true" layoutX="290.0" layoutY="498.0" mnemonicParsing="false" onAction="#clickButtonModifyAppointmentView" prefHeight="25.0" prefWidth="85.0" text="Modify" />
       <Button fx:id="ButtonRemove" disable="true" layoutX="396.0" layoutY="498.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="75.0" text="Remove" />
       <Button fx:id="ButtonCancel" cancelButton="true" disable="true" layoutX="488.0" layoutY="498.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="75.0" text="Cancel" />
-      <Button fx:id="ButtonModifyAppointmentView1" layoutX="185.0" layoutY="498.0" mnemonicParsing="false" onAction="#clickButtonModifyAppointmentView" prefHeight="25.0" prefWidth="85.0" text="Add" />
+      <Button fx:id="ButtonAddAppointmentView" layoutX="185.0" layoutY="498.0" mnemonicParsing="false" onAction="#clickButtonAddAppointmentView" prefHeight="25.0" prefWidth="85.0" text="Add" />
    </children>
 </AnchorPane>
