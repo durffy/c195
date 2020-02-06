@@ -115,7 +115,12 @@ public class CalendarViewController implements Initializable {
         //todo: delete record
     }
         
-    
+    public void clickButtonClose(ActionEvent event) throws IOException{
+        
+        //todo: close the view
+        
+    }
+
     /**
      * Initializes the controller class.
      */
