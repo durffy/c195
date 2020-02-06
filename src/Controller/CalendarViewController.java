@@ -54,16 +54,18 @@ public class CalendarViewController implements Initializable {
     @FXML private TableColumn TableWeeklyColumnContact;
     
     
-    
-    public void clickButtonCustomerView(ActionEvent event)throws IOException{
-        
-
-        Parent root = FXMLLoader.load(getClass().getResource("/View/CustomerView.fxml"));
+    public void loadScene(Parent root, ActionEvent event){
         Scene scene = new Scene(root);
 
         Stage window = (Stage) ((Node)event.getSource()).getScene().getWindow();
         window.setScene(scene);
         window.show();
+    }
+    
+    public void clickButtonCustomerView(ActionEvent event)throws IOException{
+        
+        Parent root = FXMLLoader.load(getClass().getResource("/View/CustomerView.fxml"));
+        loadScene(root, event);
 
     }
     
@@ -72,11 +74,7 @@ public class CalendarViewController implements Initializable {
         //todo load the record
 
         Parent root = FXMLLoader.load(getClass().getResource("/View/ReportsView.fxml"));
-        Scene scene = new Scene(root);
-
-        Stage window = (Stage) ((Node)event.getSource()).getScene().getWindow();
-        window.setScene(scene);
-        window.show();
+        loadScene(root, event);
 
     }
     
@@ -85,22 +83,15 @@ public class CalendarViewController implements Initializable {
         //todo: load the record
         
         Parent root = FXMLLoader.load(getClass().getResource("/View/ModifyAppointmentView.fxml"));
-        Scene scene = new Scene(root);
-
-        Stage window = (Stage) ((Node)event.getSource()).getScene().getWindow();
-        window.setScene(scene);
-        window.show();
+        loadScene(root, event);
 
     }
     
     public void clickButtonAddAppointmentView(ActionEvent event)throws IOException{
         
         Parent root = FXMLLoader.load(getClass().getResource("/View/AddAppointmentView.fxml"));
-        Scene scene = new Scene(root);
+        loadScene(root, event);
 
-        Stage window = (Stage) ((Node)event.getSource()).getScene().getWindow();
-        window.setScene(scene);
-        window.show();
 
     }
     
