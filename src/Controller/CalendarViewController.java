@@ -15,6 +15,8 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -51,6 +53,8 @@ public class CalendarViewController implements Initializable {
     @FXML private TableColumn TableWeeklyColumnLocation;
     @FXML private TableColumn TableWeeklyColumnContact;
     
+    
+    
     public void clickButtonCustomerView(ActionEvent event)throws IOException{
         
 
@@ -65,6 +69,7 @@ public class CalendarViewController implements Initializable {
     
     public void clickButtonReportsView(ActionEvent event)throws IOException{
         
+        //todo load the record
 
         Parent root = FXMLLoader.load(getClass().getResource("/View/ReportsView.fxml"));
         Scene scene = new Scene(root);
@@ -76,6 +81,8 @@ public class CalendarViewController implements Initializable {
     }
     
     public void clickButtonModifyAppointmentView(ActionEvent event)throws IOException{
+        
+        //todo: load the record
         
         Parent root = FXMLLoader.load(getClass().getResource("/View/ModifyAppointmentView.fxml"));
         Scene scene = new Scene(root);
@@ -97,7 +104,17 @@ public class CalendarViewController implements Initializable {
 
     }
     
-    
+    public void clickButtonRemove(ActionEvent event) throws IOException{
+        
+        Alert alert = new Alert(AlertType.CONFIRMATION);
+        
+        alert.setTitle("Removal Confirmation");
+        alert.setContentText("Do you want to delete this Record?");
+        alert.show();
+        
+        //todo: delete record
+    }
+        
     
     /**
      * Initializes the controller class.
