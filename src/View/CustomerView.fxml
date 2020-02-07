@@ -30,8 +30,8 @@
       </MenuButton>
       <MenuButton fx:id="MenuButtonActive" layoutX="118.0" layoutY="167.0" mnemonicParsing="false" text="Active">
          <items>
-            <MenuItem fx:id="MenuItemActive" mnemonicParsing="false" onAction="#clickMenuItemActive" text="Active" />
-            <MenuItem fx:id="MenuItemInactive" mnemonicParsing="false" onAction="#clickMenuItemInactive" text="Inactive" />
+            <MenuItem fx:id="MenuItemActive" mnemonicParsing="false" onAction="#clickMenuActiveItemActive" text="Active" />
+            <MenuItem fx:id="MenuItemInactive" mnemonicParsing="false" onAction="#clickMenuActiveItemInactive" text="Inactive" />
          </items>
       </MenuButton>
       <Button fx:id="ButtonGoBack" cancelButton="true" layoutX="63.0" layoutY="411.0" mnemonicParsing="false" onAction="#clickButtonGoBack" text="Go Back" />

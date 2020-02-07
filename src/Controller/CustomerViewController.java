@@ -77,6 +77,17 @@ public class CustomerViewController implements Initializable {
         
     }
     
+    public void clickMenuActiveItemActive(ActionEvent event) throws IOException{
+        
+        //todo: set the Customer record to Active
+        
+    }
+    
+    public void clickMenuActiveItemInactive(ActionEvent event) throws IOException{
+        
+        //todo: set the Customer record to Inactive
+        
+    }
     
     /**
      * Initializes the controller class.
