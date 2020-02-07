@@ -19,22 +19,24 @@
             <TableColumn fx:id="colActive" prefWidth="121.0" text="Active" />
         </columns>
       </TableView>
-      <Button fx:id="ButtonAddModify" layoutX="692.0" layoutY="411.0" mnemonicParsing="false" text="Add/Modify" />
-      <Button fx:id="buttonCancel" disable="true" layoutX="790.0" layoutY="411.0" mnemonicParsing="false" text="Cancel" />
-      <TextField fx:id="fieldCustomerID" disable="true" editable="false" layoutX="49.0" layoutY="37.0" prefHeight="25.0" prefWidth="212.0" promptText="CustomerID" />
-      <TextField fx:id="fieldCustomerName" layoutX="49.0" layoutY="73.0" prefHeight="25.0" prefWidth="212.0" promptText="Customer Name" />
-      <MenuButton fx:id="menuAddress" layoutX="118.0" layoutY="121.0" mnemonicParsing="false" text="Address">
+      <Button fx:id="ButtonAddModify" layoutX="143.0" layoutY="411.0" mnemonicParsing="false" onAction="#clickButtonAddModify" text="Add/Modify" />
+      <Button fx:id="ButtonCancel" disable="true" layoutX="790.0" layoutY="411.0" mnemonicParsing="false" onAction="#clickButtonCancel" text="Cancel" />
+      <TextField fx:id="TextFieldCustomerID" disable="true" editable="false" layoutX="49.0" layoutY="37.0" prefHeight="25.0" prefWidth="212.0" promptText="CustomerID" />
+      <TextField fx:id="TextFieldCustomerName" layoutX="49.0" layoutY="73.0" prefHeight="25.0" prefWidth="212.0" promptText="Customer Name" />
+      <MenuButton fx:id="MenuButtonAddress" layoutX="118.0" layoutY="121.0" mnemonicParsing="false" text="Address">
         <items>
           <MenuItem mnemonicParsing="false" text="Action 2" />
         </items>
       </MenuButton>
-      <MenuButton fx:id="menuActive" layoutX="118.0" layoutY="167.0" mnemonicParsing="false" text="Active">
+      <MenuButton fx:id="MenuButtonActive" layoutX="118.0" layoutY="167.0" mnemonicParsing="false" text="Active">
          <items>
-            <MenuItem mnemonicParsing="false" text="Action 1" />
+            <MenuItem fx:id="MenuItemActive" mnemonicParsing="false" onAction="#clickMenuItemActive" text="Active" />
+            <MenuItem fx:id="MenuItemInactive" mnemonicParsing="false" onAction="#clickMenuItemInactive" text="Inactive" />
          </items>
       </MenuButton>
-      <Button fx:id="buttonGoBack" cancelButton="true" layoutX="63.0" layoutY="411.0" mnemonicParsing="false" text="Go Back" />
+      <Button fx:id="ButtonGoBack" cancelButton="true" layoutX="63.0" layoutY="411.0" mnemonicParsing="false" onAction="#clickButtonGoBack" text="Go Back" />
       <Label layoutX="49.0" layoutY="125.0" text="Address" />
       <Label layoutX="49.0" layoutY="171.0" text="Active" />
+      <Button fx:id="ButtonRemove" layoutX="693.0" layoutY="411.0" mnemonicParsing="false" onAction="#clickButtonRemove" text="Remove" />
    </children>
 </AnchorPane>
