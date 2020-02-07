@@ -8,12 +8,12 @@
 
 <AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.ReportsViewController">
    <children>
-      <TextArea fx:id="areaReportOutput" layoutX="17.0" layoutY="62.0" prefHeight="317.0" prefWidth="558.0" />
+      <TextArea fx:id="TextAreaOutput" layoutX="17.0" layoutY="62.0" prefHeight="317.0" prefWidth="558.0" />
       <MenuButton fx:id="menuReports" layoutX="86.0" layoutY="22.0" mnemonicParsing="false" text="Reports">
         <items>
-          <MenuItem fx:id="itemAppointmentByType" mnemonicParsing="false" text="Number of Appointments by Type" />
-          <MenuItem fx:id="itemSchedulePerConsultant" mnemonicParsing="false" text="Schedule Per Consultant" />
-            <MenuItem fx:id="itemActiveCustomers" mnemonicParsing="false" text="Active Customers" />
+          <MenuItem fx:id="MenuReportsItemNumberOfAppointmentsByType" mnemonicParsing="false" onAction="#clickMenuReportsItemNumberOfAppointmentsByType" text="Number of Appointments by Type" />
+          <MenuItem fx:id="MenuReportsItemSchedulePerConsultant" mnemonicParsing="false" onAction="#clickMenuReportsItemSchedulePerConsultant" text="Schedule Per Consultant" />
+            <MenuItem fx:id="MenuReportsItemActiveCustomers" mnemonicParsing="false" onAction="#clickMenuReportsItemActiveCustomers" text="Active Customers" />
         </items>
       </MenuButton>
       <Button fx:id="ButtonGoBack" layoutX="17.0" layoutY="22.0" mnemonicParsing="false" onAction="#clickButtonGoBack" text="Go Back" />
