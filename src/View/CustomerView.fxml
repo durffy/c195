@@ -11,12 +11,12 @@
 
 <AnchorPane id="AnchorPane" prefHeight="500.0" prefWidth="873.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.CustomerViewController">
    <children>
-      <TableView fx:id="tableCustomer" layoutX="309.0" layoutY="37.0" prefHeight="340.0" prefWidth="546.0">
+      <TableView fx:id="TableViewCustomer" layoutX="309.0" layoutY="37.0" prefHeight="340.0" prefWidth="546.0">
         <columns>
-          <TableColumn fx:id="colCustomerID" prefWidth="100.0" text="CustomerID" />
-          <TableColumn fx:id="colCustomerName" prefWidth="124.0" text="CustomerName" />
-            <TableColumn fx:id="colAddress" prefWidth="200.0" text="Address" />
-            <TableColumn fx:id="colActive" prefWidth="121.0" text="Active" />
+          <TableColumn fx:id="TableCustomerColumnCutomerID" prefWidth="100.0" text="CustomerID" />
+          <TableColumn fx:id="TableCustomerColumnCustomerName" prefWidth="124.0" text="CustomerName" />
+            <TableColumn fx:id="TableCustomerColumnAddress" prefWidth="200.0" text="Address" />
+            <TableColumn fx:id="TableCustomerColumnActive" prefWidth="121.0" text="Active" />
         </columns>
       </TableView>
       <Button fx:id="ButtonAddModify" layoutX="143.0" layoutY="411.0" mnemonicParsing="false" onAction="#clickButtonAddModify" text="Add/Modify" />
