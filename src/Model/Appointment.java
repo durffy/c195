@@ -6,6 +6,7 @@
 package Model;
 
 import java.util.Calendar;
+import java.util.Locale;
 
 /**
  *
@@ -32,4 +33,27 @@ public class Appointment {
     private String url; //VARCHAR(255)
     private String title; //VARCHAR(40)
     private String lastUpdateBy; //VARCHAR(40)
+    //new appointmentobject
+    public Appointment(String description, String location, String contact, String type, Calendar startTime, Calendar endTime, String url, String title) {
+        this.description = description;
+        this.location = location;
+        this.contact = contact;
+        this.type = type;
+        this.startTime = startTime;
+        this.endTime = endTime;
+        this.url = url;
+        this.title = title;
+        
+    }
+    
+    //db appointment object
+    
+    public Appointment() {
+
+        
+    }
+    
+
+
+
 }
