@@ -58,7 +58,7 @@ public class CustomerDAO extends DataAccessObject<Customer>{
             statement.setTimestamp(6, Timestamp.valueOf(dto.getLastUpdate()));
             statement.setString(7, dto.getLastUpdateBy());
             
-            statement.execute();
+            statement.execute();    
             return null;
         }catch (SQLException e){
             e.printStackTrace();
