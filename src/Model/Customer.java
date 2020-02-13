@@ -6,6 +6,7 @@
 package Model;
 
 import Utils.DataTransferObject;
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.Date;
 
@@ -67,6 +68,12 @@ public class Customer implements DataTransferObject {
     public void setCreateDate(LocalDateTime createDate) {
         this.createDate = createDate;
     }
+    
+    public void setCreateDate(Timestamp createDate) {
+        
+        this.createDate = createDate.toLocalDateTime();
+        
+    }
 
     public LocalDateTime getLastUpdate() {
         return lastUpdate;
@@ -75,7 +82,11 @@ public class Customer implements DataTransferObject {
     public void setLastUpdate(LocalDateTime lastUpdate) {
         this.lastUpdate = lastUpdate;
     }
-
+    
+    public void setLastUpdate(Timestamp lastUpdate) {
+        this.lastUpdate = lastUpdate.toLocalDateTime();
+    }
+    
     public String getCreatedBy() {
         return createdBy;
     }

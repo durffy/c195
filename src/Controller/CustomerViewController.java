@@ -120,6 +120,9 @@ public class CustomerViewController implements Initializable {
         
     }
     
+    //todo: load the customer from the selected row
+    
+    
     /**
      * Initializes the controller class.
      */

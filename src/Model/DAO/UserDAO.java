@@ -12,7 +12,7 @@ package Model.DAO;
 public class UserDAO {
 
     public static String getUserId() {
-        return "USERDAOTEST";
+        return "PLACEHOLDER USER";
     }
     
 }
