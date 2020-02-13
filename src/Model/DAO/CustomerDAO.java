@@ -67,8 +67,8 @@ public class CustomerDAO extends DataAccessObject<Customer>{
 
     @Override
     public List<Customer> findAll() {
-        
-        
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+ 
         
     }
 
