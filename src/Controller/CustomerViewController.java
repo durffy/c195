@@ -5,8 +5,14 @@
  */
 package Controller;
 
+import Model.Customer;
+import Model.DAO.CustomerDAO;
+import Model.DAO.UserDAO;
+import Model.DBConnection;
 import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLException;
+import java.time.LocalDateTime;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -50,6 +56,9 @@ public class CustomerViewController implements Initializable {
     @FXML private TableColumn TableCustomerColumnAddress;
     @FXML private TableColumn TableCustomerColumnActive;
     
+    private int addressId = 1;
+    private int Active = 1;
+    private int userId = 1;
     
     public void clickButtonGoBack(ActionEvent event) throws IOException{
         
@@ -62,9 +71,31 @@ public class CustomerViewController implements Initializable {
             
     }
     
-    public void clickButtonAddModify(ActionEvent event) throws IOException{
+    public void clickButtonAddModify(ActionEvent event) throws IOException, SQLException, Exception{
         //todo: add if no customer record is selected
-        //todo: modify if customer record is selected
+        
+        if(true){
+            
+            CustomerDAO customerDAO = new CustomerDAO(DBConnection.getConnection());
+            Customer customer = new Customer();
+            LocalDateTime lastUpdate = LocalDateTime.now();
+            LocalDateTime createDate = LocalDateTime.now();
+
+            customer.setCustomerName(TextFieldCustomerName.getText().toString());
+            customer.setAddressId(addressId);
+            customer.setActive(Active);
+            customer.setCreateDate(createDate);
+            customer.setCreatedBy(UserDAO.getUserId());
+            customer.setLastUpdate(lastUpdate);
+            customer.setLastUpdateBy(UserDAO.getUserId());
+
+            customerDAO.create(customer);
+            
+        }else if (false){
+            
+            //todo: modify if customer record is selected
+            
+        }
     }
     
     public void clickButtonRemove(ActionEvent event) throws IOException{

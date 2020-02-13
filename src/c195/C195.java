@@ -5,6 +5,14 @@
  */
 package c195;
 
+import Model.Customer;
+import Model.DAO.CustomerDAO;
+import Model.DBConnection;
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.sql.ResultSet;
+import java.time.LocalDateTime;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -30,8 +38,14 @@ public class C195 extends Application {
     /**
      * @param args the command line arguments
      */
-    public static void main(String[] args) {
+    public static void main(String[] args) throws SQLException, Exception {
+
+        Connection connection = DBConnection.openConnection();
+
+        
         launch(args);
+        DBConnection.closeConnection();
+        
     }
     
 }
