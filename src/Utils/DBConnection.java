@@ -10,26 +10,31 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class DBConnection{
-    private static final String databaseName="";
-    private static final String DB_URL="jdbc:mysql://52.206.157.109/" + databaseName;
-    private static final String username="";
-    private static final String password="";
+    private static final String databaseName="U03Tlb";
+    private static final String DB_URL="jdbc:mysql://3.227.166.251/" + databaseName;
+    private static final String username="U03Tlb";
+    private static final String password="53688076365";
     private static final String driver="com.mysql.jdbc.Driver";
 
     static Connection connection;
   
-    public static void makeConnection() throws ClassNotFoundException, SQLException, Exception{
+    public static Connection openConnection() throws ClassNotFoundException, SQLException, Exception{
 
-      Class.forName(driver);
-      //connection = DriverManager.getConnection(DB_URL, username, password);
+        Class.forName(driver);
+        connection = (Connection) DriverManager.getConnection(DB_URL, username, password);
 
-      System.out.println("Connection Successful!");
+        System.out.println("Connection Successful!");
 
+        return connection;
+    }
+    
+    public static Connection getConnection(){
+        return connection;
     }
 
     public static void closeConnection() throws ClassNotFoundException, SQLException, Exception{
-      connection.close();
-      System.out.println("Connection Closed!");
+        connection.close();
+        System.out.println("Connection Closed!");
     }
   
 }  
