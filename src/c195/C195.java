@@ -41,8 +41,6 @@ public class C195 extends Application {
     public static void main(String[] args) throws SQLException, Exception {
 
         Connection connection = DBConnection.openConnection();
-
-        
         launch(args);
         DBConnection.closeConnection();
         

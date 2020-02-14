@@ -11,8 +11,11 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.sql.Timestamp;
 import java.util.List;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
 /**
  *
@@ -42,7 +45,7 @@ public class CustomerDAO extends DataAccessObject<Customer>{
             + "WHERE customerId=?";
     
     private static final String GET_ALL = "SELECT "
-            + "customerId"
+            + "customerId, "
             + "customerName, "
             + "addressId, "
             + "active, "
@@ -99,14 +102,14 @@ public class CustomerDAO extends DataAccessObject<Customer>{
     }
 
     @Override
-    public List<Customer> findAll() {
-        List Customers = null;
+    public ObservableList<Customer> findAll() {
+        ObservableList<Customer> Customers = FXCollections.observableArrayList();
         Customer customer = new Customer();
         
         try(PreparedStatement statement = this.connection.prepareStatement(GET_ALL)){
 
             ResultSet resultSet = statement.executeQuery();
-            
+            int i =0;
             while(resultSet.next()){
                 
                 customer.setCustomerId(resultSet.getInt("customerId"));
@@ -117,8 +120,10 @@ public class CustomerDAO extends DataAccessObject<Customer>{
                 customer.setLastUpdate(resultSet.getTimestamp("lastUpdate"));
                 customer.setCreatedBy(resultSet.getString("createdBy"));
                 customer.setLastUpdateBy(resultSet.getString("lastUpdateBy"));
-                Customers.add(customer);
                 
+                Customers.add(customer);
+                System.out.println(Customers.get(i).getCustomerName());
+                i++;
             }
             
         }catch(SQLException e){
@@ -156,7 +161,7 @@ public class CustomerDAO extends DataAccessObject<Customer>{
     @Override
     public Customer create(Customer dto) {
 
-        try (PreparedStatement statement = this.connection.prepareStatement(INSERT);){
+        try (PreparedStatement statement = this.connection.prepareStatement(INSERT,Statement.RETURN_GENERATED_KEYS);){
             //statement.setInt(1, dto.getCustomerId());
             statement.setString(1, dto.getCustomerName());
             statement.setInt(2, dto.getAddressId());
@@ -167,8 +172,13 @@ public class CustomerDAO extends DataAccessObject<Customer>{
             statement.setString(7, dto.getLastUpdateBy());
             
             statement.execute();
-            int id = this.getLastVal("CUSTOMER_SEQUENCE");
-            return this.findById(id);
+            ResultSet resultSet = statement.getGeneratedKeys();
+            if (resultSet.next()) {
+
+                dto.setCustomerId(resultSet.getInt(1));
+                
+            }   
+            return dto;
             
         }catch (SQLException e){
             e.printStackTrace();

@@ -9,6 +9,7 @@ import Utils.DataTransferObject;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.Date;
+import javafx.beans.property.SimpleStringProperty;
 
 /**
  *
@@ -32,7 +33,8 @@ public class Customer implements DataTransferObject {
     public int getCustomerId() {
         return customerId;
     }
-
+    
+    
     public void setCustomerId(int customerId) {
         this.customerId = customerId;
     }
