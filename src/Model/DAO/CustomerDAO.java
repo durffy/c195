@@ -44,16 +44,7 @@ public class CustomerDAO extends DataAccessObject<Customer>{
             + "FROM customer "
             + "WHERE customerId=?";
     
-    private static final String GET_ALL = "SELECT "
-            + "customerId, "
-            + "customerName, "
-            + "addressId, "
-            + "active, "
-            + "createDate, "
-            + "createdBy, "
-            + "lastUpdate, "
-            + "lastUpdateBy "
-            + "FROM customer ";
+    private static final String GET_ALL = "SELECT * FROM customer ";
     
     private static final String UPDATE = "UDPATE "
             + "customerName=?, "
@@ -104,14 +95,14 @@ public class CustomerDAO extends DataAccessObject<Customer>{
     @Override
     public ObservableList<Customer> findAll() {
         ObservableList<Customer> Customers = FXCollections.observableArrayList();
-        Customer customer = new Customer();
+        
         
         try(PreparedStatement statement = this.connection.prepareStatement(GET_ALL)){
 
             ResultSet resultSet = statement.executeQuery();
-            int i =0;
+
             while(resultSet.next()){
-                
+                Customer customer = new Customer();
                 customer.setCustomerId(resultSet.getInt("customerId"));
                 customer.setCustomerName(resultSet.getString("customerName"));
                 customer.setAddressId(resultSet.getInt("addressId"));
@@ -122,10 +113,9 @@ public class CustomerDAO extends DataAccessObject<Customer>{
                 customer.setLastUpdateBy(resultSet.getString("lastUpdateBy"));
                 
                 Customers.add(customer);
-                System.out.println(Customers.get(i).getCustomerName());
-                i++;
+
             }
-            
+
         }catch(SQLException e){
             e.printStackTrace();
             throw new RuntimeException(e);
@@ -136,7 +126,7 @@ public class CustomerDAO extends DataAccessObject<Customer>{
 
     @Override
     public Customer update(Customer dto) {
-        Customer customer = null;
+        Customer customer;
         try (PreparedStatement statement = this.connection.prepareStatement(UPDATE);){
             
             statement.setString(1, dto.getCustomerName());
