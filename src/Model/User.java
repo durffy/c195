@@ -5,16 +5,17 @@
  */
 package Model;
 
+import Utils.DataTransferObject;
 import java.util.Calendar;
 
 /**
  *
  * @author CDuffy
  */
-public class User {
+public class User implements DataTransferObject{
     
     private int userId;
-    private String userName;
+    public static String userName = "test";
     private String password;
     private int active;
     private Calendar createdate;
@@ -22,6 +23,21 @@ public class User {
     private String createdBy;
     private String lastUpdateBy;
 
+    public User(int userId, String userName, String password, int active, Calendar createdate, Calendar lastUpdate, String createdBy, String lastUpdateBy) {
+        this.userId = userId;
+        this.userName = userName;
+        this.password = password;
+        this.active = active;
+        this.createdate = createdate;
+        this.lastUpdate = lastUpdate;
+        this.createdBy = createdBy;
+        this.lastUpdateBy = lastUpdateBy;
+    }
+    
+    @Override
+    public long getId() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
     public int getUserId() {
         return userId;
     }
@@ -30,21 +46,15 @@ public class User {
         this.userId = userId;
     }
 
-    public String getUserName() {
+    public static String getUserName() {
         return userName;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
-    }
 
     public String getPassword() {
         return password;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
-    }
 
     public int getActive() {
         return active;
@@ -85,6 +95,8 @@ public class User {
     public void setLastUpdateBy(String lastUpdateBy) {
         this.lastUpdateBy = lastUpdateBy;
     }
+
+
     
     
     
