@@ -44,7 +44,7 @@ public class CustomerDAO extends DataAccessObject<Customer>{
             + "FROM customer "
             + "WHERE customerId=?";
     
-    private static final String GET_ALL = "SELECT * FROM customer ";
+    private static final String GET_ALL = "SELECT * FROM customer";
     
     private static final String UPDATE = "UDPATE "
             + "customerName=?, "
