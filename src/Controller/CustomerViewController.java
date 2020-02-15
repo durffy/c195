@@ -7,17 +7,13 @@ package Controller;
 
 import Model.Customer;
 import Model.DAO.CustomerDAO;
-import Model.DAO.UserDAO;
 import Model.DBConnection;
+import Model.User;
 import java.io.IOException;
 import java.net.URL;
-import java.sql.Connection;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
-import java.util.HashSet;
 import java.util.ResourceBundle;
-import java.util.Set;
-import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -33,6 +29,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.stage.Stage;
 
 /**
@@ -46,8 +43,7 @@ public class CustomerViewController implements Initializable {
     @FXML private TextField TextFieldCustomerName;
     
     @FXML private Button ButtonGoBack;
-    @FXML private Button ButtonAddModify;
-    @FXML private Button ButtonRemove;
+    @FXML private Button ButtonAdd;
     @FXML private Button ButtonCancel;
     
     @FXML private MenuButton MenuButtonAddress;
@@ -81,45 +77,55 @@ public class CustomerViewController implements Initializable {
             
     }
     
-    public void clickButtonAddModify(ActionEvent event) throws IOException, SQLException, Exception{
+    public void clickButtonAdd(ActionEvent event) throws IOException, SQLException, Exception{
         //todo: add if no customer record is selected
         
-        if(isCustomerSelected){
+        CustomerDAO customerDAO = new CustomerDAO(DBConnection.getConnection());
+        Customer customer = new Customer();
+        LocalDateTime lastUpdate = LocalDateTime.now();
+        LocalDateTime createDate = LocalDateTime.now();
+
+        customer.setCustomerName(TextFieldCustomerName.getText().toString());
+        customer.setAddressId(addressId);
+        customer.setActive(Active);
+        customer.setCreateDate(createDate);
+        customer.setCreatedBy(User.getUserName());
+        customer.setLastUpdate(lastUpdate);
+        customer.setLastUpdateBy(User.getUserName());
+
+        customerDAO.create(customer);
+        
+        loadCustomerTable();
+        
+    }
+    
+    /**
+     *
+     * @param event
+     * @throws IOException
+     */
+    public void onCustomerNameEdit(TableColumn.CellEditEvent<Customer, String> event) throws IOException{
             
             CustomerDAO customerDAO = new CustomerDAO(DBConnection.getConnection());
-            Customer customer = new Customer();
+            Customer customer = TableViewCustomer.getSelectionModel().getSelectedItem();
+            
             LocalDateTime lastUpdate = LocalDateTime.now();
-            LocalDateTime createDate = LocalDateTime.now();
-
-            customer.setCustomerName(TextFieldCustomerName.getText().toString());
-            customer.setAddressId(addressId);
-            customer.setActive(Active);
-            customer.setCreateDate(createDate);
-            customer.setCreatedBy(UserDAO.getUserId());
-            customer.setLastUpdate(lastUpdate);
-            customer.setLastUpdateBy(UserDAO.getUserId());
-
-            customerDAO.create(customer);
+            customer.setCustomerName(event.getNewValue());
+            customer.setLastUpdate(LocalDateTime.now());
             
-        }else if (!isCustomerSelected){
+            System.out.println("id: "+ customer.getCustomerId());
+            System.out.println("name: "+ customer.getCustomerName());
+            System.out.println("address: "+ customer.getAddressId());
+            System.out.println("active: "+ customer.getActive());
+            System.out.println("createdBy: "+ customer.getCreatedBy());
             
-            CustomerDAO customerDAO = new CustomerDAO(DBConnection.getConnection());
-            Customer customer = new Customer();
-            LocalDateTime lastUpdate = LocalDateTime.now();
+            customerDAO.update(customer);
 
-//            customer.setCustomerName(TextFieldCustomerName.getText().toString());
-//            customer.setAddressId(addressId);
-//            customer.setActive(Active);
-//            customer.setLastUpdate(lastUpdate);
-//            customer.setLastUpdateBy(UserDAO.getUserId());
-//            customerDAO.update(customer);
-            
-        }
     }
     
     public void clickButtonRemove(ActionEvent event) throws IOException{
         //todo: remove record if customer record is selected
-        
+        loadCustomerTable();
     }        
     
     public void clickButtonCancel(ActionEvent event) throws IOException{
@@ -145,12 +151,15 @@ public class CustomerViewController implements Initializable {
         CustomerDAO customerDAO = new CustomerDAO(DBConnection.getConnection());        
         ObservableList<Customer> Customers = customerDAO.findAll();
 
-       
         TableCustomerColumnCustomerId.setCellValueFactory(new PropertyValueFactory<>("customerId"));
         TableCustomerColumnCustomerName.setCellValueFactory(new PropertyValueFactory<>("customerName"));
         TableCustomerColumnAddress.setCellValueFactory(new PropertyValueFactory<>("addressId"));
         TableCustomerColumnActive.setCellValueFactory(new PropertyValueFactory<>("active"));
         
+        
+        TableViewCustomer.setEditable(true);
+        TableCustomerColumnCustomerName.setCellFactory(TextFieldTableCell.forTableColumn());
+
         TableViewCustomer.setItems(Customers);
     }
     
@@ -160,6 +169,7 @@ public class CustomerViewController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO: load the Address Choices to the MenuButtonAddress
+        
         loadCustomerTable();
         
     }    

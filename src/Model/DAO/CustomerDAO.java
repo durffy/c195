@@ -42,11 +42,11 @@ public class CustomerDAO extends DataAccessObject<Customer>{
             + "lastUpdate, "
             + "lastUpdateBy "
             + "FROM customer "
-            + "WHERE customerId=?";
+            + "WHERE customerId=?;";
     
-    private static final String GET_ALL = "SELECT * FROM customer";
+    private static final String GET_ALL = "SELECT * FROM customer;";
     
-    private static final String UPDATE = "UDPATE "
+    private static final String UPDATE = "UPDATE customer SET "
             + "customerName=?, "
             + "addressId=?, "
             + "active=?, "
@@ -54,10 +54,10 @@ public class CustomerDAO extends DataAccessObject<Customer>{
             + "createdBy=?, "
             + "lastUpdate=?, "
             + "lastUpdateBy=? "
-            + "WHERE customerId=?";
+            + "WHERE customerId=?;";
     
     private static final String DELETE = "DELETE FROM customer "
-            + "WHERE cusomterId = ?";
+            + "WHERE cusomterId = ?;";
     
     public CustomerDAO(Connection connection) {
         super(connection);
@@ -126,8 +126,10 @@ public class CustomerDAO extends DataAccessObject<Customer>{
 
     @Override
     public Customer update(Customer dto) {
-        Customer customer;
+        Customer customer = null;
         try (PreparedStatement statement = this.connection.prepareStatement(UPDATE);){
+            
+            System.out.println(dto.getCustomerId());
             
             statement.setString(1, dto.getCustomerName());
             statement.setInt(2, dto.getAddressId());
