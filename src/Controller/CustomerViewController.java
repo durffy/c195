@@ -146,7 +146,7 @@ public class CustomerViewController implements Initializable {
         ObservableList<Customer> Customers = customerDAO.findAll();
 
        
-//        TableCustomerColumnCustomerId.setCellValueFactory(new PropertyValueFactory<>("customerId"));
+        TableCustomerColumnCustomerId.setCellValueFactory(new PropertyValueFactory<>("customerId"));
         TableCustomerColumnCustomerName.setCellValueFactory(new PropertyValueFactory<>("customerName"));
         TableCustomerColumnAddress.setCellValueFactory(new PropertyValueFactory<>("addressId"));
         TableCustomerColumnActive.setCellValueFactory(new PropertyValueFactory<>("active"));
