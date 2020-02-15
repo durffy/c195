@@ -57,17 +57,17 @@ public class CustomerViewController implements Initializable {
     @FXML private MenuItem MenuActiveItemInactive;
     
     @FXML private TableView<Customer> TableViewCustomer;
-    @FXML private TableColumn<Customer, String> TableCustomerColumnCutomerID;
+    @FXML private TableColumn<Customer, Integer> TableCustomerColumnCustomerId;
     @FXML private TableColumn<Customer, String> TableCustomerColumnCustomerName;
-    @FXML private TableColumn<Customer, String> TableCustomerColumnAddress;
-    @FXML private TableColumn<Customer, String> TableCustomerColumnActive;
+    @FXML private TableColumn<Customer, Integer> TableCustomerColumnAddress;
+    @FXML private TableColumn<Customer, Integer> TableCustomerColumnActive;
     
     private int addressId = 1;
     private int Active = 1;
     private int userId = 1;
     
     private boolean isCustomerSelected = true;
-    private ObservableList<Customer> Customers = FXCollections.observableArrayList();
+    //private ObservableList<Customer> Customers = FXCollections.observableArrayList();
 
     
     public void clickButtonGoBack(ActionEvent event) throws IOException{
@@ -140,12 +140,13 @@ public class CustomerViewController implements Initializable {
     }
     
     //todo: load the customer from the selected row
-    public void loadCustomerRows(){
+    public void loadCustomerTable(){
         
         CustomerDAO customerDAO = new CustomerDAO(DBConnection.getConnection());        
         ObservableList<Customer> Customers = customerDAO.findAll();
+
        
-        TableCustomerColumnCutomerID.setCellValueFactory(new PropertyValueFactory<>("customerId"));
+//        TableCustomerColumnCustomerId.setCellValueFactory(new PropertyValueFactory<>("customerId"));
         TableCustomerColumnCustomerName.setCellValueFactory(new PropertyValueFactory<>("customerName"));
         TableCustomerColumnAddress.setCellValueFactory(new PropertyValueFactory<>("addressId"));
         TableCustomerColumnActive.setCellValueFactory(new PropertyValueFactory<>("active"));
@@ -159,7 +160,7 @@ public class CustomerViewController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO: load the Address Choices to the MenuButtonAddress
-        loadCustomerRows();
+        loadCustomerTable();
         
     }    
     
