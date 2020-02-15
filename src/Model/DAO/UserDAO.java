@@ -5,14 +5,54 @@
  */
 package Model.DAO;
 
+import Model.User;
+import Utils.DataAccessObject;
+import java.sql.Connection;
+import java.util.List;
+
 /**
  *
  * @author CDuffy
  */
-public class UserDAO {
+public class UserDAO extends DataAccessObject<User>{
 
-    public static String getUserId() {
-        return "PLACEHOLDER USER";
-    }
+
+    private String GET_USER = "SELECT * FROM user WHERE userName=? AND password=?";
     
+    public UserDAO(Connection connection) {
+        super(connection);
+        
+    }
+
+    /**
+     *
+     * @param id
+     * @return
+     */
+
+    @Override
+    public User findById(int id) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public List<User> findAll() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public User update(User dto) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public User create(User dto) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void delete(int id) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+            
 }
