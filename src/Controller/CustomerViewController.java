@@ -14,6 +14,7 @@ import java.net.URL;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.util.ResourceBundle;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -39,7 +40,6 @@ import javafx.stage.Stage;
  */
 public class CustomerViewController implements Initializable {
     
-    @FXML private TextField TextFieldCustomerID;
     @FXML private TextField TextFieldCustomerName;
     
     @FXML private Button ButtonGoBack;
@@ -62,7 +62,7 @@ public class CustomerViewController implements Initializable {
     private int Active = 1;
     private int userId = 1;
     
-    private boolean isCustomerSelected = true;
+    //private boolean isCustomerSelected = true;
     //private ObservableList<Customer> Customers = FXCollections.observableArrayList();
 
     
@@ -78,7 +78,6 @@ public class CustomerViewController implements Initializable {
     }
     
     public void clickButtonAdd(ActionEvent event) throws IOException, SQLException, Exception{
-        //todo: add if no customer record is selected
         
         CustomerDAO customerDAO = new CustomerDAO(DBConnection.getConnection());
         Customer customer = new Customer();
@@ -96,6 +95,7 @@ public class CustomerViewController implements Initializable {
         customerDAO.create(customer);
         
         loadCustomerTable();
+        resetInputs();
         
     }
     
@@ -108,7 +108,7 @@ public class CustomerViewController implements Initializable {
             
             CustomerDAO customerDAO = new CustomerDAO(DBConnection.getConnection());
             Customer customer = TableViewCustomer.getSelectionModel().getSelectedItem();
-            
+            TableViewCustomer.getSelectionModel().clearSelection();
             LocalDateTime lastUpdate = LocalDateTime.now();
             customer.setCustomerName(event.getNewValue());
             customer.setLastUpdate(LocalDateTime.now());
@@ -120,29 +120,22 @@ public class CustomerViewController implements Initializable {
             System.out.println("createdBy: "+ customer.getCreatedBy());
             
             customerDAO.update(customer);
+            loadCustomerTable();
+            resetInputs();
 
     }
     
-    public void clickButtonRemove(ActionEvent event) throws IOException{
-        //todo: remove record if customer record is selected
-        loadCustomerTable();
-    }        
     
     public void clickButtonCancel(ActionEvent event) throws IOException{
         //todo: deselect if customer record is selected
-        
+        resetInputs();
     }
     
-    public void clickMenuActiveItemActive(ActionEvent event) throws IOException{
+    public void resetInputs(){
+        TableViewCustomer.getSelectionModel().clearSelection();
         
-        //todo: set the Customer record to Active
-        
-    }
-    
-    public void clickMenuActiveItemInactive(ActionEvent event) throws IOException{
-        
-        //todo: set the Customer record to Inactive
-        
+        TextFieldCustomerName.clear();
+        MenuButtonAddress.setText("Address");
     }
     
     //todo: load the customer from the selected row
@@ -150,7 +143,7 @@ public class CustomerViewController implements Initializable {
         
         CustomerDAO customerDAO = new CustomerDAO(DBConnection.getConnection());        
         ObservableList<Customer> Customers = customerDAO.findAll();
-
+        
         TableCustomerColumnCustomerId.setCellValueFactory(new PropertyValueFactory<>("customerId"));
         TableCustomerColumnCustomerName.setCellValueFactory(new PropertyValueFactory<>("customerName"));
         TableCustomerColumnAddress.setCellValueFactory(new PropertyValueFactory<>("addressId"));
@@ -159,8 +152,10 @@ public class CustomerViewController implements Initializable {
         
         TableViewCustomer.setEditable(true);
         TableCustomerColumnCustomerName.setCellFactory(TextFieldTableCell.forTableColumn());
-
+        
         TableViewCustomer.setItems(Customers);
+        TableViewCustomer.getColumns().get(0).setVisible(false);
+        TableViewCustomer.getColumns().get(0).setVisible(true);
     }
     
     /**
@@ -171,6 +166,8 @@ public class CustomerViewController implements Initializable {
         // TODO: load the Address Choices to the MenuButtonAddress
         
         loadCustomerTable();
+        
+        MenuButtonAddress.getItems().addAll();
         
     }    
     

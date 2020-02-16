@@ -141,7 +141,7 @@ public class CustomerDAO extends DataAccessObject<Customer>{
             statement.setInt(8, dto.getCustomerId());
             
             statement.execute();
-            customer = this.findById(dto.getCustomerId());
+            //customer = this.findById(dto.getCustomerId());
             
         }catch (SQLException e){
             e.printStackTrace();
