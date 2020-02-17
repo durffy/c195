@@ -28,6 +28,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ContextMenu;
 import javafx.scene.control.MenuButton;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TableColumn;
@@ -62,13 +63,14 @@ public class CustomerViewController implements Initializable {
     @FXML private TableColumn<Customer, String> TableCustomerColumnCustomerName;
     @FXML private TableColumn<Customer, Integer> TableCustomerColumnAddress;
     @FXML private TableColumn<Customer, Integer> TableCustomerColumnActive;
-    
-    private int addressId = 1;
+
     private int Active = 1;
-    private int userId = 1;
     
-    //private boolean isCustomerSelected = true;
-    //private ObservableList<Customer> Customers = FXCollections.observableArrayList();
+    private AddressDAO addressDAO = new AddressDAO(DBConnection.getConnection());
+    private ObservableList<Address> Addresses = addressDAO.findAll();
+    
+    CustomerDAO customerDAO = new CustomerDAO(DBConnection.getConnection());        
+    ObservableList<Customer> Customers = customerDAO.findAll();
      
     public void clickButtonGoBack(ActionEvent event) throws IOException{
         
@@ -124,9 +126,17 @@ public class CustomerViewController implements Initializable {
 
     }
     
-    //todo: add method for int cell edits
+    public void onAddressEditStart(TableColumn.CellEditEvent<Customer, Integer> event)throws IOException{
+        ContextMenu cm = new ContextMenu();
+         
+        MenuItem mi1 = new MenuItem("Menu 1");
+        cm.getItems().add(mi1);
+        MenuItem mi2 = new MenuItem("Menu 2");
+        cm.getItems().add(mi2);
+
+    }
     
-    public void onAddressEdit(TableColumn.CellEditEvent<Customer, Integer> event) throws IOException{
+    public void onAddressEditCommit(TableColumn.CellEditEvent<Customer, Integer> event) throws IOException{
 
         CustomerDAO customerDAO = new CustomerDAO(DBConnection.getConnection());
         Customer customer = TableViewCustomer.getSelectionModel().getSelectedItem();
@@ -160,9 +170,6 @@ public class CustomerViewController implements Initializable {
     //todo: load the customer from the selected row
     public void loadCustomerTable(){
         
-        CustomerDAO customerDAO = new CustomerDAO(DBConnection.getConnection());        
-        ObservableList<Customer> Customers = customerDAO.findAll();
-        
         TableCustomerColumnCustomerId.setCellValueFactory(new PropertyValueFactory<>("customerId"));
         TableCustomerColumnCustomerName.setCellValueFactory(new PropertyValueFactory<>("customerName"));
         TableCustomerColumnAddress.setCellValueFactory(new PropertyValueFactory<>("addressId"));
@@ -177,17 +184,10 @@ public class CustomerViewController implements Initializable {
         TableViewCustomer.getColumns().get(0).setVisible(false);
         TableViewCustomer.getColumns().get(0).setVisible(true);
     }
-    
-    /**
-     * Initializes the controller class.
-     */
-    @Override
-    public void initialize(URL url, ResourceBundle rb) {
-        // TODO: load the Address Choices to the MenuButtonAddress
-        AddressDAO addressDAO = new AddressDAO(DBConnection.getConnection());
-        ObservableList<Address> Addresses = addressDAO.findAll();
+
+
+    private void loadAddresses() {
         
-        loadCustomerTable();
         
         for(int i=0; i<  Addresses.size(); i++){
             MenuItem AddressMenuItem = new MenuItem(Addresses.get(i).getAddress() + ", " + Addresses.get(i).getPostalCode());
@@ -196,15 +196,21 @@ public class CustomerViewController implements Initializable {
             AddressMenuItem.setOnAction((event)->{
                 MenuButtonAddress.setText(AddressMenuItem.getText());
                 MenuButtonAddress.setId(AddressMenuItem.getId());
-                System.out.println();
             });
                         
             MenuButtonAddress.getItems().addAll(AddressMenuItem);
+            
         }
-        
-        
+    }
+
+    /**
+     * Initializes the controller class.
+     */
+    @Override
+    public void initialize(URL url, ResourceBundle rb) {
+
+        loadCustomerTable();
+        loadAddresses();
+
     }    
-
-
-    
 }
