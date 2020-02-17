@@ -9,6 +9,7 @@ import Model.User;
 import Utils.DataAccessObject;
 import java.sql.Connection;
 import java.util.List;
+import javafx.collections.ObservableList;
 
 /**
  *
@@ -36,7 +37,7 @@ public class UserDAO extends DataAccessObject<User>{
     }
 
     @Override
-    public List<User> findAll() {
+    public ObservableList<User> findAll() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 

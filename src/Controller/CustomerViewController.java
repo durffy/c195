@@ -5,7 +5,9 @@
  */
 package Controller;
 
+import Model.Address;
 import Model.Customer;
+import Model.DAO.AddressDAO;
 import Model.DAO.CustomerDAO;
 import Model.DBConnection;
 import Model.User;
@@ -13,10 +15,12 @@ import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
+import java.util.HashSet;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -32,6 +36,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.stage.Stage;
+import javafx.util.converter.IntegerStringConverter;
 
 /**
  * FXML Controller class
@@ -64,8 +69,7 @@ public class CustomerViewController implements Initializable {
     
     //private boolean isCustomerSelected = true;
     //private ObservableList<Customer> Customers = FXCollections.observableArrayList();
-
-    
+     
     public void clickButtonGoBack(ActionEvent event) throws IOException{
         
             Parent root = FXMLLoader.load(getClass().getResource("/View/CalendarView.fxml"));
@@ -85,7 +89,7 @@ public class CustomerViewController implements Initializable {
         LocalDateTime createDate = LocalDateTime.now();
 
         customer.setCustomerName(TextFieldCustomerName.getText().toString());
-        customer.setAddressId(addressId);
+        customer.setAddressId(Integer.parseInt(MenuButtonAddress.getId()));
         customer.setActive(Active);
         customer.setCreateDate(createDate);
         customer.setCreatedBy(User.getUserName());
@@ -109,19 +113,34 @@ public class CustomerViewController implements Initializable {
             CustomerDAO customerDAO = new CustomerDAO(DBConnection.getConnection());
             Customer customer = TableViewCustomer.getSelectionModel().getSelectedItem();
             TableViewCustomer.getSelectionModel().clearSelection();
-            LocalDateTime lastUpdate = LocalDateTime.now();
+
             customer.setCustomerName(event.getNewValue());
             customer.setLastUpdate(LocalDateTime.now());
             
-            System.out.println("id: "+ customer.getCustomerId());
-            System.out.println("name: "+ customer.getCustomerName());
-            System.out.println("address: "+ customer.getAddressId());
-            System.out.println("active: "+ customer.getActive());
-            System.out.println("createdBy: "+ customer.getCreatedBy());
             
             customerDAO.update(customer);
             loadCustomerTable();
             resetInputs();
+
+    }
+    
+    //todo: add method for int cell edits
+    
+    public void onAddressEdit(TableColumn.CellEditEvent<Customer, Integer> event) throws IOException{
+
+        CustomerDAO customerDAO = new CustomerDAO(DBConnection.getConnection());
+        Customer customer = TableViewCustomer.getSelectionModel().getSelectedItem();
+        TableViewCustomer.getSelectionModel().clearSelection();
+        
+        int addressId = event.getNewValue();
+
+        customer.setAddressId(addressId);
+        customer.setLastUpdate(LocalDateTime.now());
+
+
+        customerDAO.update(customer);
+        loadCustomerTable();
+        resetInputs();
 
     }
     
@@ -152,7 +171,8 @@ public class CustomerViewController implements Initializable {
         
         TableViewCustomer.setEditable(true);
         TableCustomerColumnCustomerName.setCellFactory(TextFieldTableCell.forTableColumn());
-        
+        TableCustomerColumnAddress.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
+
         TableViewCustomer.setItems(Customers);
         TableViewCustomer.getColumns().get(0).setVisible(false);
         TableViewCustomer.getColumns().get(0).setVisible(true);
@@ -164,11 +184,27 @@ public class CustomerViewController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO: load the Address Choices to the MenuButtonAddress
+        AddressDAO addressDAO = new AddressDAO(DBConnection.getConnection());
+        ObservableList<Address> Addresses = addressDAO.findAll();
         
         loadCustomerTable();
         
-        MenuButtonAddress.getItems().addAll();
+        for(int i=0; i<  Addresses.size(); i++){
+            MenuItem AddressMenuItem = new MenuItem(Addresses.get(i).getAddress() + ", " + Addresses.get(i).getPostalCode());
+            AddressMenuItem.setId(Integer.toString(Addresses.get(i).getAddressId()));
+            
+            AddressMenuItem.setOnAction((event)->{
+                MenuButtonAddress.setText(AddressMenuItem.getText());
+                MenuButtonAddress.setId(AddressMenuItem.getId());
+                System.out.println();
+            });
+                        
+            MenuButtonAddress.getItems().addAll(AddressMenuItem);
+        }
+        
         
     }    
+
+
     
 }

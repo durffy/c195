@@ -10,6 +10,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.List;
+import javafx.collections.ObservableList;
 
 /**
  *
@@ -24,7 +25,7 @@ public abstract class DataAccessObject <T extends DataTransferObject>{
     }
     
     public abstract T findById(int id);
-    public abstract List<T> findAll();
+    public abstract ObservableList<T> findAll();
     public abstract T update(T dto);
     public abstract T create(T dto);
     public abstract void delete(int id);
