@@ -27,6 +27,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.MenuButton;
@@ -90,7 +91,7 @@ public class CustomerViewController implements Initializable {
         LocalDateTime lastUpdate = LocalDateTime.now();
         LocalDateTime createDate = LocalDateTime.now();
 
-        customer.setCustomerName(TextFieldCustomerName.getText().toString());
+        customer.setCustomerName(TextFieldCustomerName.getText());
         customer.setAddressId(Integer.parseInt(MenuButtonAddress.getId()));
         customer.setActive(Active);
         customer.setCreateDate(createDate);
@@ -112,13 +113,11 @@ public class CustomerViewController implements Initializable {
      */
     public void onCustomerNameEdit(TableColumn.CellEditEvent<Customer, String> event) throws IOException{
             
-        CustomerDAO customerDAO = new CustomerDAO(DBConnection.getConnection());
         Customer customer = TableViewCustomer.getSelectionModel().getSelectedItem();
         TableViewCustomer.getSelectionModel().clearSelection();
 
         customer.setCustomerName(event.getNewValue());
         customer.setLastUpdate(LocalDateTime.now());
-
 
         customerDAO.update(customer);
         loadCustomerTable();
@@ -138,7 +137,6 @@ public class CustomerViewController implements Initializable {
     
     public void onAddressEditCommit(TableColumn.CellEditEvent<Customer, Integer> event) throws IOException{
 
-        CustomerDAO customerDAO = new CustomerDAO(DBConnection.getConnection());
         Customer customer = TableViewCustomer.getSelectionModel().getSelectedItem();
         TableViewCustomer.getSelectionModel().clearSelection();
         
@@ -154,6 +152,40 @@ public class CustomerViewController implements Initializable {
 
     }
     
+    public void onActiveEditCommit(TableColumn.CellEditEvent<Customer, Integer> event) throws IOException{
+
+        
+        int columnValue = event.getNewValue();
+                
+        if(columnValue == 0 || columnValue == 1){
+
+            Customer customer = TableViewCustomer.getSelectionModel().getSelectedItem();
+            TableViewCustomer.getSelectionModel().clearSelection();
+
+            int active = event.getNewValue();
+
+            customer.setActive(active);
+            customer.setLastUpdate(LocalDateTime.now());
+
+
+            customerDAO.update(customer);
+            loadCustomerTable();
+            resetInputs();
+            
+        }else{
+            
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+
+            alert.setTitle("Active Values");
+            alert.setContentText("Please set either 0, for inactive or 1 for active");
+            alert.show();
+            resetInputs();
+            
+        }
+        
+
+
+    }
     
     public void clickButtonCancel(ActionEvent event) throws IOException{
         //todo: deselect if customer record is selected
@@ -175,11 +207,12 @@ public class CustomerViewController implements Initializable {
         TableCustomerColumnAddress.setCellValueFactory(new PropertyValueFactory<>("addressId"));
         TableCustomerColumnActive.setCellValueFactory(new PropertyValueFactory<>("active"));
         
-        
         TableViewCustomer.setEditable(true);
         TableCustomerColumnCustomerName.setCellFactory(TextFieldTableCell.forTableColumn());
         TableCustomerColumnAddress.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
+        TableCustomerColumnActive.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
 
+                
         TableViewCustomer.setItems(Customers);
         TableViewCustomer.getColumns().get(0).setVisible(false);
         TableViewCustomer.getColumns().get(0).setVisible(true);

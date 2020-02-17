@@ -14,7 +14,7 @@
           <TableColumn fx:id="TableCustomerColumnCustomerId" editable="false" prefWidth="100.0" text="CustomerID" />
           <TableColumn fx:id="TableCustomerColumnCustomerName" onEditCommit="#onCustomerNameEdit" prefWidth="124.0" text="CustomerName" />
             <TableColumn fx:id="TableCustomerColumnAddress" onEditCommit="#onAddressEditCommit" onEditStart="#onAddressEditStart" prefWidth="200.0" text="Address" />
-            <TableColumn fx:id="TableCustomerColumnActive" prefWidth="121.0" text="Active" />
+            <TableColumn fx:id="TableCustomerColumnActive" onEditCommit="#onActiveEditCommit" prefWidth="121.0" text="Active" />
         </columns>
       </TableView>
       <Button fx:id="ButtonAdd" layoutX="430.0" layoutY="450.0" mnemonicParsing="false" onAction="#clickButtonAdd" prefHeight="25.0" prefWidth="65.0" text="Add" />
