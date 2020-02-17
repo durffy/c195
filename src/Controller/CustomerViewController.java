@@ -110,17 +110,17 @@ public class CustomerViewController implements Initializable {
      */
     public void onCustomerNameEdit(TableColumn.CellEditEvent<Customer, String> event) throws IOException{
             
-            CustomerDAO customerDAO = new CustomerDAO(DBConnection.getConnection());
-            Customer customer = TableViewCustomer.getSelectionModel().getSelectedItem();
-            TableViewCustomer.getSelectionModel().clearSelection();
+        CustomerDAO customerDAO = new CustomerDAO(DBConnection.getConnection());
+        Customer customer = TableViewCustomer.getSelectionModel().getSelectedItem();
+        TableViewCustomer.getSelectionModel().clearSelection();
 
-            customer.setCustomerName(event.getNewValue());
-            customer.setLastUpdate(LocalDateTime.now());
-            
-            
-            customerDAO.update(customer);
-            loadCustomerTable();
-            resetInputs();
+        customer.setCustomerName(event.getNewValue());
+        customer.setLastUpdate(LocalDateTime.now());
+
+
+        customerDAO.update(customer);
+        loadCustomerTable();
+        resetInputs();
 
     }
     
