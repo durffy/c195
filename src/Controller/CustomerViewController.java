@@ -9,7 +9,7 @@ import Model.Address;
 import Model.Customer;
 import Model.DAO.AddressDAO;
 import Model.DAO.CustomerDAO;
-import Model.DBConnection;
+import Utils.DBConnection;
 import Model.User;
 import java.io.IOException;
 import java.net.URL;
@@ -211,11 +211,11 @@ public class CustomerViewController implements Initializable {
         TableCustomerColumnCustomerName.setCellFactory(TextFieldTableCell.forTableColumn());
         TableCustomerColumnAddress.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
         TableCustomerColumnActive.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
-
-                
+               
         TableViewCustomer.setItems(Customers);
         TableViewCustomer.getColumns().get(0).setVisible(false);
         TableViewCustomer.getColumns().get(0).setVisible(true);
+        
     }
 
 

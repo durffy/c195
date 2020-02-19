@@ -7,7 +7,7 @@ package c195;
 
 import Model.Customer;
 import Model.DAO.CustomerDAO;
-import Model.DBConnection;
+import Utils.DBConnection;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;

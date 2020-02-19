@@ -5,9 +5,14 @@
  */
 package Controller;
 
+import Model.Appointment;
+import Model.DAO.AppointmentDOA;
+import Utils.DBConnection;
 import java.io.IOException;
 import java.net.URL;
+import java.sql.Timestamp;
 import java.util.ResourceBundle;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -20,7 +25,10 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.stage.Stage;
+import javafx.util.converter.IntegerStringConverter;
 
 /**
  * FXML Controller class
@@ -35,23 +43,19 @@ public class CalendarViewController implements Initializable {
     @FXML private Button ButtonModifyAppointmentView;
     
     //monthly table view
-    @FXML private TableView TableViewMonthly;
-    @FXML private TableColumn TableMonthlyColumnSunday;
-    @FXML private TableColumn TableMonthlyColumnMonday;
-    @FXML private TableColumn TableMonthlyColumnTuesday;
-    @FXML private TableColumn TableMonthlyColumnWednesday;
-    @FXML private TableColumn TableMonthlyColumnThursday;
-    @FXML private TableColumn TableMonthlyColumnFriday;
-    @FXML private TableColumn TableMonthlyColumnSaturday;
+    @FXML private TableView<Appointment> TableViewMonth;
+    @FXML private TableColumn<Appointment, Timestamp> TableMonthColumnStart;
+    @FXML private TableColumn<Appointment, String> TableMonthColumnTitle;
+    @FXML private TableColumn<Appointment, String> TableMonthColumnLocation;
+    @FXML private TableColumn<Appointment, String> TableMonthColumnContact;
     
     //weekly table view
-    @FXML private TableView TableViewWeekly;
-    @FXML private TableColumn TableWeeklyColumnWeek;
-    @FXML private TableColumn TableWeeklyColumnDateTime;
-    @FXML private TableColumn TableWeeklyColumnTitle;
-    @FXML private TableColumn TableWeeklyColumnDescription;
-    @FXML private TableColumn TableWeeklyColumnLocation;
-    @FXML private TableColumn TableWeeklyColumnContact;
+    @FXML private TableView TableViewWeek;
+    @FXML private TableColumn TableWeekColumnStart;
+    @FXML private TableColumn TableWeekColumnEnd;
+    @FXML private TableColumn TableWeekColumnTitle;
+    @FXML private TableColumn TableWeekColumnDescription;
+    @FXML private TableColumn TableWeekColumnContact;
     
     
     public void loadScene(Parent root, ActionEvent event){
@@ -112,12 +116,38 @@ public class CalendarViewController implements Initializable {
         
     }
 
+    public void loadWeeklySchedule(){
+
+    }
+    
+    public void loadMonthlySchedule(){
+        
+        AppointmentDOA appointmentDOA = new AppointmentDOA(DBConnection.getConnection());
+        ObservableList<Appointment> MonthlyAppointments = appointmentDOA.findAll();
+        
+        TableMonthColumnStart.setCellValueFactory(new PropertyValueFactory<>("start"));
+        TableMonthColumnTitle.setCellValueFactory(new PropertyValueFactory<>("title"));
+        TableMonthColumnLocation.setCellValueFactory(new PropertyValueFactory<>("location"));
+        TableMonthColumnContact.setCellValueFactory(new PropertyValueFactory<>("contact"));
+        
+        TableViewMonth.setEditable(true);
+        TableMonthColumnTitle.setCellFactory(TextFieldTableCell.forTableColumn());
+        TableMonthColumnLocation.setCellFactory(TextFieldTableCell.forTableColumn());
+        TableMonthColumnContact.setCellFactory(TextFieldTableCell.forTableColumn());
+               
+        TableViewMonth.setItems(MonthlyAppointments);
+
+    }
+    
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+        
+        
+        loadMonthlySchedule();
+    
     }    
     
 }

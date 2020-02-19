@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Model;
+package Utils;
 
 import com.mysql.jdbc.Connection;
 import java.sql.DriverManager;
