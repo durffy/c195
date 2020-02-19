@@ -53,8 +53,9 @@ public class AppointmentDOA extends DataAccessObject<Appointment> {
                 appointment.setUserId(resultSet.getInt("userId"));
                 appointment.setTitle(resultSet.getString("title"));
                 appointment.setDescription(resultSet.getString("description"));
-                appointment.setLocation(resultSet.getString("contact"));
-                appointment.setContact(resultSet.getString("type"));
+                appointment.setLocation(resultSet.getString("location"));
+                appointment.setContact(resultSet.getString("contact"));
+                appointment.setType(resultSet.getString("type"));
                 appointment.setUrl(resultSet.getString("url"));
                 appointment.setStartTime(resultSet.getTimestamp("start"));
                 appointment.setEndTime(resultSet.getTimestamp("end"));

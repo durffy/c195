@@ -30,6 +30,9 @@ import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.stage.Stage;
 import javafx.util.converter.IntegerStringConverter;
 
+
+
+
 /**
  * FXML Controller class
  *
@@ -57,6 +60,9 @@ public class CalendarViewController implements Initializable {
     @FXML private TableColumn TableWeekColumnDescription;
     @FXML private TableColumn TableWeekColumnContact;
     
+    private AppointmentDOA appointmentDOA = new AppointmentDOA(DBConnection.getConnection());
+    private ObservableList<Appointment> Appointments = appointmentDOA.findAll();
+
     
     public void loadScene(Parent root, ActionEvent event){
         Scene scene = new Scene(root);
@@ -76,6 +82,7 @@ public class CalendarViewController implements Initializable {
     public void clickButtonReportsView(ActionEvent event)throws IOException{
         
         //todo load the record
+        
 
         Parent root = FXMLLoader.load(getClass().getResource("/View/ReportsView.fxml"));
         loadScene(root, event);
@@ -85,6 +92,8 @@ public class CalendarViewController implements Initializable {
     public void clickButtonModifyAppointmentView(ActionEvent event)throws IOException{
         
         //todo: load the record
+
+        
         
         Parent root = FXMLLoader.load(getClass().getResource("/View/ModifyAppointmentView.fxml"));
         loadScene(root, event);
@@ -117,25 +126,26 @@ public class CalendarViewController implements Initializable {
     }
 
     public void loadWeeklySchedule(){
-
+        //TODO: get the date
+        //TODO: load monday through friday based on the date
+        TableWeekColumnStart.setCellValueFactory(new PropertyValueFactory<>("startTime"));
+        TableWeekColumnEnd.setCellValueFactory(new PropertyValueFactory<>("endTime"));
+        TableWeekColumnTitle.setCellValueFactory(new PropertyValueFactory<>("title"));
+        TableWeekColumnContact.setCellValueFactory(new PropertyValueFactory<>("contact"));
+        TableWeekColumnDescription.setCellValueFactory(new PropertyValueFactory<>("description"));
+           
+        TableViewWeek.setItems(Appointments);
+        
     }
     
     public void loadMonthlySchedule(){
-        
-        AppointmentDOA appointmentDOA = new AppointmentDOA(DBConnection.getConnection());
-        ObservableList<Appointment> MonthlyAppointments = appointmentDOA.findAll();
-        
-        TableMonthColumnStart.setCellValueFactory(new PropertyValueFactory<>("start"));
+        //TODO: only load the month
+        TableMonthColumnStart.setCellValueFactory(new PropertyValueFactory<>("startTime"));
         TableMonthColumnTitle.setCellValueFactory(new PropertyValueFactory<>("title"));
         TableMonthColumnLocation.setCellValueFactory(new PropertyValueFactory<>("location"));
         TableMonthColumnContact.setCellValueFactory(new PropertyValueFactory<>("contact"));
-        
-        TableViewMonth.setEditable(true);
-        TableMonthColumnTitle.setCellFactory(TextFieldTableCell.forTableColumn());
-        TableMonthColumnLocation.setCellFactory(TextFieldTableCell.forTableColumn());
-        TableMonthColumnContact.setCellFactory(TextFieldTableCell.forTableColumn());
-               
-        TableViewMonth.setItems(MonthlyAppointments);
+             
+        TableViewMonth.setItems(Appointments);
 
     }
     
@@ -145,8 +155,8 @@ public class CalendarViewController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         
-        
         loadMonthlySchedule();
+        loadWeeklySchedule();
     
     }    
     

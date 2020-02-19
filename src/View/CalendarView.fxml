@@ -33,13 +33,13 @@
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <TableView fx:id="TableViewWeekly" layoutY="-4.0" prefHeight="400.0" prefWidth="525.0">
+                        <TableView fx:id="TableViewWeek" layoutY="-4.0" prefHeight="400.0" prefWidth="525.0">
                            <columns>
-                              <TableColumn fx:id="TableWeeklyColumnDateTime" maxWidth="105.0" minWidth="105.0" prefWidth="63.0" text="Start" />
-                              <TableColumn fx:id="TableWeeklyColumnTitle" maxWidth="105.0" minWidth="105.0" prefWidth="72.0" text="End" />
-                              <TableColumn fx:id="TableWeeklyColumnDescription" maxWidth="105.0" minWidth="105.0" prefWidth="104.0" text="Title" />
-                              <TableColumn fx:id="TableWeeklyColumnLocation" maxWidth="105.0" minWidth="105.0" prefWidth="105.0" text="Contact" />
-                              <TableColumn fx:id="TableWeeklyColumnContact" maxWidth="105.0" minWidth="105.0" prefWidth="101.0" text="Description" />
+                              <TableColumn fx:id="TableWeekColumnStart" maxWidth="105.0" minWidth="105.0" prefWidth="63.0" text="Start" />
+                              <TableColumn fx:id="TableWeekColumnEnd" maxWidth="105.0" minWidth="105.0" prefWidth="72.0" text="End" />
+                              <TableColumn fx:id="TableWeekColumnTitle" maxWidth="105.0" minWidth="105.0" prefWidth="104.0" text="Title" />
+                              <TableColumn fx:id="TableWeekColumnContact" maxWidth="105.0" minWidth="105.0" prefWidth="105.0" text="Contact" />
+                              <TableColumn fx:id="TableWeekColumnDescription" maxWidth="105.0" minWidth="105.0" prefWidth="101.0" text="Description" />
                            </columns>
                         </TableView>
                      </children>
