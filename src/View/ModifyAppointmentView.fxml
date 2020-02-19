@@ -6,19 +6,19 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane id="AnchorPane" prefHeight="500.0" prefWidth="300.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.ModifyAppointmentViewController">
+<AnchorPane id="AnchorPane" prefHeight="522.0" prefWidth="300.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.ModifyAppointmentViewController">
    <children>
-      <TextField fx:id="TextFieldAppointmentID" disable="true" editable="false" layoutX="25.0" layoutY="14.0" promptText="AppointmentID" AnchorPane.leftAnchor="25.0" AnchorPane.rightAnchor="25.0"/>
-      <TextField fx:id="TextFieldTitle" layoutX="25.0" layoutY="83.0" prefWidth="250.0" promptText="Title" AnchorPane.leftAnchor="25.0" AnchorPane.rightAnchor="25.0" />
-      <TextArea fx:id="TextAreaDescription" layoutX="25.0" layoutY="340.0" prefHeight="91.0" prefWidth="250.0" promptText="Description" AnchorPane.leftAnchor="25.0" AnchorPane.rightAnchor="25.0" />
-      <TextField fx:id="TextFieldLocation" layoutX="25.0" layoutY="119.0" promptText="Location" AnchorPane.leftAnchor="25.0" AnchorPane.rightAnchor="25.0" />
-      <TextField fx:id="TextFieldContact" layoutX="25.0" layoutY="159.0" promptText="Contact" AnchorPane.leftAnchor="25.0" AnchorPane.rightAnchor="25.0" />
-      <TextField fx:id="TextFieldType" layoutX="25.0" layoutY="197.0" promptText="Type of Meeting" AnchorPane.leftAnchor="25.0" AnchorPane.rightAnchor="25.0" />
-      <TextField fx:id="TextFieldURL" layoutX="25.0" layoutY="229.0" promptText="URL" AnchorPane.leftAnchor="25.0" AnchorPane.rightAnchor="25.0" />
-      <DatePicker fx:id="DatePickerStart" layoutX="25.0" layoutY="263.0" prefHeight="25.0" prefWidth="177.0" promptText="Start Date/Time" AnchorPane.leftAnchor="25.0" AnchorPane.rightAnchor="98.0" />
-      <DatePicker fx:id="DatePickerEnd" layoutX="25.0" layoutY="298.0" prefHeight="25.0" prefWidth="177.0" promptText="End Date/Time" AnchorPane.leftAnchor="25.0" AnchorPane.rightAnchor="98.0" />
-      <TextField fx:id="TextFieldUserName" disable="true" editable="false" layoutX="25.0" layoutY="49.0" promptText="User" AnchorPane.leftAnchor="25.0" AnchorPane.rightAnchor="25.0" />
-      <Button fx:id="ButtonCancel" layoutX="223.0" layoutY="445.0" mnemonicParsing="false" onAction="#clickButtonCancel" text="Cancel" />
-      <Button fx:id="ButtonSave" layoutX="164.0" layoutY="445.0" mnemonicParsing="false" onAction="#clickButtonSave" prefHeight="25.0" prefWidth="52.0" text="Save" />
+      <TextField fx:id="TextFieldAppointmentID" disable="true" editable="false" layoutX="25.0" layoutY="14.0" promptText="AppointmentID" AnchorPane.leftAnchor="25.0" AnchorPane.rightAnchor="25.0" />
+      <TextField fx:id="TextFieldTitle" layoutX="25.0" layoutY="125.0" prefWidth="250.0" promptText="Title" AnchorPane.leftAnchor="25.0" AnchorPane.rightAnchor="25.0" />
+      <TextArea fx:id="TextAreaDescription" layoutX="25.0" layoutY="382.0" prefHeight="91.0" prefWidth="250.0" promptText="Description" AnchorPane.leftAnchor="25.0" AnchorPane.rightAnchor="25.0" />
+      <TextField fx:id="TextFieldLocation" layoutX="25.0" layoutY="161.0" promptText="Location" AnchorPane.leftAnchor="25.0" AnchorPane.rightAnchor="25.0" />
+      <TextField fx:id="TextFieldContact" layoutX="25.0" layoutY="201.0" promptText="Contact" AnchorPane.leftAnchor="25.0" AnchorPane.rightAnchor="25.0" />
+      <TextField fx:id="TextFieldType" layoutX="25.0" layoutY="239.0" promptText="Type of Meeting" AnchorPane.leftAnchor="25.0" AnchorPane.rightAnchor="25.0" />
+      <TextField fx:id="TextFieldUrl" layoutX="25.0" layoutY="271.0" promptText="URL" AnchorPane.leftAnchor="25.0" AnchorPane.rightAnchor="25.0" />
+      <DatePicker fx:id="DatePickerStart" layoutX="25.0" layoutY="305.0" prefHeight="25.0" prefWidth="250.0" promptText="Start Date/Time" AnchorPane.leftAnchor="25.0" AnchorPane.rightAnchor="25.0" />
+      <TextField fx:id="TextFieldUser" disable="true" editable="false" layoutX="25.0" layoutY="49.0" promptText="User" AnchorPane.leftAnchor="25.0" AnchorPane.rightAnchor="25.0" />
+      <Button fx:id="ButtonCancel" layoutX="223.0" layoutY="487.0" mnemonicParsing="false" onAction="#clickButtonCancel" text="Cancel" />
+      <Button fx:id="ButtonSave" layoutX="164.0" layoutY="487.0" mnemonicParsing="false" onAction="#clickButtonSave" prefHeight="25.0" prefWidth="52.0" text="Save" />
+      <TextField fx:id="TextFieldClient" layoutX="25.0" layoutY="87.0" prefWidth="250.0" promptText="Client" />
    </children>
 </AnchorPane>

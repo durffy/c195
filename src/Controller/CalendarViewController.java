@@ -92,8 +92,10 @@ public class CalendarViewController implements Initializable {
     public void clickButtonModifyAppointmentView(ActionEvent event)throws IOException{
         
         //todo: load the record
-
-        
+        //get selected appointment
+        //setSelected appointment in the Modify view
+        Appointment appointment = TableViewMonth.getSelectionModel().getSelectedItem();
+        ModifyAppointmentViewController.appointment = appointment;
         
         Parent root = FXMLLoader.load(getClass().getResource("/View/ModifyAppointmentView.fxml"));
         loadScene(root, event);

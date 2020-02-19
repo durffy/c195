@@ -5,6 +5,7 @@
  */
 package Controller;
 
+import Model.Appointment;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -29,19 +30,22 @@ import javafx.stage.Stage;
 public class ModifyAppointmentViewController implements Initializable {
 
     @FXML private TextField TextFieldAppointmentID;
-    @FXML private TextField TextFieldUserName;
+    @FXML private TextField TextFieldUser;
     @FXML private TextField TextFieldTitle;
     @FXML private TextField TextFieldLocation;
     @FXML private TextField TextFieldContact;
     @FXML private TextField TextFieldType;
+    @FXML private TextField TextFieldClient;
+    @FXML private TextField TextFieldUrl;
     
     @FXML private DatePicker DatePickerStart;
-    @FXML private DatePicker DatePickerEnd;
     
     @FXML private TextArea TextAreaDescription;
     
     @FXML private Button ButtonSave;
     @FXML private Button ButtonCancel;
+    
+    public static Appointment appointment;
     
     public void loadCalendarView(ActionEvent event)throws IOException{
         
@@ -75,7 +79,18 @@ public class ModifyAppointmentViewController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+        // TODO, load the object to the fields for editing
+        TextFieldAppointmentID.setText(Integer.toString(appointment.getAppointmentId()));
+        TextFieldUser.setText(Integer.toString(appointment.getUserId()));
+        TextFieldClient.setText(Integer.toString(appointment.getCustomerId()));
+        TextFieldTitle.setText(appointment.getTitle());
+        TextFieldLocation.setText(appointment.getLocation());
+        TextFieldContact.setText(appointment.getContact()); 
+        TextFieldType.setText(appointment.getType());
+        TextFieldUrl.setText(appointment.getUrl());
+        DatePickerStart.setValue(appointment.getStartTime().toLocalDateTime().toLocalDate());
+        TextAreaDescription.setText(appointment.getDescription());
+
     }    
     
 }
