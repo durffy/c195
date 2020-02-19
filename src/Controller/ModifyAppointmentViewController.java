@@ -18,6 +18,8 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
+import javafx.scene.control.MenuButton;
+import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
@@ -39,6 +41,10 @@ public class ModifyAppointmentViewController implements Initializable {
     @FXML private TextField TextFieldUrl;
     
     @FXML private DatePicker DatePickerStart;
+    @FXML private DatePicker DatePickerEnd;
+    
+    @FXML private MenuButton MenuButtonStart;
+    @FXML private MenuButton MenuButtonEnd;
     
     @FXML private TextArea TextAreaDescription;
     
@@ -89,8 +95,40 @@ public class ModifyAppointmentViewController implements Initializable {
         TextFieldType.setText(appointment.getType());
         TextFieldUrl.setText(appointment.getUrl());
         DatePickerStart.setValue(appointment.getStartTime().toLocalDateTime().toLocalDate());
+        appointment.getStartTime().toInstant();
+        DatePickerEnd.setValue(appointment.getEndTime().toLocalDateTime().toLocalDate());
+        appointment.getEndTime().toInstant();
         TextAreaDescription.setText(appointment.getDescription());
-
+        
+        
+        String[] interval = new String[]{":00",
+            ":15",
+            ":30",
+            ":45"};
+        
+        for (int i=0; i < 24; i++){  
+            for (String interval1 : interval) {
+                MenuItem StartMenuItem = new MenuItem();
+                
+                StartMenuItem.setText(String.format("%d%s", i, interval1));
+                StartMenuItem.setOnAction((event)->{
+                    
+                    MenuButtonStart.setText(StartMenuItem.getText());
+                    
+                });
+                MenuItem EndMenuItem = new MenuItem();
+                EndMenuItem.setText(String.format("%d%s", i, interval1));
+                EndMenuItem.setOnAction((event)->{
+                    
+                    MenuButtonEnd.setText(EndMenuItem.getText());
+                    
+                    
+                });
+                
+                MenuButtonStart.getItems().addAll(StartMenuItem);
+                MenuButtonEnd.getItems().addAll(EndMenuItem);
+            }
+        }
     }    
-    
+
 }
