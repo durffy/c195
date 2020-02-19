@@ -8,6 +8,10 @@ package Controller;
 import Model.Appointment;
 import java.io.IOException;
 import java.net.URL;
+import java.sql.Timestamp;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.time.ZoneOffset;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -66,8 +70,23 @@ public class ModifyAppointmentViewController implements Initializable {
     
     public void clickButtonSave(ActionEvent event) throws IOException{
         
-        //check the input
-        //add the record
+        TextFieldAppointmentID.getText();
+        TextFieldUser.getText();
+        TextFieldTitle.getText();
+        TextFieldLocation.getText();
+        TextFieldContact.getText();
+        TextFieldType.getText();
+        TextFieldClient.getText();
+        TextFieldUrl.getText();
+        TextAreaDescription.getText();
+        
+        Timestamp startDate = Timestamp.valueOf(DatePickerStart.getValue().atStartOfDay());
+        Timestamp endDate = Timestamp.valueOf(DatePickerEnd.getValue().atStartOfDay());
+        
+        
+        MenuButtonStart.getText();
+        MenuButtonEnd.getText();
+        
         loadCalendarView(event);
         
     }
@@ -85,6 +104,7 @@ public class ModifyAppointmentViewController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+  
         // TODO, load the object to the fields for editing
         TextFieldAppointmentID.setText(Integer.toString(appointment.getAppointmentId()));
         TextFieldUser.setText(Integer.toString(appointment.getUserId()));
@@ -94,12 +114,18 @@ public class ModifyAppointmentViewController implements Initializable {
         TextFieldContact.setText(appointment.getContact()); 
         TextFieldType.setText(appointment.getType());
         TextFieldUrl.setText(appointment.getUrl());
+
+        int startHour = appointment.getStartTime().toLocalDateTime().getHour();
+        int startMinute = appointment.getStartTime().toLocalDateTime().getMinute();
         DatePickerStart.setValue(appointment.getStartTime().toLocalDateTime().toLocalDate());
-        appointment.getStartTime().toInstant();
-        DatePickerEnd.setValue(appointment.getEndTime().toLocalDateTime().toLocalDate());
-        appointment.getEndTime().toInstant();
-        TextAreaDescription.setText(appointment.getDescription());
+        MenuButtonStart.setText(String.format("%d%d", startHour, startMinute));
         
+        int endHour = appointment.getEndTime().toLocalDateTime().getHour();
+        int endMinute = appointment.getEndTime().toLocalDateTime().getHour();
+        DatePickerEnd.setValue(appointment.getEndTime().toLocalDateTime().toLocalDate());
+        MenuButtonEnd.setText(String.format("%d%d", endHour, endMinute));
+        
+        TextAreaDescription.setText(appointment.getDescription());
         
         String[] interval = new String[]{":00",
             ":15",
