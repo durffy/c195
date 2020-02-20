@@ -5,6 +5,7 @@
  */
 package Model.DAO;
 
+import static Controller.ModifyAppointmentViewController.appointment;
 import Model.Appointment;
 import Model.Customer;
 import Utils.DataAccessObject;
@@ -23,7 +24,20 @@ import javafx.collections.ObservableList;
 public class AppointmentDOA extends DataAccessObject<Appointment> {
 
     private static final String INSERT = "INSERT";
-    private static final String UPDATE = "UPDATE SET";
+    
+    private static final String UPDATE = "UPDATE appointment SET "
+            + "userId=?, "
+            + "customerId=?,"
+            + "title=?, "
+            + "location=?, "
+            + "contact=?, "
+            + "type=?, "
+            + "url=?, "
+            + "description=?, "
+            + "start=?, "
+            + "end=? "
+            + "WHERE appointmentId=?";
+    
     private static final String GET_ALL = "SELECT * FROM appointment";
     private static final String DELETE = "DELETE FROM appointment";
 
@@ -39,7 +53,6 @@ public class AppointmentDOA extends DataAccessObject<Appointment> {
     @Override
     public ObservableList<Appointment> findAll() {
         ObservableList<Appointment> Appointment = FXCollections.observableArrayList();
-        
         
         try(PreparedStatement statement = this.connection.prepareStatement(GET_ALL)){
 
@@ -76,9 +89,47 @@ public class AppointmentDOA extends DataAccessObject<Appointment> {
         return Appointment;
     }
 
+/*
+            1+ "userId=?, "
+            2+ "customerId=?,"
+            3+ "title=?, "
+            4+ "location=?, "
+            5+ "contact=?, "
+            6+ "type=?, "
+            7+ "url=?, "
+            8+ "description=?, "
+            9+ "start=?, "
+            10+ "end=?";
+            11+ "WHERE appointmentId=?";
+
+*/
     @Override
     public Appointment update(Appointment dto) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Appointment appointment = null;
+        try (PreparedStatement statement = this.connection.prepareStatement(UPDATE);){
+            
+            System.out.println(dto.getCustomerId());
+            
+            statement.setInt(1, dto.getUserId());
+            statement.setInt(2, dto.getCustomerId());
+            statement.setString(3, dto.getTitle());
+            statement.setString(4,dto.getLocation());
+            statement.setString(5,dto.getContact());
+            statement.setString(6, dto.getType());
+            statement.setString(7,dto.getUrl());
+            statement.setString(8, dto.getDescription());
+            statement.setTimestamp(9, dto.getStartTime());
+            statement.setTimestamp(10,dto.getEndTime());
+            statement.setInt(11, dto.getAppointmentId());
+            
+            statement.execute();
+            //customer = this.findById(dto.getCustomerId());
+            
+        }catch (SQLException e){
+            e.printStackTrace();
+            throw new RuntimeException(e);
+        }
+        return appointment;
     }
 
     @Override

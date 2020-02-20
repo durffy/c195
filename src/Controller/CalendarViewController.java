@@ -62,7 +62,6 @@ public class CalendarViewController implements Initializable {
     
     private AppointmentDOA appointmentDOA = new AppointmentDOA(DBConnection.getConnection());
     private ObservableList<Appointment> Appointments = appointmentDOA.findAll();
-
     
     public void loadScene(Parent root, ActionEvent event){
         Scene scene = new Scene(root);
@@ -106,8 +105,8 @@ public class CalendarViewController implements Initializable {
         
         Parent root = FXMLLoader.load(getClass().getResource("/View/AddAppointmentView.fxml"));
         loadScene(root, event);
-
-
+        
+        
     }
     
     public void clickButtonRemove(ActionEvent event) throws IOException{

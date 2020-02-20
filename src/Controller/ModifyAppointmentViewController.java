@@ -6,12 +6,15 @@
 package Controller;
 
 import Model.Appointment;
+import Model.DAO.AppointmentDOA;
+import Utils.DBConnection;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.time.ZoneOffset;
+import java.time.format.DateTimeFormatter;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -55,6 +58,7 @@ public class ModifyAppointmentViewController implements Initializable {
     @FXML private Button ButtonSave;
     @FXML private Button ButtonCancel;
     
+    private AppointmentDOA appointmentDOA = new AppointmentDOA(DBConnection.getConnection());
     public static Appointment appointment;
     
     public void loadCalendarView(ActionEvent event)throws IOException{
@@ -70,22 +74,23 @@ public class ModifyAppointmentViewController implements Initializable {
     
     public void clickButtonSave(ActionEvent event) throws IOException{
         
-        TextFieldAppointmentID.getText();
-        TextFieldUser.getText();
-        TextFieldTitle.getText();
-        TextFieldLocation.getText();
-        TextFieldContact.getText();
-        TextFieldType.getText();
-        TextFieldClient.getText();
-        TextFieldUrl.getText();
-        TextAreaDescription.getText();
+        
+        appointment.setUserId(Integer.parseInt(TextFieldUser.getText()));
+        appointment.setTitle(TextFieldTitle.getText());
+        appointment.setLocation(TextFieldLocation.getText());
+        appointment.setContact(TextFieldContact.getText());
+        appointment.setType(TextFieldType.getText());
+        appointment.setCustomerId(Integer.parseInt(TextFieldClient.getText()));
+        appointment.setUrl(TextFieldUrl.getText());
+        appointment.setDescription(TextAreaDescription.getText());
         
         Timestamp startDate = Timestamp.valueOf(DatePickerStart.getValue().atStartOfDay());
         Timestamp endDate = Timestamp.valueOf(DatePickerEnd.getValue().atStartOfDay());
         
+        appointment.setStartTime(startDate);
+        appointment.setEndTime(endDate);
         
-        MenuButtonStart.getText();
-        MenuButtonEnd.getText();
+        appointmentDOA.update(appointment);
         
         loadCalendarView(event);
         
