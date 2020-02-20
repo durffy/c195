@@ -154,7 +154,7 @@ public class CustomerDAO extends DataAccessObject<Customer>{
     public Customer create(Customer dto) {
 
         try (PreparedStatement statement = this.connection.prepareStatement(INSERT,Statement.RETURN_GENERATED_KEYS);){
-            //statement.setInt(1, dto.getCustomerId());
+
             statement.setString(1, dto.getCustomerName());
             statement.setInt(2, dto.getAddressId());
             statement.setInt(3, dto.getActive());
