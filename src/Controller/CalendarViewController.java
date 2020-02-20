@@ -23,6 +23,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.Tab;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -44,6 +45,9 @@ public class CalendarViewController implements Initializable {
     @FXML private Button ButtonReportsView;
     @FXML private Button ButtonAddAppointmentView;
     @FXML private Button ButtonModifyAppointmentView;
+    
+    @FXML private Tab tabMonthly;
+    @FXML private Tab tabWeekly;
     
     //monthly table view
     @FXML private TableView<Appointment> TableViewMonth;
@@ -88,18 +92,22 @@ public class CalendarViewController implements Initializable {
     public void clickButtonModifyAppointmentView(ActionEvent event)throws IOException{
         
         Appointment appointment=null;
-                
-        if(!TableViewMonth.getSelectionModel().isEmpty()){
-            
-            appointment = TableViewMonth.getSelectionModel().getSelectedItem();
-            
-            
-        }else if(!TableViewWeek.getSelectionModel().isEmpty()){
-            
-            appointment = TableViewWeek.getSelectionModel().getSelectedItem();
+        
+        if(tabMonthly.isSelected()){
+            if(!TableViewMonth.getSelectionModel().isEmpty()){
 
-        }
- 
+                appointment = TableViewMonth.getSelectionModel().getSelectedItem();
+
+
+            }
+        }else if(tabWeekly.isSelected()){
+            if(!TableViewWeek.getSelectionModel().isEmpty()){
+
+                appointment = TableViewWeek.getSelectionModel().getSelectedItem();
+
+            }
+        } 
+        
         ModifyAppointmentViewController.appointment = appointment;
         
         Parent root = FXMLLoader.load(getClass().getResource("/View/ModifyAppointmentView.fxml"));
@@ -132,6 +140,7 @@ public class CalendarViewController implements Initializable {
         
     }
 
+    
     public void loadWeeklySchedule(){
         //TODO: get the date
         //TODO: load monday through friday based on the date
