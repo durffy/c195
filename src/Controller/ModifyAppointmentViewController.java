@@ -6,7 +6,9 @@
 package Controller;
 
 import Model.Appointment;
+import Model.Customer;
 import Model.DAO.AppointmentDOA;
+import Model.DAO.CustomerDAO;
 import Utils.DBConnection;
 import java.io.IOException;
 import java.net.URL;
@@ -16,6 +18,7 @@ import java.text.SimpleDateFormat;
 import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
 import java.util.ResourceBundle;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -44,12 +47,13 @@ public class ModifyAppointmentViewController implements Initializable {
     @FXML private TextField TextFieldLocation;
     @FXML private TextField TextFieldContact;
     @FXML private TextField TextFieldType;
-    @FXML private TextField TextFieldClient;
+    //@FXML private TextField TextFieldClient;
     @FXML private TextField TextFieldUrl;
     
     @FXML private DatePicker DatePickerStart;
     @FXML private DatePicker DatePickerEnd;
     
+    @FXML private MenuButton MenuButtonClient;
     @FXML private MenuButton MenuButtonStart;
     @FXML private MenuButton MenuButtonEnd;
     
@@ -60,6 +64,9 @@ public class ModifyAppointmentViewController implements Initializable {
     
     private AppointmentDOA appointmentDOA = new AppointmentDOA(DBConnection.getConnection());
     public static Appointment appointment;
+    
+    private CustomerDAO customerDOA = new CustomerDAO(DBConnection.getConnection());
+    private ObservableList<Customer> Clients = customerDOA.findAll();
     
     public void loadCalendarView(ActionEvent event)throws IOException{
         
@@ -80,9 +87,11 @@ public class ModifyAppointmentViewController implements Initializable {
         appointment.setLocation(TextFieldLocation.getText());
         appointment.setContact(TextFieldContact.getText());
         appointment.setType(TextFieldType.getText());
-        appointment.setCustomerId(Integer.parseInt(TextFieldClient.getText()));
+        appointment.setCustomerId(Integer.parseInt(MenuButtonClient.getId()));
         appointment.setUrl(TextFieldUrl.getText());
         appointment.setDescription(TextAreaDescription.getText());
+        
+        System.out.println(Integer.parseInt(MenuButtonClient.getId()));
         
         Timestamp startDate = Timestamp.valueOf(DatePickerStart.getValue().atStartOfDay());
         Timestamp endDate = Timestamp.valueOf(DatePickerEnd.getValue().atStartOfDay());
@@ -113,7 +122,10 @@ public class ModifyAppointmentViewController implements Initializable {
         // TODO, load the object to the fields for editing
         TextFieldAppointmentID.setText(Integer.toString(appointment.getAppointmentId()));
         TextFieldUser.setText(Integer.toString(appointment.getUserId()));
-        TextFieldClient.setText(Integer.toString(appointment.getCustomerId()));
+       
+        
+        MenuButtonClient.setText(Clients.get(appointment.getCustomerId()-1).getCustomerName());
+        MenuButtonClient.setId(Integer.toString(appointment.getCustomerId()));
         TextFieldTitle.setText(appointment.getTitle());
         TextFieldLocation.setText(appointment.getLocation());
         TextFieldContact.setText(appointment.getContact()); 
@@ -132,6 +144,20 @@ public class ModifyAppointmentViewController implements Initializable {
         
         TextAreaDescription.setText(appointment.getDescription());
         
+        for(int i=0; i<  Clients.size(); i++){
+            MenuItem ClientMenuItem = new MenuItem(Clients.get(i).getCustomerName());
+            ClientMenuItem.setId(Integer.toString(Clients.get(i).getCustomerId()));
+            
+            System.out.println(String.format("%s, %s", Clients.get(i).getCustomerName(), Clients.get(i).getCustomerId()));
+            
+            ClientMenuItem.setOnAction((event)->{
+                MenuButtonClient.setText(ClientMenuItem.getText());
+                MenuButtonClient.setId(ClientMenuItem.getId());
+            });
+                        
+            MenuButtonClient.getItems().addAll(ClientMenuItem);
+            
+        }
         String[] interval = new String[]{":00",
             ":15",
             ":30",
