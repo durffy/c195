@@ -153,7 +153,7 @@ public class CalendarViewController implements Initializable {
             int day = Appointments.get(i).getStartTime().toLocalDateTime().getDayOfYear();
             int pday = DatePickerDate.getValue().getDayOfYear();
             
-            if(day-pday <= 4 && day-pday >= -3){
+            if(day-pday <= 3 && day-pday >= -3){
                 weeklyAppointments.add(Appointments.get(i));
             }
         } 
