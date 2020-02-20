@@ -11,7 +11,9 @@ import Utils.DBConnection;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Timestamp;
+import java.time.LocalDate;
 import java.util.ResourceBundle;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -23,6 +25,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -46,6 +49,7 @@ public class CalendarViewController implements Initializable {
     @FXML private Button ButtonAddAppointmentView;
     @FXML private Button ButtonModifyAppointmentView;
     
+    @FXML private DatePicker DatePickerDate;
     @FXML private Tab tabMonthly;
     @FXML private Tab tabWeekly;
     
@@ -112,14 +116,14 @@ public class CalendarViewController implements Initializable {
         
         Parent root = FXMLLoader.load(getClass().getResource("/View/ModifyAppointmentView.fxml"));
         loadScene(root, event);
-
+        loadMonthlySchedule();
+        loadWeeklySchedule();
     }
     
     public void clickButtonAddAppointmentView(ActionEvent event)throws IOException{
         
         Parent root = FXMLLoader.load(getClass().getResource("/View/AddAppointmentView.fxml"));
         loadScene(root, event);
-        
         
     }
     
@@ -142,26 +146,44 @@ public class CalendarViewController implements Initializable {
 
     
     public void loadWeeklySchedule(){
-        //TODO: get the date
-        //TODO: load monday through friday based on the date
+        
+        ObservableList<Appointment> weeklyAppointments = FXCollections.observableArrayList();;
+
+        for(int i=0; i<Appointments.size();i++){
+            int day = Appointments.get(i).getStartTime().toLocalDateTime().getDayOfYear();
+            int pday = DatePickerDate.getValue().getDayOfYear();
+            
+            if(day-pday <= 4 && day-pday >= -3){
+                weeklyAppointments.add(Appointments.get(i));
+            }
+        } 
         TableWeekColumnStart.setCellValueFactory(new PropertyValueFactory<>("startTime"));
         TableWeekColumnEnd.setCellValueFactory(new PropertyValueFactory<>("endTime"));
         TableWeekColumnTitle.setCellValueFactory(new PropertyValueFactory<>("title"));
         TableWeekColumnContact.setCellValueFactory(new PropertyValueFactory<>("contact"));
         TableWeekColumnDescription.setCellValueFactory(new PropertyValueFactory<>("description"));
            
-        TableViewWeek.setItems(Appointments);
+        TableViewWeek.setItems(weeklyAppointments);
         
     }
     
     public void loadMonthlySchedule(){
-        //TODO: only load the month
+        
+        ObservableList<Appointment> monthlyAppointments = FXCollections.observableArrayList();;
+
+        for(int i=0; i<Appointments.size();i++){
+            if(Appointments.get(i).getStartTime().toLocalDateTime().getMonthValue() 
+                    == DatePickerDate.getValue().getMonthValue()){
+                monthlyAppointments.add(Appointments.get(i));
+            }
+        } 
+         
         TableMonthColumnStart.setCellValueFactory(new PropertyValueFactory<>("startTime"));
         TableMonthColumnTitle.setCellValueFactory(new PropertyValueFactory<>("title"));
         TableMonthColumnLocation.setCellValueFactory(new PropertyValueFactory<>("location"));
         TableMonthColumnContact.setCellValueFactory(new PropertyValueFactory<>("contact"));
              
-        TableViewMonth.setItems(Appointments);
+        TableViewMonth.setItems(monthlyAppointments);
 
     }
     
@@ -171,6 +193,7 @@ public class CalendarViewController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         
+        DatePickerDate.setValue(LocalDate.now());
         loadMonthlySchedule();
         loadWeeklySchedule();
     
