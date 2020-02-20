@@ -7,7 +7,9 @@ package Controller;
 
 import static Controller.ModifyAppointmentViewController.appointment;
 import Model.Appointment;
+import Model.Customer;
 import Model.DAO.AppointmentDOA;
+import Model.DAO.CustomerDAO;
 import Utils.DBConnection;
 import java.io.IOException;
 import java.net.URL;
@@ -42,12 +44,13 @@ public class AddAppointmentViewController implements Initializable {
     @FXML private TextField TextFieldLocation;
     @FXML private TextField TextFieldContact;
     @FXML private TextField TextFieldType;
-    @FXML private TextField TextFieldClient;
+    //@FXML private TextField TextFieldClient;
     @FXML private TextField TextFieldUrl;
     
     @FXML private DatePicker DatePickerStart;
     @FXML private DatePicker DatePickerEnd;
     
+    @FXML private MenuButton MenuButtonClient;
     @FXML private MenuButton MenuButtonStart;
     @FXML private MenuButton MenuButtonEnd;
     
@@ -58,6 +61,9 @@ public class AddAppointmentViewController implements Initializable {
     
     private AppointmentDOA appointmentDOA = new AppointmentDOA(DBConnection.getConnection());
     public static Appointment appointment= new Appointment();
+    
+    private CustomerDAO customerDOA = new CustomerDAO(DBConnection.getConnection());
+    private ObservableList<Customer> Clients = customerDOA.findAll();
     
     public void loadCalendarView(ActionEvent event)throws IOException{
         
@@ -78,7 +84,7 @@ public class AddAppointmentViewController implements Initializable {
         appointment.setLocation(TextFieldLocation.getText());
         appointment.setContact(TextFieldContact.getText());
         appointment.setType(TextFieldType.getText());
-        appointment.setCustomerId(Integer.parseInt(TextFieldClient.getText()));
+        appointment.setCustomerId(Integer.parseInt(MenuButtonClient.getId()));
         appointment.setUrl(TextFieldUrl.getText());
         appointment.setDescription(TextAreaDescription.getText());
         
@@ -108,6 +114,20 @@ public class AddAppointmentViewController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        
+        for(int i=0; i<  Clients.size(); i++){
+            MenuItem ClientMenuItem = new MenuItem(Clients.get(i).getCustomerName());
+            ClientMenuItem.setId(Integer.toString(Clients.get(i).getCustomerId()));
+            
+            ClientMenuItem.setOnAction((event)->{
+                MenuButtonClient.setText(ClientMenuItem.getText());
+                MenuButtonClient.setId(ClientMenuItem.getId());
+            });
+                        
+            MenuButtonClient.getItems().addAll(ClientMenuItem);
+            
+        }
+        
         String[] interval = new String[]{":00",
             ":15",
             ":30",
