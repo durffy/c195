@@ -221,7 +221,6 @@ public class CustomerViewController implements Initializable {
 
     private void loadAddresses() {
         
-        
         for(int i=0; i<  Addresses.size(); i++){
             MenuItem AddressMenuItem = new MenuItem(Addresses.get(i).getAddress() + ", " + Addresses.get(i).getPostalCode());
             AddressMenuItem.setId(Integer.toString(Addresses.get(i).getAddressId()));
