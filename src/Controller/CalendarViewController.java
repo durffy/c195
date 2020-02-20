@@ -53,12 +53,12 @@ public class CalendarViewController implements Initializable {
     @FXML private TableColumn<Appointment, String> TableMonthColumnContact;
     
     //weekly table view
-    @FXML private TableView TableViewWeek;
-    @FXML private TableColumn TableWeekColumnStart;
-    @FXML private TableColumn TableWeekColumnEnd;
-    @FXML private TableColumn TableWeekColumnTitle;
-    @FXML private TableColumn TableWeekColumnDescription;
-    @FXML private TableColumn TableWeekColumnContact;
+    @FXML private TableView<Appointment> TableViewWeek;
+    @FXML private TableColumn<Appointment, Timestamp> TableWeekColumnStart;
+    @FXML private TableColumn<Appointment, Timestamp>  TableWeekColumnEnd;
+    @FXML private TableColumn<Appointment, String> TableWeekColumnTitle;
+    @FXML private TableColumn<Appointment, String> TableWeekColumnDescription;
+    @FXML private TableColumn<Appointment, String> TableWeekColumnContact;
     
     private AppointmentDOA appointmentDOA = new AppointmentDOA(DBConnection.getConnection());
     private ObservableList<Appointment> Appointments = appointmentDOA.findAll();
@@ -80,9 +80,6 @@ public class CalendarViewController implements Initializable {
     
     public void clickButtonReportsView(ActionEvent event)throws IOException{
         
-        //todo load the record
-        
-
         Parent root = FXMLLoader.load(getClass().getResource("/View/ReportsView.fxml"));
         loadScene(root, event);
 
@@ -90,10 +87,19 @@ public class CalendarViewController implements Initializable {
     
     public void clickButtonModifyAppointmentView(ActionEvent event)throws IOException{
         
-        //todo: load the record
-        //get selected appointment
-        //setSelected appointment in the Modify view
-        Appointment appointment = TableViewMonth.getSelectionModel().getSelectedItem();
+        Appointment appointment=null;
+                
+        if(!TableViewMonth.getSelectionModel().isEmpty()){
+            
+            appointment = TableViewMonth.getSelectionModel().getSelectedItem();
+            
+            
+        }else if(!TableViewWeek.getSelectionModel().isEmpty()){
+            
+            appointment = TableViewWeek.getSelectionModel().getSelectedItem();
+
+        }
+ 
         ModifyAppointmentViewController.appointment = appointment;
         
         Parent root = FXMLLoader.load(getClass().getResource("/View/ModifyAppointmentView.fxml"));
