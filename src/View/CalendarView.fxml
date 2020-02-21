@@ -53,6 +53,6 @@
       <Button fx:id="ButtonRemove" layoutX="488.0" layoutY="497.0" mnemonicParsing="false" onAction="#clickButtonRemove" prefHeight="25.0" prefWidth="75.0" text="Remove" />
       <Button fx:id="ButtonCancel" cancelButton="true" layoutX="488.0" layoutY="17.0" mnemonicParsing="false" onAction="#clickButtonClose" prefHeight="25.0" prefWidth="75.0" text="Close" />
       <Button fx:id="ButtonAddAppointmentView" layoutX="277.0" layoutY="497.0" mnemonicParsing="false" onAction="#clickButtonAddAppointmentView" prefHeight="25.0" prefWidth="85.0" text="Add" />
-      <DatePicker fx:id="DatePickerDate" layoutX="216.0" layoutY="17.0" prefHeight="25.0" prefWidth="255.0" />
+      <DatePicker fx:id="DatePickerDate" layoutX="216.0" layoutY="17.0" onAction="#clickDatePicker" prefHeight="25.0" prefWidth="255.0" />
    </children>
 </AnchorPane>

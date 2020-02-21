@@ -12,6 +12,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.sql.Timestamp;
 import java.time.LocalDate;
+import java.util.Optional;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -25,6 +26,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TableColumn;
@@ -79,6 +81,65 @@ public class CalendarViewController implements Initializable {
         window.show();
     }
     
+    
+    public void loadWeeklySchedule(){
+        
+        ObservableList<Appointment> weeklyAppointments = FXCollections.observableArrayList();;
+
+        for(int i=0; i<Appointments.size();i++){
+            
+            int appointmentDay = Appointments.get(i).getStartTime().toLocalDateTime().getDayOfYear();
+            int appointmentYear = Appointments.get(i).getStartTime().toLocalDateTime().getYear();
+
+            int selectedDay = DatePickerDate.getValue().getDayOfYear();
+            int selectedYear = DatePickerDate.getValue().getYear();
+
+            if(appointmentDay-selectedDay <= 3 && 
+                    appointmentDay-selectedDay >= -3 && 
+                    appointmentYear == selectedYear){
+                
+                weeklyAppointments.add(Appointments.get(i));
+                
+            }
+        } 
+        TableWeekColumnStart.setCellValueFactory(new PropertyValueFactory<>("startTime"));
+        TableWeekColumnEnd.setCellValueFactory(new PropertyValueFactory<>("endTime"));
+        TableWeekColumnTitle.setCellValueFactory(new PropertyValueFactory<>("title"));
+        TableWeekColumnContact.setCellValueFactory(new PropertyValueFactory<>("contact"));
+        TableWeekColumnDescription.setCellValueFactory(new PropertyValueFactory<>("description"));
+           
+        TableViewWeek.setItems(weeklyAppointments);
+        
+    }
+    
+    public void loadMonthlySchedule(){
+        
+        ObservableList<Appointment> monthlyAppointments = FXCollections.observableArrayList();;
+
+        for(int i=0; i<Appointments.size();i++){
+            
+            int appointmentMonth = Appointments.get(i).getStartTime().toLocalDateTime().getMonthValue();
+            int appointmentYear = Appointments.get(i).getStartTime().toLocalDateTime().getYear();
+            
+            int selectedMonth = DatePickerDate.getValue().getMonthValue();
+            int selectedYear = DatePickerDate.getValue().getYear();
+            
+            
+            if(appointmentMonth==selectedMonth && appointmentYear==selectedYear){
+                monthlyAppointments.add(Appointments.get(i));
+            }
+        } 
+         
+        TableMonthColumnStart.setCellValueFactory(new PropertyValueFactory<>("startTime"));
+        TableMonthColumnTitle.setCellValueFactory(new PropertyValueFactory<>("title"));
+        TableMonthColumnLocation.setCellValueFactory(new PropertyValueFactory<>("location"));
+        TableMonthColumnContact.setCellValueFactory(new PropertyValueFactory<>("contact"));
+             
+        TableViewMonth.setItems(monthlyAppointments);
+
+    }
+    
+    
     public void clickButtonCustomerView(ActionEvent event)throws IOException{
         
         Parent root = FXMLLoader.load(getClass().getResource("/View/CustomerView.fxml"));
@@ -127,64 +188,18 @@ public class CalendarViewController implements Initializable {
         
     }
     
-    public void clickButtonRemove(ActionEvent event) throws IOException{
-        
-        Alert alert = new Alert(AlertType.CONFIRMATION);
-        
-        alert.setTitle("Removal Confirmation");
-        alert.setContentText("Do you want to delete this Record?");
-        alert.show();
-        
-        //todo: delete record
-    }
+
         
     public void clickButtonClose(ActionEvent event) throws IOException{
         
         //todo: close the view
         
     }
-
-    
-    public void loadWeeklySchedule(){
+    public void clickDatePicker (ActionEvent event) throws IOException{
         
-        ObservableList<Appointment> weeklyAppointments = FXCollections.observableArrayList();;
-
-        for(int i=0; i<Appointments.size();i++){
-            int day = Appointments.get(i).getStartTime().toLocalDateTime().getDayOfYear();
-            int pday = DatePickerDate.getValue().getDayOfYear();
-            
-            if(day-pday <= 3 && day-pday >= -3){
-                weeklyAppointments.add(Appointments.get(i));
-            }
-        } 
-        TableWeekColumnStart.setCellValueFactory(new PropertyValueFactory<>("startTime"));
-        TableWeekColumnEnd.setCellValueFactory(new PropertyValueFactory<>("endTime"));
-        TableWeekColumnTitle.setCellValueFactory(new PropertyValueFactory<>("title"));
-        TableWeekColumnContact.setCellValueFactory(new PropertyValueFactory<>("contact"));
-        TableWeekColumnDescription.setCellValueFactory(new PropertyValueFactory<>("description"));
-           
-        TableViewWeek.setItems(weeklyAppointments);
+        loadWeeklySchedule();
+        loadMonthlySchedule();
         
-    }
-    
-    public void loadMonthlySchedule(){
-        
-        ObservableList<Appointment> monthlyAppointments = FXCollections.observableArrayList();;
-
-        for(int i=0; i<Appointments.size();i++){
-            if(Appointments.get(i).getStartTime().toLocalDateTime().getMonthValue() 
-                    == DatePickerDate.getValue().getMonthValue()){
-                monthlyAppointments.add(Appointments.get(i));
-            }
-        } 
-         
-        TableMonthColumnStart.setCellValueFactory(new PropertyValueFactory<>("startTime"));
-        TableMonthColumnTitle.setCellValueFactory(new PropertyValueFactory<>("title"));
-        TableMonthColumnLocation.setCellValueFactory(new PropertyValueFactory<>("location"));
-        TableMonthColumnContact.setCellValueFactory(new PropertyValueFactory<>("contact"));
-             
-        TableViewMonth.setItems(monthlyAppointments);
-
     }
     
     /**
