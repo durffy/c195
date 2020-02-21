@@ -46,10 +46,6 @@ import javafx.util.converter.IntegerStringConverter;
  */
 public class CalendarViewController implements Initializable {
 
-    @FXML private Button ButtonCustomerView;
-    @FXML private Button ButtonReportsView;
-    @FXML private Button ButtonAddAppointmentView;
-    @FXML private Button ButtonModifyAppointmentView;
     
     @FXML private DatePicker DatePickerDate;
     @FXML private Tab tabMonthly;
@@ -227,7 +223,7 @@ public class CalendarViewController implements Initializable {
         }
     }
      
-    public void clickButtonClose(ActionEvent event) throws IOException{
+    public void clickButtonLogout(ActionEvent event) throws IOException{
         
         //todo: close the view
         
