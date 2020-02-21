@@ -57,7 +57,7 @@ public class AppointmentDOA extends DataAccessObject<Appointment> {
             + "WHERE appointmentId=?";
     
     private static final String GET_ALL = "SELECT * FROM appointment";
-    private static final String DELETE = "DELETE FROM appointment";
+    private static final String DELETE = "DELETE FROM appointment WHERE appointmentId=?;";
 
     public AppointmentDOA(Connection connection) {
         super(connection);
@@ -172,10 +172,21 @@ public class AppointmentDOA extends DataAccessObject<Appointment> {
 
     @Override
     public void delete(int id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+        
+        try (PreparedStatement statement = this.connection.prepareStatement(DELETE);){
+
+            statement.setInt(1, id);
+            statement.execute();
+            
+        }catch (SQLException e){
+            
+            e.printStackTrace();
+            throw new RuntimeException(e);
+            
+        }    
     
+    }
 
-
+    
     
 }

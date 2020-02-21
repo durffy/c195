@@ -188,7 +188,7 @@ public class CalendarViewController implements Initializable {
         
     }
     
- public void clickButtonRemove(ActionEvent event) throws IOException{
+    public void clickButtonRemove(ActionEvent event) throws IOException{
         
         Alert alert = new Alert(AlertType.CONFIRMATION);
         
@@ -216,7 +216,9 @@ public class CalendarViewController implements Initializable {
                  }
              } 
             
+            
             appointmentDOA.delete(appointment.getAppointmentId());
+            Appointments.remove(appointment);
             loadWeeklySchedule();
             loadMonthlySchedule();
             
