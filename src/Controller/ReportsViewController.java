@@ -5,6 +5,8 @@
  */
 package Controller;
 
+import Model.Appointment;
+import Utils.DBConnection;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -20,6 +22,13 @@ import javafx.scene.control.MenuButton;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextArea;
 import javafx.stage.Stage;
+import Model.DAO.AppointmentDOA;
+import java.util.Comparator;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
 /**
  * FXML Controller class
@@ -50,16 +59,27 @@ public class ReportsViewController implements Initializable {
     
     public void clickMenuReportsItemNumberOfAppointmentsByType(ActionEvent event) throws IOException{
         //TODO: clear output on textarea
+        TextAreaOutput.clear();
         //TODO: load query for Count of Appointments by type
+        AppointmentDOA appointmentDOA = new AppointmentDOA(DBConnection.getConnection());
+        ObservableList<Appointment> appointments = appointmentDOA.findAll();
+        
+        Map<String, Long> appointmentsMap = appointments.stream()
+            .collect(Collectors.groupingBy(Appointment::getType, Collectors.counting()));
+        
+        appointmentsMap.forEach((key, value)-> TextAreaOutput.appendText(String.format("%s: %d\r\n",key, value)));
+        
     }
     
     public void clickMenuReportsItemSchedulePerConsultant(ActionEvent event) throws IOException{
         //TODO: clear output on textarea
+        TextAreaOutput.clear();
         //TODO: load query for Sheduled Items Per Consultant
     }
         
     public void clickMenuReportsItemActiveCustomers(ActionEvent event) throws IOException{
         //TODO: clear output on textarea
+        TextAreaOutput.clear();
         //TODO: load query for the Number of Active Customers
     }
     
