@@ -188,8 +188,43 @@ public class CalendarViewController implements Initializable {
         
     }
     
-
+ public void clickButtonRemove(ActionEvent event) throws IOException{
         
+        Alert alert = new Alert(AlertType.CONFIRMATION);
+        
+        alert.setTitle("Removal Confirmation");
+        alert.setContentText("Do you want to delete this Record?");
+
+        Optional<ButtonType> result = alert.showAndWait();
+        
+        // check for confirmation, check which tab is selected, check which item in the tab is selected
+        if(result.get() == ButtonType.OK){
+            
+            Appointment appointment=null;
+            
+            if(tabMonthly.isSelected()){
+                if(!TableViewMonth.getSelectionModel().isEmpty()){
+
+                    appointment = TableViewMonth.getSelectionModel().getSelectedItem();
+
+                 }
+             }else if(tabWeekly.isSelected()){
+                if(!TableViewWeek.getSelectionModel().isEmpty()){
+
+                     appointment = TableViewWeek.getSelectionModel().getSelectedItem();
+
+                 }
+             } 
+            
+            appointmentDOA.delete(appointment.getAppointmentId());
+            loadWeeklySchedule();
+            loadMonthlySchedule();
+            
+        }else {
+            
+        }
+    }
+     
     public void clickButtonClose(ActionEvent event) throws IOException{
         
         //todo: close the view
