@@ -10,17 +10,13 @@ import Model.Customer;
 import Model.DAO.AddressDAO;
 import Model.DAO.CustomerDAO;
 import Utils.DBConnection;
-import Model.User;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
-import java.util.HashSet;
 import java.util.ResourceBundle;
-import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -95,9 +91,11 @@ public class CustomerViewController implements Initializable {
         customer.setAddressId(Integer.parseInt(MenuButtonAddress.getId()));
         customer.setActive(Active);
         customer.setCreateDate(createDate);
-        customer.setCreatedBy(User.getUserName());
+        //customer.setCreatedBy(User.getUserName())
+        customer.setCreatedBy("hardCodedTest");
         customer.setLastUpdate(lastUpdate);
-        customer.setLastUpdateBy(User.getUserName());
+        //customer.setLastUpdateBy(User.getUserName());
+        customer.setLastUpdateBy("hardCodedTest");
 
         customerDAO.create(customer);
         

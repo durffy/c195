@@ -5,10 +5,7 @@
  */
 package Model.DAO;
 
-import static Controller.ModifyAppointmentViewController.appointment;
 import Model.Appointment;
-import Model.Customer;
-import Model.User;
 import Utils.DataAccessObject;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -151,10 +148,12 @@ public class AppointmentDOA extends DataAccessObject<Appointment> {
             statement.setTimestamp(10,dto.getEndTime());
 
             statement.setTimestamp(11, Timestamp.from(Instant.now()));
-            statement.setString(12,User.getUserName());
+            //statement.setString(12,User.getUserName());
+            statement.setString(12,"hardCodedTest");
             statement.setTimestamp(13, Timestamp.from(Instant.now()));
-            statement.setString(14,User.getUserName());
-
+            //statement.setString(14,User.getUserName());
+            statement.setString(14,"hardCodedTest");
+            
             statement.execute();
             ResultSet resultSet = statement.getGeneratedKeys();
             if (resultSet.next()) {
