@@ -6,6 +6,7 @@
 package Controller;
 
 import Model.Appointment;
+import Model.Customer;
 import Utils.DBConnection;
 import java.io.IOException;
 import java.net.URL;
@@ -23,6 +24,7 @@ import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextArea;
 import javafx.stage.Stage;
 import Model.DAO.AppointmentDOA;
+import Model.DAO.CustomerDAO;
 import Model.DAO.UserDAO;
 import Model.User;
 import java.util.Map;
@@ -90,9 +92,22 @@ public class ReportsViewController implements Initializable {
     }
     
     public void clickMenuReportsItemActiveCustomers(ActionEvent event) throws IOException{
-        //TODO: clear output on textarea
+        //clear output on textarea
         TextAreaOutput.clear();
-        //TODO: load query for the Number of Active Customers
+        
+        //load query for the Number of Active Customers
+        CustomerDAO customerDAO = new CustomerDAO(DBConnection.getConnection());
+        ObservableList<Customer> Customers = customerDAO.findAll();
+        
+        int count = 0;
+        
+        for(int i =0; i < Customers.size(); i ++){
+            if(Customers.get(i).getActive() == 1){
+                count++;
+            }
+        }
+        
+        TextAreaOutput.setText(String.format("Active: %s", count));
     }
     
     /**
