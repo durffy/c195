@@ -85,7 +85,7 @@ public class ReportsViewController implements Initializable {
         Map<Integer, Long> appointmentsMap = appointments.stream()
             .collect(Collectors.groupingBy(Appointment::getUserId, Collectors.counting()));
         
-        appointmentsMap.forEach((key, value)-> TextAreaOutput.appendText(String.format("%d: %d\r\n",key, value)));
+        appointmentsMap.forEach((key, value)-> TextAreaOutput.appendText(String.format("%s: %d\r\n",users.get(key-1).getUserName(), value)));
         
     }
     
