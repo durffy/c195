@@ -12,6 +12,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.sql.Timestamp;
 import java.time.LocalDate;
+import java.util.Locale;
 import java.util.Optional;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
@@ -25,6 +26,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Tab;
@@ -45,8 +47,7 @@ public class CalendarViewController implements Initializable {
 
     
     @FXML private DatePicker DatePickerDate;
-    @FXML private Tab tabMonthly;
-    @FXML private Tab tabWeekly;
+    @FXML private Tab tabMonthly,  tabWeekly;
     
     //monthly table view
     @FXML private TableView<Appointment> TableViewMonth;
@@ -62,6 +63,12 @@ public class CalendarViewController implements Initializable {
     @FXML private TableColumn<Appointment, String> TableWeekColumnTitle;
     @FXML private TableColumn<Appointment, String> TableWeekColumnDescription;
     @FXML private TableColumn<Appointment, String> TableWeekColumnContact;
+    
+    @FXML private Button ButtonCustomerView, 
+            ButtonReportView, 
+            ButtonLogout,
+            ButtonAddAppointmentView,
+            ButtonRemove;
     
     private AppointmentDOA appointmentDOA = new AppointmentDOA(DBConnection.getConnection());
     private ObservableList<Appointment> Appointments = appointmentDOA.findAll();
@@ -238,6 +245,31 @@ public class CalendarViewController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         
+        rb = ResourceBundle.getBundle("locale/c195", Locale.getDefault());
+        
+        ButtonCustomerView.setText(rb.getString(ButtonCustomerView.getText()));
+        ButtonReportView.setText(rb.getString(ButtonReportView.getText()));
+        ButtonLogout.setText(rb.getString(ButtonLogout.getText()));
+        ButtonAddAppointmentView.setText(rb.getString(ButtonAddAppointmentView.getText()));
+        ButtonRemove.setText(rb.getString(ButtonRemove.getText()));
+                
+    
+        tabMonthly.setText(rb.getString(tabMonthly.getText()));
+        tabWeekly.setText(rb.getString(tabWeekly.getText()));
+
+        //monthly table view
+        TableMonthColumnStart.setText(rb.getString(TableMonthColumnStart.getText()));
+        TableMonthColumnTitle.setText(rb.getString(TableMonthColumnTitle.getText()));
+        TableMonthColumnLocation.setText(rb.getString(TableMonthColumnLocation.getText()));
+        TableMonthColumnContact.setText(rb.getString(TableMonthColumnContact.getText()));
+
+        //weekly table view
+        TableWeekColumnStart.setText(rb.getString(TableWeekColumnStart.getText()));
+        TableWeekColumnEnd.setText(rb.getString(TableWeekColumnEnd.getText()));
+        TableWeekColumnTitle.setText(rb.getString(TableWeekColumnTitle.getText()));
+        TableWeekColumnDescription.setText(rb.getString(TableWeekColumnDescription.getText()));
+        TableWeekColumnContact.setText(rb.getString(TableWeekColumnContact.getText()));
+
         DatePickerDate.setValue(LocalDate.now());
         loadMonthlySchedule();
         loadWeeklySchedule();
