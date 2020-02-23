@@ -57,13 +57,22 @@ public class LoginViewController implements Initializable {
         
     }
     
+    
+    
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        rb = ResourceBundle.getBundle("locale/c195", Locale.getDefault());
         
+        if(!(Locale.getDefault()==Locale.US)){
+            rb = ResourceBundle.getBundle("locale/c195", Locale.getDefault());
+            LoadLocales(rb); 
+        }
+
+    }
+
+    private void LoadLocales(ResourceBundle rb) {
         TextFieldUsername.setPromptText(rb.getString(TextFieldUsername.getPromptText()));
         PasswordField.setPromptText(rb.getString(PasswordField.getPromptText()));
         ButtonLogin.setText(rb.getString(ButtonLogin.getText()));

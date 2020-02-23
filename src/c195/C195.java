@@ -43,7 +43,7 @@ public class C195 extends Application {
      */
     public static void main(String[] args) throws SQLException, Exception {
         
-        ResourceBundle rb = ResourceBundle.getBundle("locale/c195", Locale.getDefault());
+        
         
         Connection connection = DBConnection.openConnection();
         launch(args);

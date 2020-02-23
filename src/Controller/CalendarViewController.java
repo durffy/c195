@@ -239,11 +239,7 @@ public class CalendarViewController implements Initializable {
         
     }
     
-    /**
-     * Initializes the controller class.
-     */
-    @Override
-    public void initialize(URL url, ResourceBundle rb) {
+    public void LoadLocales(ResourceBundle rb){
         
         rb = ResourceBundle.getBundle("locale/c195", Locale.getDefault());
         
@@ -270,10 +266,24 @@ public class CalendarViewController implements Initializable {
         TableWeekColumnDescription.setText(rb.getString(TableWeekColumnDescription.getText()));
         TableWeekColumnContact.setText(rb.getString(TableWeekColumnContact.getText()));
 
+        
+    }
+    
+    /**
+     * Initializes the controller class.
+     */
+    @Override
+    public void initialize(URL url, ResourceBundle rb) {
+        
+        if(!(Locale.getDefault()==Locale.US)){
+            rb = ResourceBundle.getBundle("locale/c195", Locale.getDefault());
+            LoadLocales(rb); 
+        }
+        
         DatePickerDate.setValue(LocalDate.now());
         loadMonthlySchedule();
         loadWeeklySchedule();
-    
+        
     }    
     
 }

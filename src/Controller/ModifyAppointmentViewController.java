@@ -221,8 +221,11 @@ public class ModifyAppointmentViewController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        rb = ResourceBundle.getBundle("locale/c195", Locale.getDefault());
-        LoadLocales(rb);
+        
+        if(!(Locale.getDefault()==Locale.US)){
+            rb = ResourceBundle.getBundle("locale/c195", Locale.getDefault());
+            LoadLocales(rb); 
+        }
         LoadDateTimeMenuItems();
         LoadAppointment();
     }    
