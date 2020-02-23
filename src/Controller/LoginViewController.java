@@ -7,6 +7,7 @@ package Controller;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.Locale;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -32,6 +33,7 @@ public class LoginViewController implements Initializable {
     @FXML private ToggleGroup ToggleGroupLanguage;
     @FXML private RadioButton RadioButtonEnglish;
     @FXML private RadioButton RadioButtonSpanish;
+    
     
     
     public void clickButtonLogin(ActionEvent event) throws IOException{
@@ -60,7 +62,12 @@ public class LoginViewController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+        rb = ResourceBundle.getBundle("locale/c195", Locale.getDefault());
+        
+        TextFieldUsername.setPromptText(rb.getString(TextFieldUsername.getPromptText()));
+        PasswordField.setPromptText(rb.getString(PasswordField.getPromptText()));
+        ButtonLogin.setText(rb.getString(ButtonLogin.getText()));
+        ButtonCancel.setText(rb.getString(ButtonCancel.getText()));
     }
     
     
