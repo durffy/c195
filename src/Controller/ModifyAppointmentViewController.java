@@ -125,6 +125,21 @@ public class ModifyAppointmentViewController implements Initializable {
         
     }
     
+    public void LoadClientMenuItems(){
+        for(int i=0; i<  Clients.size(); i++){
+            MenuItem ClientMenuItem = new MenuItem(Clients.get(i).getCustomerName());
+            ClientMenuItem.setId(Integer.toString(Clients.get(i).getCustomerId()));
+                        
+            ClientMenuItem.setOnAction((event)->{
+                MenuButtonClient.setText(ClientMenuItem.getText());
+                MenuButtonClient.setId(ClientMenuItem.getId());
+            });
+                        
+            MenuButtonClient.getItems().addAll(ClientMenuItem);
+            
+        }
+    }
+    
     public void LoadDateTimeMenuItems(){
         
         int startHour = appointment.getStartTime().toLocalDateTime().getHour();
@@ -137,20 +152,7 @@ public class ModifyAppointmentViewController implements Initializable {
         DatePickerEnd.setValue(appointment.getEndTime().toLocalDateTime().toLocalDate());
         MenuButtonEnd.setText(String.format("%d%d", endHour, endMinute));
         
-        for(int i=0; i<  Clients.size(); i++){
-            MenuItem ClientMenuItem = new MenuItem(Clients.get(i).getCustomerName());
-            ClientMenuItem.setId(Integer.toString(Clients.get(i).getCustomerId()));
-            
-            System.out.println(String.format("%s, %s", Clients.get(i).getCustomerName(), Clients.get(i).getCustomerId()));
-            
-            ClientMenuItem.setOnAction((event)->{
-                MenuButtonClient.setText(ClientMenuItem.getText());
-                MenuButtonClient.setId(ClientMenuItem.getId());
-            });
-                        
-            MenuButtonClient.getItems().addAll(ClientMenuItem);
-            
-        }
+        
         String[] interval = new String[]{":00",
             ":15",
             ":30",
@@ -226,6 +228,8 @@ public class ModifyAppointmentViewController implements Initializable {
             rb = ResourceBundle.getBundle("locale/c195", Locale.getDefault());
             LoadLocales(rb); 
         }
+        
+        LoadClientMenuItems();
         LoadDateTimeMenuItems();
         LoadAppointment();
     }    

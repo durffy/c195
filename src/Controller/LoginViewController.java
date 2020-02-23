@@ -57,7 +57,13 @@ public class LoginViewController implements Initializable {
         
     }
     
-    
+
+    private void LoadLocales(ResourceBundle rb) {
+        TextFieldUsername.setPromptText(rb.getString(TextFieldUsername.getPromptText()));
+        PasswordField.setPromptText(rb.getString(PasswordField.getPromptText()));
+        ButtonLogin.setText(rb.getString(ButtonLogin.getText()));
+        ButtonCancel.setText(rb.getString(ButtonCancel.getText()));
+    }
     
     /**
      * Initializes the controller class.
@@ -71,14 +77,5 @@ public class LoginViewController implements Initializable {
         }
 
     }
-
-    private void LoadLocales(ResourceBundle rb) {
-        TextFieldUsername.setPromptText(rb.getString(TextFieldUsername.getPromptText()));
-        PasswordField.setPromptText(rb.getString(PasswordField.getPromptText()));
-        ButtonLogin.setText(rb.getString(ButtonLogin.getText()));
-        ButtonCancel.setText(rb.getString(ButtonCancel.getText()));
-    }
-    
-    
     
 }
