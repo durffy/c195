@@ -17,6 +17,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
+import java.util.Locale;
 import java.util.ResourceBundle;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -26,6 +27,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.MenuButton;
@@ -62,6 +64,17 @@ public class ModifyAppointmentViewController implements Initializable {
     @FXML private Button ButtonSave;
     @FXML private Button ButtonCancel;
     
+    @FXML private Label LabelAppointmentID,
+            LabelUserID,
+            LabelClient,
+            LabelTitle,
+            LabelLocation,
+            LabelContact,
+            LabelType,
+            LabelStart,
+            LabelEnd,
+            LabelDescription;
+
     private AppointmentDOA appointmentDOA = new AppointmentDOA(DBConnection.getConnection());
     public static Appointment appointment;
     
@@ -112,26 +125,8 @@ public class ModifyAppointmentViewController implements Initializable {
         
     }
     
-    
-    /**
-     * Initializes the controller class.
-     */
-    @Override
-    public void initialize(URL url, ResourceBundle rb) {
-  
-        // TODO, load the object to the fields for editing
-        TextFieldAppointmentID.setText(Integer.toString(appointment.getAppointmentId()));
-        TextFieldUser.setText(Integer.toString(appointment.getUserId()));
-       
+    public void LoadDateTimeMenuItems(){
         
-        MenuButtonClient.setText(Clients.get(appointment.getCustomerId()-1).getCustomerName());
-        MenuButtonClient.setId(Integer.toString(appointment.getCustomerId()));
-        TextFieldTitle.setText(appointment.getTitle());
-        TextFieldLocation.setText(appointment.getLocation());
-        TextFieldContact.setText(appointment.getContact()); 
-        TextFieldType.setText(appointment.getType());
-        TextFieldUrl.setText(appointment.getUrl());
-
         int startHour = appointment.getStartTime().toLocalDateTime().getHour();
         int startMinute = appointment.getStartTime().toLocalDateTime().getMinute();
         DatePickerStart.setValue(appointment.getStartTime().toLocalDateTime().toLocalDate());
@@ -141,8 +136,6 @@ public class ModifyAppointmentViewController implements Initializable {
         int endMinute = appointment.getEndTime().toLocalDateTime().getHour();
         DatePickerEnd.setValue(appointment.getEndTime().toLocalDateTime().toLocalDate());
         MenuButtonEnd.setText(String.format("%d%d", endHour, endMinute));
-        
-        TextAreaDescription.setText(appointment.getDescription());
         
         for(int i=0; i<  Clients.size(); i++){
             MenuItem ClientMenuItem = new MenuItem(Clients.get(i).getCustomerName());
@@ -186,6 +179,52 @@ public class ModifyAppointmentViewController implements Initializable {
                 MenuButtonEnd.getItems().addAll(EndMenuItem);
             }
         }
+    }
+    
+    public void LoadAppointment(){
+        
+        // load the object to the fields for editing
+        TextFieldAppointmentID.setText(Integer.toString(appointment.getAppointmentId()));
+        TextFieldUser.setText(Integer.toString(appointment.getUserId()));
+        
+        MenuButtonClient.setText(Clients.get(appointment.getCustomerId()-1).getCustomerName());
+        MenuButtonClient.setId(Integer.toString(appointment.getCustomerId()));
+        TextFieldTitle.setText(appointment.getTitle());
+        TextFieldLocation.setText(appointment.getLocation());
+        TextFieldContact.setText(appointment.getContact()); 
+        TextFieldType.setText(appointment.getType());
+        TextFieldUrl.setText(appointment.getUrl());
+
+        TextAreaDescription.setText(appointment.getDescription());
+    }
+    
+    public void LoadLocales(ResourceBundle rb){
+        
+        System.out.println(LabelAppointmentID.getText());
+        LabelAppointmentID.setText(rb.getString(LabelAppointmentID.getText()));
+        LabelUserID.setText(rb.getString(LabelUserID.getText()));
+        LabelClient.setText(rb.getString(LabelClient.getText()));
+        LabelTitle.setText(rb.getString(LabelTitle.getText()));
+        LabelType.setText(rb.getString(LabelType.getText()));
+        LabelLocation.setText(rb.getString(LabelLocation.getText()));
+        LabelContact.setText(rb.getString(LabelContact.getText()));
+        LabelStart.setText(rb.getString(LabelStart.getText()));
+        LabelEnd.setText(rb.getString(LabelEnd.getText()));
+        LabelDescription.setText(rb.getString(LabelDescription.getText()));
+        
+
+    }
+    
+    
+    /**
+     * Initializes the controller class.
+     */
+    @Override
+    public void initialize(URL url, ResourceBundle rb) {
+        rb = ResourceBundle.getBundle("locale/c195", Locale.getDefault());
+        LoadLocales(rb);
+        LoadDateTimeMenuItems();
+        LoadAppointment();
     }    
 
 }
