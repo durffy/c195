@@ -27,6 +27,7 @@ import Model.DAO.AppointmentDOA;
 import Model.DAO.CustomerDAO;
 import Model.DAO.UserDAO;
 import Model.User;
+import java.util.Locale;
 import java.util.Map;
 import java.util.stream.Collectors;
 import javafx.collections.ObservableList;
@@ -94,6 +95,7 @@ public class ReportsViewController implements Initializable {
     public void clickMenuReportsItemActiveCustomers(ActionEvent event) throws IOException{
         //clear output on textarea
         TextAreaOutput.clear();
+        String Active = "Active";
         
         //load query for the Number of Active Customers
         CustomerDAO customerDAO = new CustomerDAO(DBConnection.getConnection());
@@ -106,16 +108,36 @@ public class ReportsViewController implements Initializable {
                 count++;
             }
         }
-        
-        TextAreaOutput.setText(String.format("Active: %s", count));
+        if(!(Locale.getDefault()==Locale.US)){
+            ResourceBundle rb = ResourceBundle.getBundle("locale/c195", Locale.getDefault());
+            Active = rb.getString(Active);
+        }
+        TextAreaOutput.setText(String.format("%s: %s", Active, count));
     }
     
+
+
+    private void LoadLocales(ResourceBundle rb) {
+        
+        rb = ResourceBundle.getBundle("locale/c195", Locale.getDefault());
+        ButtonGoBack.setText(rb.getString(ButtonGoBack.getText()));
+    
+        MenuButtonReports.setText(rb.getString(MenuButtonReports.getText()));
+        MenuReportsItemNumberOfAppointmentsByType.setText(rb.getString(MenuReportsItemNumberOfAppointmentsByType.getText()));
+        MenuReportsItemSchedulePerConsultant.setText(rb.getString(MenuReportsItemSchedulePerConsultant.getText()));
+        MenuReportsItemActiveCustomers.setText(rb.getString(MenuReportsItemActiveCustomers.getText()));
+        
+    }
+     
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+        if(!(Locale.getDefault()==Locale.US)){
+            rb = ResourceBundle.getBundle("locale/c195", Locale.getDefault());
+            LoadLocales(rb); 
+        }
     }    
-    
+
 }
