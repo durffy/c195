@@ -33,6 +33,7 @@ public class LoginViewController implements Initializable {
     @FXML private ToggleGroup ToggleGroupLanguage;
     @FXML private RadioButton RadioButtonEnglish;
     @FXML private RadioButton RadioButtonSpanish;
+    @FXML private Label LabelMainHeader;
     
     
     
@@ -59,6 +60,8 @@ public class LoginViewController implements Initializable {
     
 
     private void LoadLocales(ResourceBundle rb) {
+        
+        LabelMainHeader.setText(rb.getString(LabelMainHeader.getText()));
         TextFieldUsername.setPromptText(rb.getString(TextFieldUsername.getPromptText()));
         PasswordField.setPromptText(rb.getString(PasswordField.getPromptText()));
         ButtonLogin.setText(rb.getString(ButtonLogin.getText()));
