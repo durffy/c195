@@ -216,7 +216,6 @@ public class CalendarViewController implements Initializable {
                  }
              } 
             
-            
             appointmentDOA.delete(appointment.getAppointmentId());
             Appointments.remove(appointment);
             loadWeeklySchedule();

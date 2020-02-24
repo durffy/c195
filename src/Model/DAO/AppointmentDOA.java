@@ -76,6 +76,7 @@ public class AppointmentDOA extends DataAccessObject<Appointment> {
             while(resultSet.next()){
                 
                 Appointment appointment = new Appointment();
+                
                 appointment.setAppointmentId(resultSet.getInt("appointmentId"));
                 appointment.setCustomerId(resultSet.getInt("customerId"));
                 appointment.setUserId(resultSet.getInt("userId"));

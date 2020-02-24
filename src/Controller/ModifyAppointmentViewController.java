@@ -129,7 +129,8 @@ public class ModifyAppointmentViewController implements Initializable {
         for(int i=0; i<  Clients.size(); i++){
             MenuItem ClientMenuItem = new MenuItem(Clients.get(i).getCustomerName());
             ClientMenuItem.setId(Integer.toString(Clients.get(i).getCustomerId()));
-                        
+            
+            //Lambda Expression: create the menu items for each client in the database make the menu item selectable
             ClientMenuItem.setOnAction((event)->{
                 MenuButtonClient.setText(ClientMenuItem.getText());
                 MenuButtonClient.setId(ClientMenuItem.getId());
@@ -163,6 +164,8 @@ public class ModifyAppointmentViewController implements Initializable {
                 MenuItem StartMenuItem = new MenuItem();
                 
                 StartMenuItem.setText(String.format("%d%s", i, interval1));
+                
+                //Lambda Expression: Add Menu options for start times
                 StartMenuItem.setOnAction((event)->{
                     
                     MenuButtonStart.setText(StartMenuItem.getText());
@@ -170,6 +173,8 @@ public class ModifyAppointmentViewController implements Initializable {
                 });
                 MenuItem EndMenuItem = new MenuItem();
                 EndMenuItem.setText(String.format("%d%s", i, interval1));
+                
+                //Lambda Expression: Add Menu options for end times
                 EndMenuItem.setOnAction((event)->{
                     
                     MenuButtonEnd.setText(EndMenuItem.getText());

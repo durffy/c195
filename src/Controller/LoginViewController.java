@@ -52,40 +52,37 @@ public class LoginViewController implements Initializable {
         boolean successfulLogin = false;
         
         for(User user : users){
-            if(TextFieldUsername.getText().contains(TextFieldUsername.getText())){
-                if(PasswordField.getText().contains(user.getPassword())){
-                    
-                    System.out.println(String.format("field: %s %s", TextFieldUsername.getText(), PasswordField.getText()));
-                    System.out.println(String.format("class: %s %s", user.getUserName(), user.getPassword()));
-                
-                    CurrentUser = user;
-                    successfulLogin = true;
-                    
-                    Parent root = FXMLLoader.load(getClass().getResource("/View/CalendarView.fxml"));
-                    Scene scene = new Scene(root);
+            if(TextFieldUsername.getText().contains(TextFieldUsername.getText()) && PasswordField.getText().contains(user.getPassword())){
 
-                    Stage window = (Stage) ((Node)event.getSource()).getScene().getWindow();
-                    window.setScene(scene);
-                    window.show();
-                    
-                }
+                CurrentUser = user;
+                successfulLogin = true;
+
+                Parent root = FXMLLoader.load(getClass().getResource("/View/CalendarView.fxml"));
+                Scene scene = new Scene(root);
+
+                Stage window = (Stage) ((Node)event.getSource()).getScene().getWindow();
+                window.setScene(scene);
+                window.show();
+
             }
         }
 
         System.out.println(successfulLogin);
-        
+
         if(!successfulLogin){
+            
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Credential Failure");
-            alert.setContentText("Username and Password do not match");
-
+            alert.setContentText("The username and password did not match");
+                    
             if(!(Locale.getDefault()==Locale.US)){
                 ResourceBundle rb = ResourceBundle.getBundle("locale/c195", Locale.getDefault());
-                alert.setTitle(alert.getTitle());
-                alert.setContentText(alert.getContentText());
+                alert.setTitle(rb.getString(alert.getTitle()));
+                alert.setContentText(rb.getString(alert.getContentText()));
             }
             
             alert.showAndWait();
+            
         }
     }
     
