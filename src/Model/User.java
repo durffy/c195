@@ -61,8 +61,11 @@ public class User implements DataTransferObject{
     public String getPassword() {
         return password;
     }
-
-
+    
+    public void setPassword(String password) {
+        this.password = password;
+    }
+    
     public int getActive() {
         return active;
     }

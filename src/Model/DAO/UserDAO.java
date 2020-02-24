@@ -57,6 +57,7 @@ public class UserDAO extends DataAccessObject<User>{
                 User user = new User();
                 user.setUserId(resultSet.getInt("userId"));
                 user.setUserName(resultSet.getString("userName"));
+                user.setPassword(resultSet.getString("password"));
                 user.setActive(resultSet.getInt("active"));
                 user.setCreateDate(resultSet.getTimestamp("createDate"));
                 user.setCreatedBy(resultSet.getString("createdBy"));
