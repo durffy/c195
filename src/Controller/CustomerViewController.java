@@ -96,6 +96,8 @@ public class CustomerViewController implements Initializable {
 
         customerDAO.create(customer);
         
+        Customers.add(customer);
+        
         loadCustomerTable();
         resetInputs();
         
