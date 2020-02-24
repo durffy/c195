@@ -14,6 +14,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
+import java.util.Locale;
 import java.util.ResourceBundle;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -50,10 +51,6 @@ public class CustomerViewController implements Initializable {
     @FXML private Button ButtonCancel;
     
     @FXML private MenuButton MenuButtonAddress;
-    
-    @FXML private MenuButton MenuButtonActive;
-    @FXML private MenuItem MenuActiveItemActive;
-    @FXML private MenuItem MenuActiveItemInactive;
     
     @FXML private TableView<Customer> TableViewCustomer;
     @FXML private TableColumn<Customer, Integer> TableCustomerColumnCustomerId;
@@ -186,15 +183,13 @@ public class CustomerViewController implements Initializable {
     }
     
     public void clickButtonCancel(ActionEvent event) throws IOException{
-        //todo: deselect if customer record is selected
         resetInputs();
     }
     
     public void resetInputs(){
         TableViewCustomer.getSelectionModel().clearSelection();
-        
         TextFieldCustomerName.clear();
-        MenuButtonAddress.setText("Address");
+
     }
     
     //todo: load the customer from the selected row
@@ -232,13 +227,36 @@ public class CustomerViewController implements Initializable {
             
         }
     }
+    
+    public void LoadLocales(ResourceBundle rb){
+        
+        rb = ResourceBundle.getBundle("locale/c195", Locale.getDefault());
+
+        
+        TextFieldCustomerName.setPromptText(rb.getString(TextFieldCustomerName.getPromptText()));
+
+        ButtonGoBack.setText(rb.getString(ButtonGoBack.getText()));
+        ButtonAdd.setText(rb.getString(ButtonAdd.getText()));
+        ButtonCancel.setText(rb.getString(ButtonCancel.getText()));
+
+        MenuButtonAddress.setText(rb.getString(MenuButtonAddress.getText()));
+
+        TableCustomerColumnCustomerId.setText(rb.getString(TableCustomerColumnCustomerId.getText()));
+        TableCustomerColumnCustomerName.setText(rb.getString(TableCustomerColumnCustomerName.getText()));
+        TableCustomerColumnAddress.setText(rb.getString(TableCustomerColumnAddress.getText()));
+        TableCustomerColumnActive.setText(rb.getString(TableCustomerColumnActive.getText()));
+    }
 
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-
+        
+        if(!(Locale.getDefault()==Locale.US)){
+            rb = ResourceBundle.getBundle("locale/c195", Locale.getDefault());
+            LoadLocales(rb); 
+        }
         loadCustomerTable();
         loadAddresses();
 
