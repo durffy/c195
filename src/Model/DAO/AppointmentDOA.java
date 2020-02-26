@@ -5,15 +5,19 @@
  */
 package Model.DAO;
 
+import Controller.LoginViewController;
 import Model.Appointment;
 import Utils.DataAccessObject;
+import Utils.DateTimeConverter;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Timestamp;
 import java.time.Instant;
+import java.time.LocalDateTime;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -50,7 +54,8 @@ public class AppointmentDOA extends DataAccessObject<Appointment> {
             + "url=?, "
             + "description=?, "
             + "start=?, "
-            + "end=? "
+            + "end=?, "
+            + "lastUpdate=? "
             + "WHERE appointmentId=?";
     
     private static final String GET_ALL = "SELECT * FROM appointment";
@@ -86,11 +91,19 @@ public class AppointmentDOA extends DataAccessObject<Appointment> {
                 appointment.setContact(resultSet.getString("contact"));
                 appointment.setType(resultSet.getString("type"));
                 appointment.setUrl(resultSet.getString("url"));
-                appointment.setStartTime(resultSet.getTimestamp("start"));
-                appointment.setEndTime(resultSet.getTimestamp("end"));
-                appointment.setCreatedDate(resultSet.getTimestamp("createDate"));
+                
+                //date and time conversion UTC to LocalDateTime Timestamp
+                Timestamp start = DateTimeConverter.toLocalDateTime(resultSet.getTimestamp("start"));
+                Timestamp end =  DateTimeConverter.toLocalDateTime(resultSet.getTimestamp("end"));
+                Timestamp createDate =  DateTimeConverter.toLocalDateTime(resultSet.getTimestamp("createDate"));
+                Timestamp lastUpdate = DateTimeConverter.toLocalDateTime(resultSet.getTimestamp("lastUpdate"));
+                
+                appointment.setStartTime(start);
+                appointment.setEndTime(end);
+                appointment.setCreatedDate(createDate);
+                appointment.setLastUpdate(lastUpdate);
+                
                 appointment.setCreatedBy(resultSet.getString("createdBy"));
-                appointment.setLastUpdate(resultSet.getTimestamp("lastUpdate"));
                 appointment.setLastUpdateBy(resultSet.getString("lastUpdateBy"));
                 
                 Appointment.add(appointment);
@@ -118,9 +131,17 @@ public class AppointmentDOA extends DataAccessObject<Appointment> {
             statement.setString(6, dto.getType());
             statement.setString(7,dto.getUrl());
             statement.setString(8, dto.getDescription());
-            statement.setTimestamp(9, dto.getStartTime());
-            statement.setTimestamp(10,dto.getEndTime());
-            statement.setInt(11, dto.getAppointmentId());
+            
+            //date and time conversion LocalDateTime Timestamp to UTC Timestamp
+            Timestamp start = DateTimeConverter.toUTC(dto.getStartTime());
+            Timestamp end =  DateTimeConverter.toUTC(dto.getEndTime());
+            dto.setLastUpdate(Timestamp.from(Instant.now()));
+            Timestamp lastUpdate = DateTimeConverter.toUTC(dto.getLastUpdate());
+
+            statement.setTimestamp(9, start);
+            statement.setTimestamp(10, end);
+            statement.setTimestamp(11, lastUpdate);
+            statement.setInt(12, dto.getAppointmentId());
 
             statement.execute();
 
@@ -145,15 +166,19 @@ public class AppointmentDOA extends DataAccessObject<Appointment> {
             statement.setString(6, dto.getType());
             statement.setString(7,dto.getUrl());
             statement.setString(8, dto.getDescription());
-            statement.setTimestamp(9, dto.getStartTime());
-            statement.setTimestamp(10,dto.getEndTime());
 
-            statement.setTimestamp(11, Timestamp.from(Instant.now()));
-            //statement.setString(12,User.getUserName());
-            statement.setString(12,"hardCodedTest");
-            statement.setTimestamp(13, Timestamp.from(Instant.now()));
-            //statement.setString(14,User.getUserName());
-            statement.setString(14,"hardCodedTest");
+            //date and time conversion UTC to LocalDateTime Timestamp
+            Timestamp start = DateTimeConverter.toUTC(dto.getStartTime());
+            Timestamp end =  DateTimeConverter.toUTC(dto.getEndTime());
+            Timestamp now = DateTimeConverter.toUTC(Timestamp.from(Instant.now()));
+            
+            statement.setTimestamp(9, start);
+            statement.setTimestamp(10,end);
+
+            statement.setTimestamp(11, now);
+            statement.setString(12, LoginViewController.CurrentUser.getUserName());
+            statement.setTimestamp(13, now);
+            statement.setString(14,LoginViewController.CurrentUser.getUserName());
             
             statement.execute();
             ResultSet resultSet = statement.getGeneratedKeys();
