@@ -89,10 +89,10 @@ public class CustomerViewController implements Initializable {
         customer.setActive(Active);
         customer.setCreateDate(createDate);
         //customer.setCreatedBy(User.getUserName())
-        customer.setCreatedBy("hardCodedTest");
+        customer.setCreatedBy(LoginViewController.CurrentUser.getUserName());
         customer.setLastUpdate(lastUpdate);
         //customer.setLastUpdateBy(User.getUserName());
-        customer.setLastUpdateBy("hardCodedTest");
+        customer.setLastUpdateBy(LoginViewController.CurrentUser.getUserName());
 
         customerDAO.create(customer);
         
@@ -115,6 +115,7 @@ public class CustomerViewController implements Initializable {
 
         customer.setCustomerName(event.getNewValue());
         customer.setLastUpdate(LocalDateTime.now());
+        customer.setLastUpdateBy(LoginViewController.CurrentUser.getUserName());
 
         customerDAO.update(customer);
         loadCustomerTable();
@@ -141,7 +142,6 @@ public class CustomerViewController implements Initializable {
 
         customer.setAddressId(addressId);
         customer.setLastUpdate(LocalDateTime.now());
-
 
         customerDAO.update(customer);
         loadCustomerTable();

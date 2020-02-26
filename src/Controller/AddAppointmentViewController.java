@@ -14,6 +14,9 @@ import Utils.DBConnection;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Timestamp;
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Locale;
 import java.util.ResourceBundle;
 import javafx.collections.ObservableList;
@@ -138,14 +141,15 @@ public class AddAppointmentViewController implements Initializable {
     
     public void LoadDateTimeMenuItems(){
         
-        int startHour = appointment.getStartTime().toLocalDateTime().getHour();
-        int startMinute = appointment.getStartTime().toLocalDateTime().getMinute();
-        DatePickerStart.setValue(appointment.getStartTime().toLocalDateTime().toLocalDate());
+        int startHour = 00;
+        int startMinute = 00;
+        
+        DatePickerStart.setValue(LocalDate.now());
         MenuButtonStart.setText(String.format("%d%d", startHour, startMinute));
         
-        int endHour = appointment.getEndTime().toLocalDateTime().getHour();
-        int endMinute = appointment.getEndTime().toLocalDateTime().getHour();
-        DatePickerEnd.setValue(appointment.getEndTime().toLocalDateTime().toLocalDate());
+        int endHour = 00;
+        int endMinute = 00;
+        DatePickerEnd.setValue(LocalDate.now());
         MenuButtonEnd.setText(String.format("%d%d", endHour, endMinute));
         
         
@@ -156,48 +160,35 @@ public class AddAppointmentViewController implements Initializable {
         
         for (int i=0; i < 24; i++){  
             for (String interval1 : interval) {
-                MenuItem StartMenuItem = new MenuItem();
                 
+                
+                
+                MenuItem StartMenuItem = new MenuItem();
                 StartMenuItem.setText(String.format("%d%s", i, interval1));
                 
                 //Lambda Expression: Add Menu options for start times
                 StartMenuItem.setOnAction((event)->{
-                    
                     MenuButtonStart.setText(StartMenuItem.getText());
-                    
                 });
+                
+                
+                
+                
                 MenuItem EndMenuItem = new MenuItem();
                 EndMenuItem.setText(String.format("%d%s", i, interval1));
                 
                 //Lambda Expression: Add Menu options for end times
                 EndMenuItem.setOnAction((event)->{
-                    
-                    MenuButtonEnd.setText(EndMenuItem.getText());
-                    
-                    
+                    MenuButtonEnd.setText(EndMenuItem.getText());  
                 });
                 
                 MenuButtonStart.getItems().addAll(StartMenuItem);
                 MenuButtonEnd.getItems().addAll(EndMenuItem);
+                
+                
+                
             }
         }
-    }
-    
-    public void LoadAppointment(){
-        
-        // load the object to the fields for editing
-        TextFieldAppointmentID.setText(Integer.toString(appointment.getAppointmentId()));
-        TextFieldUser.setText(Integer.toString(appointment.getUserId()));
-        
-        MenuButtonClient.setText(Clients.get(appointment.getCustomerId()-1).getCustomerName());
-        MenuButtonClient.setId(Integer.toString(appointment.getCustomerId()));
-        TextFieldTitle.setText(appointment.getTitle());
-        TextFieldLocation.setText(appointment.getLocation());
-        TextFieldContact.setText(appointment.getContact()); 
-        TextFieldType.setText(appointment.getType());
-        TextFieldUrl.setText(appointment.getUrl());
-
-        TextAreaDescription.setText(appointment.getDescription());
     }
     
     public void LoadLocales(ResourceBundle rb){
@@ -226,42 +217,15 @@ public class AddAppointmentViewController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        
         if(!(Locale.getDefault()==Locale.US)){
             rb = ResourceBundle.getBundle("locale/c195", Locale.getDefault());
             LoadLocales(rb); 
         }
         
+        LoadClientMenuItems();
+        LoadDateTimeMenuItems();
         
-
-        
-        String[] interval = new String[]{":00",
-            ":15",
-            ":30",
-            ":45"};
-        
-        for (int i=0; i < 24; i++){  
-            for (String interval1 : interval) {
-                MenuItem StartMenuItem = new MenuItem();
-                
-                StartMenuItem.setText(String.format("%d%s", i, interval1));
-                StartMenuItem.setOnAction((event)->{
-                    
-                    MenuButtonStart.setText(StartMenuItem.getText());
-                    
-                });
-                MenuItem EndMenuItem = new MenuItem();
-                EndMenuItem.setText(String.format("%d%s", i, interval1));
-                EndMenuItem.setOnAction((event)->{
-                    
-                    MenuButtonEnd.setText(EndMenuItem.getText());
-                    
-                    
-                });
-                
-                MenuButtonStart.getItems().addAll(StartMenuItem);
-                MenuButtonEnd.getItems().addAll(EndMenuItem);
-            }
-        }
     }    
 
 
