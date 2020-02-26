@@ -13,10 +13,6 @@ import Utils.DBConnection;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Timestamp;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.time.ZoneOffset;
-import java.time.format.DateTimeFormatter;
 import java.util.Locale;
 import java.util.ResourceBundle;
 import javafx.collections.ObservableList;
@@ -56,8 +52,8 @@ public class ModifyAppointmentViewController implements Initializable {
     @FXML private DatePicker DatePickerEnd;
     
     @FXML private MenuButton MenuButtonClient;
-    @FXML private MenuButton MenuButtonStart;
-    @FXML private MenuButton MenuButtonEnd;
+    @FXML private MenuButton MenuButtonStartHour, MenuButtonStartMinute;
+    @FXML private MenuButton MenuButtonEndHour, MenuButtonEndMinute;
     
     @FXML private TextArea TextAreaDescription;
     
@@ -146,45 +142,71 @@ public class ModifyAppointmentViewController implements Initializable {
         int startHour = appointment.getStartTime().toLocalDateTime().getHour();
         int startMinute = appointment.getStartTime().toLocalDateTime().getMinute();
         DatePickerStart.setValue(appointment.getStartTime().toLocalDateTime().toLocalDate());
-        MenuButtonStart.setText(String.format("%d%d", startHour, startMinute));
+        MenuButtonStartHour.setText(Integer.toString(startHour));
+        MenuButtonStartHour.setText(Integer.toString(startMinute));
+
         
         int endHour = appointment.getEndTime().toLocalDateTime().getHour();
-        int endMinute = appointment.getEndTime().toLocalDateTime().getHour();
+        int endMinute = appointment.getEndTime().toLocalDateTime().getMinute();
         DatePickerEnd.setValue(appointment.getEndTime().toLocalDateTime().toLocalDate());
-        MenuButtonEnd.setText(String.format("%d%d", endHour, endMinute));
+        MenuButtonEndHour.setText(Integer.toString(endHour));
+        MenuButtonEndMinute.setText(Integer.toString(endMinute));
         
         
-        String[] interval = new String[]{":00",
-            ":15",
-            ":30",
-            ":45"};
+        int[] interval = new int[]{00,
+            15,
+            30,
+            45};
         
-        for (int i=0; i < 24; i++){  
-            for (String interval1 : interval) {
-                MenuItem StartMenuItem = new MenuItem();
+        //set the minute
+        for (int j : interval) {
+            
+            //start times
+            MenuItem StartTime = new MenuItem();
+            StartTime.setText(String.format("%d", j));
+            
+            StartTime.setOnAction((event)->{
+                MenuButtonStartMinute.setText(StartTime.getText());
+            });
+            
+            MenuButtonStartMinute.getItems().addAll(StartTime);
+            
+            
+            //end times
+            MenuItem EndTime = new MenuItem();
+            EndTime.setText(String.format("%d", j));
+            
+            EndTime.setOnAction((event)->{
+                MenuButtonEndMinute.setText(EndTime.getText());  
+            });
+            
+            MenuButtonEndMinute.getItems().addAll(EndTime);
+        }
+        
+        //set the hour
+        for (int i=0; i < 23; i++){  
+
                 
-                StartMenuItem.setText(String.format("%d%s", i, interval1));
+                MenuItem StartMenuItem = new MenuItem();
+                StartMenuItem.setText(String.format("%d", i));
                 
                 //Lambda Expression: Add Menu options for start times
                 StartMenuItem.setOnAction((event)->{
-                    
-                    MenuButtonStart.setText(StartMenuItem.getText());
-                    
+                    MenuButtonStartHour.setText(StartMenuItem.getText());
                 });
+                
                 MenuItem EndMenuItem = new MenuItem();
-                EndMenuItem.setText(String.format("%d%s", i, interval1));
+                EndMenuItem.setText(String.format("%d", i));
                 
                 //Lambda Expression: Add Menu options for end times
                 EndMenuItem.setOnAction((event)->{
-                    
-                    MenuButtonEnd.setText(EndMenuItem.getText());
-                    
-                    
+                    MenuButtonEndHour.setText(EndMenuItem.getText());  
                 });
                 
-                MenuButtonStart.getItems().addAll(StartMenuItem);
-                MenuButtonEnd.getItems().addAll(EndMenuItem);
-            }
+                MenuButtonStartHour.getItems().addAll(StartMenuItem);
+                MenuButtonEndHour.getItems().addAll(EndMenuItem);
+
+            
         }
     }
     

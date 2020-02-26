@@ -28,13 +28,15 @@
       <TextField fx:id="TextFieldUrl" layoutX="123.0" layoutY="271.0" prefHeight="25.0" prefWidth="152.0" AnchorPane.leftAnchor="125.0" AnchorPane.rightAnchor="25.0" />
       <Label fx:id="LabelStart" alignment="TOP_RIGHT" layoutX="25.0" layoutY="309.0" text="Start" textAlignment="RIGHT" AnchorPane.leftAnchor="25.0" />
       <DatePicker fx:id="DatePickerStart" layoutX="72.0" layoutY="305.0" prefHeight="25.0" prefWidth="105.0" AnchorPane.leftAnchor="75.0" />
-      <MenuButton fx:id="MenuButtonStart" layoutX="190.0" layoutY="305.0" mnemonicParsing="false" AnchorPane.leftAnchor="200.0" />
+      <MenuButton fx:id="MenuButtonStartHour" layoutX="195.0" layoutY="305.0" mnemonicParsing="false" AnchorPane.leftAnchor="195.0" />
       <Label fx:id="LabelEnd" alignment="TOP_RIGHT" layoutX="38.0" layoutY="344.0" text="End" textAlignment="RIGHT" AnchorPane.leftAnchor="25.0" />
       <DatePicker fx:id="DatePickerEnd" layoutX="72.0" layoutY="340.0" prefHeight="25.0" prefWidth="105.0" AnchorPane.leftAnchor="75.0" />
-      <MenuButton fx:id="MenuButtonEnd" layoutX="189.0" layoutY="340.0" mnemonicParsing="false" AnchorPane.leftAnchor="200.0" />
+      <MenuButton fx:id="MenuButtonEndHour" layoutX="195.0" layoutY="340.0" mnemonicParsing="false" AnchorPane.leftAnchor="195.0" />
       <Label fx:id="LabelDescription" alignment="TOP_RIGHT" layoutX="26.0" layoutY="374.0" text="Description" textAlignment="RIGHT" AnchorPane.leftAnchor="25.0" />
       <TextArea fx:id="TextAreaDescription" layoutX="24.0" layoutY="400.0" prefHeight="73.0" prefWidth="251.0" AnchorPane.leftAnchor="24.0" AnchorPane.rightAnchor="25.0" />
       <Button fx:id="ButtonSave" layoutX="164.0" layoutY="487.0" mnemonicParsing="false" onAction="#clickButtonSave" prefHeight="25.0" prefWidth="52.0" text="Save" />
       <Button fx:id="ButtonCancel" layoutX="223.0" layoutY="487.0" mnemonicParsing="false" onAction="#clickButtonCancel" text="Cancel" />
+      <MenuButton fx:id="MenuButtonStartMinute" layoutX="239.0" layoutY="305.0" mnemonicParsing="false" />
+      <MenuButton fx:id="MenuButtonEndMinute" layoutX="238.0" layoutY="340.0" mnemonicParsing="false" />
    </children>
 </AnchorPane>
