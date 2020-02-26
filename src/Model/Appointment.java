@@ -24,13 +24,11 @@ public class Appointment implements DataTransferObject{
     private String contact;
     private String type;
     
-    //TODO: must convert from UTC to Local and back in get/set
     private Timestamp startTime;
     private Timestamp endTime;
     private Timestamp createdDate;
     private Timestamp lastUpdate;
     
-    //TODO: limit String Size
     private String createdBy; //VARCHAR(255)
     private String url; //VARCHAR(255)
     private String title; //VARCHAR(40)
