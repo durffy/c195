@@ -5,7 +5,6 @@
  */
 package Controller;
 
-import static Controller.ModifyAppointmentViewController.appointment;
 import Model.Appointment;
 import Model.Customer;
 import Model.DAO.AppointmentDOA;
@@ -14,8 +13,6 @@ import Utils.DBConnection;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Timestamp;
-import java.time.Instant;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Locale;
 import java.util.ResourceBundle;
@@ -94,7 +91,6 @@ public class AddAppointmentViewController implements Initializable {
     
     public void clickButtonSave(ActionEvent event) throws IOException{
         
-        
         appointment.setUserId(1);
         appointment.setTitle(TextFieldTitle.getText());
         appointment.setLocation(TextFieldLocation.getText());
@@ -104,17 +100,15 @@ public class AddAppointmentViewController implements Initializable {
         appointment.setUrl(TextFieldUrl.getText());
         appointment.setDescription(TextAreaDescription.getText());
         
+        //setup date/time information
         int startHour = Integer.parseInt(MenuButtonStartHour.getText());
         int startMinute = Integer.parseInt(MenuButtonStartMinute.getText());
-        
         int endHour = Integer.parseInt(MenuButtonEndHour.getText());
         int endMinute = Integer.parseInt(MenuButtonEndMinute.getText());
-        
         
         Timestamp startDate = Timestamp.valueOf(DatePickerStart.getValue().atTime(startHour, startMinute));
         Timestamp endDate = Timestamp.valueOf(DatePickerEnd.getValue().atTime(endHour,endMinute));
        
-        
         appointment.setStartTime(startDate);
         appointment.setEndTime(endDate);
         
