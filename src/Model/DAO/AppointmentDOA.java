@@ -55,7 +55,8 @@ public class AppointmentDOA extends DataAccessObject<Appointment> {
             + "description=?, "
             + "start=?, "
             + "end=?, "
-            + "lastUpdate=? "
+            + "lastUpdate=?,"
+            + "lastUpdateBy=? "
             + "WHERE appointmentId=?";
     
     private static final String GET_ALL = "SELECT * FROM appointment";
@@ -141,7 +142,8 @@ public class AppointmentDOA extends DataAccessObject<Appointment> {
             statement.setTimestamp(9, start);
             statement.setTimestamp(10, end);
             statement.setTimestamp(11, lastUpdate);
-            statement.setInt(12, dto.getAppointmentId());
+            statement.setString(12, dto.getLastUpdateBy());
+            statement.setInt(13, dto.getAppointmentId());
 
             statement.execute();
 

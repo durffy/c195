@@ -9,6 +9,10 @@ import Utils.DataTransferObject;
 import java.sql.Timestamp;
 import java.util.Calendar;
 import java.util.Locale;
+import java.util.Optional;
+import java.util.ResourceBundle;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 
 /**
  *
@@ -103,7 +107,7 @@ public class Appointment implements DataTransferObject{
     }
 
     public void setEndTime(Timestamp endTime) {
-        this.endTime = endTime;
+            this.endTime = endTime;
     }
 
     public Timestamp getCreatedDate() {

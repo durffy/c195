@@ -23,6 +23,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
@@ -87,30 +88,82 @@ public class ModifyAppointmentViewController implements Initializable {
         window.show();
 
     }
+    public Boolean checkDatesForScheduleErrors(Timestamp startTime, Timestamp endTime){
+        boolean passedChecks= false;
+
+        if(startTime.after(endTime)){
+
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Schedule Error");
+            alert.setContentText("Start time occurs after the End Time");
+
+            if(!(Locale.getDefault()==Locale.US)){
+                ResourceBundle rb = ResourceBundle.getBundle("locale/c195", Locale.getDefault());
+                alert.setTitle(rb.getString(alert.getTitle())); 
+                alert.setContentText(rb.getString(alert.getContentText()));
+
+            }
+
+            alert.show();
+
+        
+        }else if(startTime.toLocalDateTime().getHour() < 6 ||//if the start time is before 06:00
+                endTime.toLocalDateTime().getHour() < 6 ||//if the end time is before 06:00
+                startTime.toLocalDateTime().getHour() > 20 ||//if the start time is after 20:00
+                endTime.toLocalDateTime().getHour() > 20 ){//if the end time is after 20:00
+            
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Schedule Error");
+            alert.setContentText("Start or End Time is out of the range of 06:00 and 20:00 hours");
+
+            if(!(Locale.getDefault()==Locale.US)){
+                ResourceBundle rb = ResourceBundle.getBundle("locale/c195", Locale.getDefault());
+                alert.setTitle(rb.getString(alert.getTitle())); 
+                alert.setContentText(rb.getString(alert.getContentText()));
+
+            }
+
+            alert.show();
+            
+        }else{
+            
+            passedChecks = true;
+        
+        }
+        
+        return passedChecks;
+        
+    }
     
     public void clickButtonSave(ActionEvent event) throws IOException{
         
         
-        appointment.setUserId(Integer.parseInt(TextFieldUser.getText()));
-        appointment.setTitle(TextFieldTitle.getText());
-        appointment.setLocation(TextFieldLocation.getText());
-        appointment.setContact(TextFieldContact.getText());
-        appointment.setType(TextFieldType.getText());
-        appointment.setCustomerId(Integer.parseInt(MenuButtonClient.getId()));
-        appointment.setUrl(TextFieldUrl.getText());
-        appointment.setDescription(TextAreaDescription.getText());
+        //setup date/time information
+        int startHour = Integer.parseInt(MenuButtonStartHour.getText());
+        int startMinute = Integer.parseInt(MenuButtonStartMinute.getText()); 
+        int endHour = Integer.parseInt(MenuButtonEndHour.getText());
+        int endMinute = Integer.parseInt(MenuButtonEndMinute.getText());
         
-        System.out.println(Integer.parseInt(MenuButtonClient.getId()));
+        Timestamp startDate = Timestamp.valueOf(DatePickerStart.getValue().atTime(startHour, startMinute));
+        Timestamp endDate = Timestamp.valueOf(DatePickerEnd.getValue().atTime(endHour, endMinute));
         
-        Timestamp startDate = Timestamp.valueOf(DatePickerStart.getValue().atStartOfDay());
-        Timestamp endDate = Timestamp.valueOf(DatePickerEnd.getValue().atStartOfDay());
-        
-        appointment.setStartTime(startDate);
-        appointment.setEndTime(endDate);
-        
-        appointmentDOA.update(appointment);
-        
-        loadCalendarView(event);
+        if(checkDatesForScheduleErrors(startDate, endDate)){
+            
+            appointment.setUserId(Integer.parseInt(TextFieldUser.getText()));
+            appointment.setTitle(TextFieldTitle.getText());
+            appointment.setLocation(TextFieldLocation.getText());
+            appointment.setContact(TextFieldContact.getText());
+            appointment.setType(TextFieldType.getText());
+            appointment.setCustomerId(Integer.parseInt(MenuButtonClient.getId()));
+            appointment.setUrl(TextFieldUrl.getText());
+            appointment.setDescription(TextAreaDescription.getText());  
+            appointment.setStartTime(startDate);
+            appointment.setEndTime(endDate);
+            appointment.setLastUpdateBy(LoginViewController.CurrentUser.getUserName());
+            appointmentDOA.update(appointment);
+            loadCalendarView(event);
+            
+        }
         
     }
     
@@ -143,7 +196,7 @@ public class ModifyAppointmentViewController implements Initializable {
         int startMinute = appointment.getStartTime().toLocalDateTime().getMinute();
         DatePickerStart.setValue(appointment.getStartTime().toLocalDateTime().toLocalDate());
         MenuButtonStartHour.setText(Integer.toString(startHour));
-        MenuButtonStartHour.setText(Integer.toString(startMinute));
+        MenuButtonStartMinute.setText(Integer.toString(startMinute));
 
         
         int endHour = appointment.getEndTime().toLocalDateTime().getHour();
