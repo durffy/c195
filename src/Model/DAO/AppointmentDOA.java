@@ -61,6 +61,7 @@ public class AppointmentDOA extends DataAccessObject<Appointment> {
     
     private static final String GET_ALL = "SELECT * FROM appointment";
     private static final String DELETE = "DELETE FROM appointment WHERE appointmentId=?;";
+    private static final String DELETE_WITH_CUSTOMER = "DELETE FROM appointment WHERE customerId=?;";
 
     public AppointmentDOA(Connection connection) {
         super(connection);
@@ -213,7 +214,21 @@ public class AppointmentDOA extends DataAccessObject<Appointment> {
         }    
     
     }
-
     
+    //private static final String DELETE_WITH_CUSTOMER = "DELETE FROM appointment WHERE customerId=?;";
+    
+    public void deleteWithCustomer(int id){
+        try (PreparedStatement statement = this.connection.prepareStatement(DELETE_WITH_CUSTOMER);){
+
+            statement.setInt(1, id);
+            statement.execute();
+            
+        }catch (SQLException e){
+            
+            e.printStackTrace();
+            throw new RuntimeException(e);
+            
+        }   
+    }
     
 }

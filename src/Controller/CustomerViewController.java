@@ -6,8 +6,10 @@
 package Controller;
 
 import Model.Address;
+import Model.Appointment;
 import Model.Customer;
 import Model.DAO.AddressDAO;
+import Model.DAO.AppointmentDOA;
 import Model.DAO.CustomerDAO;
 import Utils.DBConnection;
 import java.io.IOException;
@@ -15,8 +17,10 @@ import java.net.URL;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.util.Locale;
+import java.util.Optional;
 import java.util.ResourceBundle;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -26,6 +30,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.MenuButton;
 import javafx.scene.control.MenuItem;
@@ -46,9 +51,10 @@ public class CustomerViewController implements Initializable {
     
     @FXML private TextField TextFieldCustomerName;
     
-    @FXML private Button ButtonGoBack;
-    @FXML private Button ButtonAdd;
-    @FXML private Button ButtonCancel;
+    @FXML private Button ButtonGoBack, 
+            ButtonAdd, 
+            ButtonCancel,
+            ButtonRemove;
     
     @FXML private MenuButton MenuButtonAddress;
     
@@ -63,8 +69,8 @@ public class CustomerViewController implements Initializable {
     private AddressDAO addressDAO = new AddressDAO(DBConnection.getConnection());
     private ObservableList<Address> Addresses = addressDAO.findAll();
     
-    CustomerDAO customerDAO = new CustomerDAO(DBConnection.getConnection());        
-    ObservableList<Customer> Customers = customerDAO.findAll();
+    private CustomerDAO customerDAO = new CustomerDAO(DBConnection.getConnection());        
+    private ObservableList<Customer> Customers = customerDAO.findAll(); 
      
     public void clickButtonGoBack(ActionEvent event) throws IOException{
         
@@ -101,6 +107,39 @@ public class CustomerViewController implements Initializable {
         loadCustomerTable();
         resetInputs();
         
+    }
+    
+    public void clickButtonRemove(ActionEvent event) throws IOException{
+        
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        
+        alert.setTitle("Removal Confirmation");
+        alert.setContentText("This will delete all realated appointments. Do you want to delete this Record?");
+        
+        if(!(Locale.getDefault()==Locale.US)){
+            ResourceBundle rb = ResourceBundle.getBundle("locale/c195", Locale.getDefault());
+
+            alert.setTitle(rb.getString(alert.getTitle())); 
+            alert.setContentText(rb.getString(alert.getContentText()));
+
+        }
+        
+        Optional<ButtonType> result = alert.showAndWait();
+        
+        // check for confirmation, check which item in the tab is selected
+        if(result.get() == ButtonType.OK){
+            
+            AppointmentDOA appointmentDOA= new AppointmentDOA(DBConnection.getConnection());   
+            
+            Customer customer = TableViewCustomer.getSelectionModel().getSelectedItem();
+            
+            appointmentDOA.deleteWithCustomer(customer.getCustomerId());
+            customerDAO.delete(customer.getCustomerId());
+            Customers.remove(customer);
+            
+                 
+            
+        }
     }
     
     /**
@@ -175,6 +214,15 @@ public class CustomerViewController implements Initializable {
 
             alert.setTitle("Active Values");
             alert.setContentText("Please set either 0, for inactive or 1 for active");
+            
+            if(!(Locale.getDefault()==Locale.US)){
+                ResourceBundle rb = ResourceBundle.getBundle("locale/c195", Locale.getDefault());
+
+                alert.setTitle(rb.getString(alert.getTitle())); 
+                alert.setContentText(rb.getString(alert.getContentText()));
+
+            }
+            
             alert.show();
             resetInputs();
             
@@ -240,7 +288,8 @@ public class CustomerViewController implements Initializable {
         ButtonGoBack.setText(rb.getString(ButtonGoBack.getText()));
         ButtonAdd.setText(rb.getString(ButtonAdd.getText()));
         ButtonCancel.setText(rb.getString(ButtonCancel.getText()));
-
+        ButtonRemove.setText(rb.getString(ButtonRemove.getText()));
+        
         MenuButtonAddress.setText(rb.getString(MenuButtonAddress.getText()));
 
         TableCustomerColumnCustomerId.setText(rb.getString(TableCustomerColumnCustomerId.getText()));

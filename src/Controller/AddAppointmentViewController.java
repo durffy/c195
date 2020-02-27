@@ -25,7 +25,6 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
@@ -48,7 +47,6 @@ public class AddAppointmentViewController implements Initializable {
     @FXML private TextField TextFieldLocation;
     @FXML private TextField TextFieldContact;
     @FXML private TextField TextFieldType;
-    //@FXML private TextField TextFieldClient;
     @FXML private TextField TextFieldUrl;
     
     @FXML private DatePicker DatePickerStart;
@@ -76,6 +74,7 @@ public class AddAppointmentViewController implements Initializable {
     
     private AppointmentDOA appointmentDOA = new AppointmentDOA(DBConnection.getConnection());
     public static Appointment appointment= new Appointment();
+    private ObservableList<Appointment> allAppointments = appointmentDOA.findAll();
     
     private CustomerDAO customerDOA = new CustomerDAO(DBConnection.getConnection());
     private ObservableList<Customer> Clients = customerDOA.findAll();
@@ -103,7 +102,9 @@ public class AddAppointmentViewController implements Initializable {
         Timestamp startDate = Timestamp.valueOf(DatePickerStart.getValue().atTime(startHour, startMinute));
         Timestamp endDate = Timestamp.valueOf(DatePickerEnd.getValue().atTime(endHour,endMinute));
        
-        if(Scheduler.checkForScheduleErrors(startDate, endDate)){
+        boolean NoScheduleErrorsExist = Scheduler.checkForScheduleErrors(startDate, endDate);
+ 
+        if(NoScheduleErrorsExist){
             appointment.setUserId(LoginViewController.CurrentUser.getUserId());
             appointment.setTitle(TextFieldTitle.getText());
             appointment.setLocation(TextFieldLocation.getText());

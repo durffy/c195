@@ -11,6 +11,7 @@ import Utils.DBConnection;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Timestamp;
+import java.time.Instant;
 import java.time.LocalDate;
 import java.util.Locale;
 import java.util.Optional;
@@ -219,8 +220,6 @@ public class CalendarViewController implements Initializable {
             loadWeeklySchedule();
             loadMonthlySchedule();
             
-        }else {
-            
         }
     }
      
@@ -246,7 +245,6 @@ public class CalendarViewController implements Initializable {
         ButtonAddAppointmentView.setText(rb.getString(ButtonAddAppointmentView.getText()));
         ButtonRemove.setText(rb.getString(ButtonRemove.getText()));
                 
-    
         tabMonthly.setText(rb.getString(tabMonthly.getText()));
         tabWeekly.setText(rb.getString(tabWeekly.getText()));
 
@@ -281,6 +279,28 @@ public class CalendarViewController implements Initializable {
         loadMonthlySchedule();
         loadWeeklySchedule();
         
+        for(Appointment appointment: Appointments){
+            
+            boolean UserIDMatches = (appointment.getUserId() == LoginViewController.CurrentUser.getUserId());
+            boolean AppointmentIn15Minutes = (appointment.getStartTime().before(Timestamp.from(Instant.now().plusSeconds(900))));
+            boolean AppointmentNotBeforeNow = (appointment.getStartTime().after(Timestamp.from(Instant.now())));
+            
+            if(UserIDMatches && AppointmentIn15Minutes && AppointmentNotBeforeNow){
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Appointment Notice");
+                alert.setContentText(String.format("Appointment: %s will start within 15 minutes", appointment.getTitle()));
+
+                if(!(Locale.getDefault()==Locale.US)){
+                    
+                    alert.setTitle(rb.getString(alert.getTitle())); 
+                    alert.setContentText(rb.getString(alert.getContentText()));
+
+                }
+
+                alert.show();
+            }
+            
+        }
     }    
     
 }

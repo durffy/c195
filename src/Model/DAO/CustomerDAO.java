@@ -57,7 +57,7 @@ public class CustomerDAO extends DataAccessObject<Customer>{
             + "WHERE customerId=?;";
     
     private static final String DELETE = "DELETE FROM customer "
-            + "WHERE cusomterId = ?;";
+            + "WHERE customerId = ?;";
     
     public CustomerDAO(Connection connection) {
         super(connection);
