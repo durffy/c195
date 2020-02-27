@@ -36,8 +36,6 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 
 
-
-
 /**
  * FXML Controller class
  *

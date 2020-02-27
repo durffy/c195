@@ -17,9 +17,10 @@ import javafx.scene.control.Alert;
  */
 public class Scheduler {
     
+    // REQUIREMENT F
     public static Boolean checkForScheduleErrors(Timestamp startTime, Timestamp endTime){
         boolean passedChecks= false;
-
+        
         if(startTime.before(Timestamp.from(Instant.now()))){
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Schedule Error");

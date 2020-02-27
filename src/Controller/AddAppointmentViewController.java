@@ -104,7 +104,7 @@ public class AddAppointmentViewController implements Initializable {
         Timestamp endDate = Timestamp.valueOf(DatePickerEnd.getValue().atTime(endHour,endMinute));
        
         if(Scheduler.checkForScheduleErrors(startDate, endDate)){
-            appointment.setUserId(1);
+            appointment.setUserId(LoginViewController.CurrentUser.getUserId());
             appointment.setTitle(TextFieldTitle.getText());
             appointment.setLocation(TextFieldLocation.getText());
             appointment.setContact(TextFieldContact.getText());
@@ -158,7 +158,6 @@ public class AddAppointmentViewController implements Initializable {
         DatePickerEnd.setValue(now.toLocalDate());
         MenuButtonEndHour.setText(Integer.toString(now.getHour()));
         MenuButtonEndMinute.setText(Integer.toString(now.getMinute()));
-        
         
         int[] interval = new int[]{00,
             15,
@@ -219,8 +218,6 @@ public class AddAppointmentViewController implements Initializable {
     public void LoadLocales(ResourceBundle rb){
         
         System.out.println(LabelAppointmentID.getText());
-        LabelAppointmentID.setText(rb.getString(LabelAppointmentID.getText()));
-        LabelUserID.setText(rb.getString(LabelUserID.getText()));
         LabelClient.setText(rb.getString(LabelClient.getText()));
         LabelTitle.setText(rb.getString(LabelTitle.getText()));
         LabelType.setText(rb.getString(LabelType.getText()));
@@ -247,6 +244,8 @@ public class AddAppointmentViewController implements Initializable {
             rb = ResourceBundle.getBundle("locale/c195", Locale.getDefault());
             LoadLocales(rb); 
         }
+        
+        LabelUserID.setText(LoginViewController.CurrentUser.getUserName());
         
         LoadClientMenuItems();
         LoadDateTimeMenuItems();
