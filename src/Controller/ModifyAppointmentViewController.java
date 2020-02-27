@@ -10,6 +10,7 @@ import Model.Customer;
 import Model.DAO.AppointmentDOA;
 import Model.DAO.CustomerDAO;
 import Utils.DBConnection;
+import Utils.Scheduler;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Timestamp;
@@ -88,53 +89,7 @@ public class ModifyAppointmentViewController implements Initializable {
         window.show();
 
     }
-    public Boolean checkDatesForScheduleErrors(Timestamp startTime, Timestamp endTime){
-        boolean passedChecks= false;
 
-        if(startTime.after(endTime)){
-
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Schedule Error");
-            alert.setContentText("Start time occurs after the End Time");
-
-            if(!(Locale.getDefault()==Locale.US)){
-                ResourceBundle rb = ResourceBundle.getBundle("locale/c195", Locale.getDefault());
-                alert.setTitle(rb.getString(alert.getTitle())); 
-                alert.setContentText(rb.getString(alert.getContentText()));
-
-            }
-
-            alert.show();
-
-        
-        }else if(startTime.toLocalDateTime().getHour() < 6 ||//if the start time is before 06:00
-                endTime.toLocalDateTime().getHour() < 6 ||//if the end time is before 06:00
-                startTime.toLocalDateTime().getHour() > 20 ||//if the start time is after 20:00
-                endTime.toLocalDateTime().getHour() > 20 ){//if the end time is after 20:00
-            
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Schedule Error");
-            alert.setContentText("Start or End Time is out of the range of 06:00 and 20:00 hours");
-
-            if(!(Locale.getDefault()==Locale.US)){
-                ResourceBundle rb = ResourceBundle.getBundle("locale/c195", Locale.getDefault());
-                alert.setTitle(rb.getString(alert.getTitle())); 
-                alert.setContentText(rb.getString(alert.getContentText()));
-
-            }
-
-            alert.show();
-            
-        }else{
-            
-            passedChecks = true;
-        
-        }
-        
-        return passedChecks;
-        
-    }
-    
     public void clickButtonSave(ActionEvent event) throws IOException{
         
         
@@ -147,7 +102,7 @@ public class ModifyAppointmentViewController implements Initializable {
         Timestamp startDate = Timestamp.valueOf(DatePickerStart.getValue().atTime(startHour, startMinute));
         Timestamp endDate = Timestamp.valueOf(DatePickerEnd.getValue().atTime(endHour, endMinute));
         
-        if(checkDatesForScheduleErrors(startDate, endDate)){
+        if(Scheduler.checkForScheduleErrors(startDate, endDate)){
             
             appointment.setUserId(Integer.parseInt(TextFieldUser.getText()));
             appointment.setTitle(TextFieldTitle.getText());

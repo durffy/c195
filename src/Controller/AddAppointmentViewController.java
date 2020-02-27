@@ -10,6 +10,7 @@ import Model.Customer;
 import Model.DAO.AppointmentDOA;
 import Model.DAO.CustomerDAO;
 import Utils.DBConnection;
+import Utils.Scheduler;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Timestamp;
@@ -24,6 +25,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
@@ -88,17 +90,9 @@ public class AddAppointmentViewController implements Initializable {
         window.show();
 
     }
+
     
     public void clickButtonSave(ActionEvent event) throws IOException{
-        
-        appointment.setUserId(1);
-        appointment.setTitle(TextFieldTitle.getText());
-        appointment.setLocation(TextFieldLocation.getText());
-        appointment.setContact(TextFieldContact.getText());
-        appointment.setType(TextFieldType.getText());
-        appointment.setCustomerId(Integer.parseInt(MenuButtonClient.getId()));
-        appointment.setUrl(TextFieldUrl.getText());
-        appointment.setDescription(TextAreaDescription.getText());
         
         //setup date/time information
         int startHour = Integer.parseInt(MenuButtonStartHour.getText());
@@ -109,12 +103,25 @@ public class AddAppointmentViewController implements Initializable {
         Timestamp startDate = Timestamp.valueOf(DatePickerStart.getValue().atTime(startHour, startMinute));
         Timestamp endDate = Timestamp.valueOf(DatePickerEnd.getValue().atTime(endHour,endMinute));
        
-        appointment.setStartTime(startDate);
-        appointment.setEndTime(endDate);
-        
-        appointmentDOA.create(appointment);
-        
-        loadCalendarView(event);
+        if(Scheduler.checkForScheduleErrors(startDate, endDate)){
+            appointment.setUserId(1);
+            appointment.setTitle(TextFieldTitle.getText());
+            appointment.setLocation(TextFieldLocation.getText());
+            appointment.setContact(TextFieldContact.getText());
+            appointment.setType(TextFieldType.getText());
+            appointment.setCustomerId(Integer.parseInt(MenuButtonClient.getId()));
+            appointment.setUrl(TextFieldUrl.getText());
+            appointment.setDescription(TextAreaDescription.getText());
+            
+            
+            appointment.setStartTime(startDate);
+            appointment.setEndTime(endDate);
+
+            appointmentDOA.create(appointment);
+
+            loadCalendarView(event);
+        } else {
+        }
         
     }
     
