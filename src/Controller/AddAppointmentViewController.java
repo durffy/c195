@@ -10,6 +10,7 @@ import Model.Customer;
 import Model.DAO.AppointmentDOA;
 import Model.DAO.CustomerDAO;
 import Utils.DBConnection;
+import Utils.Login;
 import Utils.Scheduler;
 import java.io.IOException;
 import java.net.URL;
@@ -105,7 +106,7 @@ public class AddAppointmentViewController implements Initializable {
         boolean NoScheduleErrorsExist = Scheduler.checkForScheduleErrors(startDate, endDate);
  
         if(NoScheduleErrorsExist){
-            appointment.setUserId(LoginViewController.CurrentUser.getUserId());
+            appointment.setUserId(Login.getUserId());
             appointment.setTitle(TextFieldTitle.getText());
             appointment.setLocation(TextFieldLocation.getText());
             appointment.setContact(TextFieldContact.getText());
@@ -246,7 +247,7 @@ public class AddAppointmentViewController implements Initializable {
             LoadLocales(rb); 
         }
         
-        LabelUserID.setText(LoginViewController.CurrentUser.getUserName());
+        LabelUserID.setText(Login.getUserName());
         
         LoadClientMenuItems();
         LoadDateTimeMenuItems();

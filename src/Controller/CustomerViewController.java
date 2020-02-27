@@ -12,6 +12,7 @@ import Model.DAO.AddressDAO;
 import Model.DAO.AppointmentDOA;
 import Model.DAO.CustomerDAO;
 import Utils.DBConnection;
+import Utils.Login;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
@@ -95,10 +96,10 @@ public class CustomerViewController implements Initializable {
         customer.setActive(Active);
         customer.setCreateDate(createDate);
         //customer.setCreatedBy(User.getUserName())
-        customer.setCreatedBy(LoginViewController.CurrentUser.getUserName());
+        customer.setCreatedBy(Login.getUserName());
         customer.setLastUpdate(lastUpdate);
         //customer.setLastUpdateBy(User.getUserName());
-        customer.setLastUpdateBy(LoginViewController.CurrentUser.getUserName());
+        customer.setLastUpdateBy(Login.getUserName());
 
         customerDAO.create(customer);
         
@@ -154,7 +155,7 @@ public class CustomerViewController implements Initializable {
 
         customer.setCustomerName(event.getNewValue());
         customer.setLastUpdate(LocalDateTime.now());
-        customer.setLastUpdateBy(LoginViewController.CurrentUser.getUserName());
+        customer.setLastUpdateBy(Login.getUserName());
 
         customerDAO.update(customer);
         loadCustomerTable();

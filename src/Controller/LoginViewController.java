@@ -9,11 +9,13 @@ import Model.Appointment;
 import Model.DAO.UserDAO;
 import Model.User;
 import Utils.DBConnection;
+import Utils.Login;
 import java.io.IOException;
 import java.net.URL;
 import java.util.Locale;
 import java.util.Optional;
 import java.util.ResourceBundle;
+import java.util.Set;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -41,11 +43,6 @@ public class LoginViewController implements Initializable {
     UserDAO userDAO = new UserDAO(DBConnection.getConnection());        
     ObservableList<User> users = userDAO.findAll();
     
-    public static User CurrentUser;
-    
-    public User getCurrentUser(){
-        return CurrentUser;
-    }
     
     public void clickButtonLogin(ActionEvent event) throws IOException{
         
@@ -54,9 +51,8 @@ public class LoginViewController implements Initializable {
         for(User user : users){
             if(TextFieldUsername.getText().contains(TextFieldUsername.getText()) && PasswordField.getText().contains(user.getPassword())){
 
-                CurrentUser = user;
-                successfulLogin = true;
-
+                Login.setUser(user);
+                
                 Parent root = FXMLLoader.load(getClass().getResource("/View/CalendarView.fxml"));
                 Scene scene = new Scene(root);
 

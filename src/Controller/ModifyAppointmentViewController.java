@@ -10,6 +10,7 @@ import Model.Customer;
 import Model.DAO.AppointmentDOA;
 import Model.DAO.CustomerDAO;
 import Utils.DBConnection;
+import Utils.Login;
 import Utils.Scheduler;
 import java.io.IOException;
 import java.net.URL;
@@ -114,7 +115,7 @@ public class ModifyAppointmentViewController implements Initializable {
             appointment.setDescription(TextAreaDescription.getText());  
             appointment.setStartTime(startDate);
             appointment.setEndTime(endDate);
-            appointment.setLastUpdateBy(LoginViewController.CurrentUser.getUserName());
+            appointment.setLastUpdateBy(Login.getUserName());
             appointmentDOA.update(appointment);
             loadCalendarView(event);
             

@@ -8,6 +8,7 @@ package Controller;
 import Model.Appointment;
 import Model.DAO.AppointmentDOA;
 import Utils.DBConnection;
+import Utils.Login;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Timestamp;
@@ -281,7 +282,7 @@ public class CalendarViewController implements Initializable {
         
         for(Appointment appointment: Appointments){
             
-            boolean UserIDMatches = (appointment.getUserId() == LoginViewController.CurrentUser.getUserId());
+            boolean UserIDMatches = (appointment.getUserId() == Login.getUserId());
             boolean AppointmentIn15Minutes = (appointment.getStartTime().before(Timestamp.from(Instant.now().plusSeconds(900))));
             boolean AppointmentNotBeforeNow = (appointment.getStartTime().after(Timestamp.from(Instant.now())));
             

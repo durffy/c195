@@ -9,6 +9,7 @@ import Controller.LoginViewController;
 import Model.Appointment;
 import Utils.DataAccessObject;
 import Utils.DateTimeConverter;
+import Utils.Login;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
@@ -179,9 +180,9 @@ public class AppointmentDOA extends DataAccessObject<Appointment> {
             statement.setTimestamp(10,end);
 
             statement.setTimestamp(11, now);
-            statement.setString(12, LoginViewController.CurrentUser.getUserName());
+            statement.setString(12, Login.getUserName());
             statement.setTimestamp(13, now);
-            statement.setString(14,LoginViewController.CurrentUser.getUserName());
+            statement.setString(14,Login.getUserName());
             
             statement.execute();
             ResultSet resultSet = statement.getGeneratedKeys();
