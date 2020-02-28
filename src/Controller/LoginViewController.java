@@ -52,7 +52,7 @@ public class LoginViewController implements Initializable {
             if(TextFieldUsername.getText().contains(TextFieldUsername.getText()) && PasswordField.getText().contains(user.getPassword())){
 
                 Login.setUser(user);
-                
+                successfulLogin = true;
                 Parent root = FXMLLoader.load(getClass().getResource("/View/CalendarView.fxml"));
                 Scene scene = new Scene(root);
 
@@ -62,8 +62,6 @@ public class LoginViewController implements Initializable {
 
             }
         }
-
-        System.out.println(successfulLogin);
 
         if(!successfulLogin){
             

@@ -6,7 +6,6 @@
 package Controller;
 
 import Model.Address;
-import Model.Appointment;
 import Model.Customer;
 import Model.DAO.AddressDAO;
 import Model.DAO.AppointmentDOA;
@@ -21,7 +20,6 @@ import java.util.Locale;
 import java.util.Optional;
 import java.util.ResourceBundle;
 import javafx.collections.ObservableList;
-import javafx.collections.transformation.FilteredList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;

@@ -103,7 +103,10 @@ public class ModifyAppointmentViewController implements Initializable {
         Timestamp startDate = Timestamp.valueOf(DatePickerStart.getValue().atTime(startHour, startMinute));
         Timestamp endDate = Timestamp.valueOf(DatePickerEnd.getValue().atTime(endHour, endMinute));
         
-        if(Scheduler.checkForScheduleErrors(startDate, endDate)){
+        boolean NoScheduleErrorsExist = Scheduler.checkForScheduleErrors(startDate, endDate);
+        boolean NoOverlap = Scheduler.CheckForScheduleOverLap(startDate, endDate);
+ 
+        if(NoScheduleErrorsExist && NoOverlap){
             
             appointment.setUserId(Integer.parseInt(TextFieldUser.getText()));
             appointment.setTitle(TextFieldTitle.getText());

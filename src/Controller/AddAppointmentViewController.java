@@ -104,8 +104,9 @@ public class AddAppointmentViewController implements Initializable {
         Timestamp endDate = Timestamp.valueOf(DatePickerEnd.getValue().atTime(endHour,endMinute));
        
         boolean NoScheduleErrorsExist = Scheduler.checkForScheduleErrors(startDate, endDate);
+        boolean NoOverlap = Scheduler.CheckForScheduleOverLap(startDate, endDate);
  
-        if(NoScheduleErrorsExist){
+        if(NoScheduleErrorsExist && NoOverlap){
             appointment.setUserId(Login.getUserId());
             appointment.setTitle(TextFieldTitle.getText());
             appointment.setLocation(TextFieldLocation.getText());
