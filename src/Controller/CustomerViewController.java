@@ -241,7 +241,6 @@ public class CustomerViewController implements Initializable {
 
     }
     
-    //todo: load the customer from the selected row
     public void loadCustomerTable(){
         
         TableCustomerColumnCustomerId.setCellValueFactory(new PropertyValueFactory<>("customerId"));
@@ -253,6 +252,7 @@ public class CustomerViewController implements Initializable {
         TableCustomerColumnCustomerName.setCellFactory(TextFieldTableCell.forTableColumn());
         TableCustomerColumnAddress.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
         TableCustomerColumnActive.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
+
                
         TableViewCustomer.setItems(Customers);
         TableViewCustomer.getColumns().get(0).setVisible(false);
