@@ -5,6 +5,9 @@
  */
 package Controller;
 
+import Model.Appointment;
+import Model.Customer;
+import Utils.DBConnection;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -20,6 +23,14 @@ import javafx.scene.control.MenuButton;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextArea;
 import javafx.stage.Stage;
+import Model.DAO.AppointmentDOA;
+import Model.DAO.CustomerDAO;
+import Model.DAO.UserDAO;
+import Model.User;
+import java.util.Locale;
+import java.util.Map;
+import java.util.stream.Collectors;
+import javafx.collections.ObservableList;
 
 /**
  * FXML Controller class
@@ -49,26 +60,84 @@ public class ReportsViewController implements Initializable {
     }
     
     public void clickMenuReportsItemNumberOfAppointmentsByType(ActionEvent event) throws IOException{
-        //TODO: clear output on textarea
-        //TODO: load query for Count of Appointments by type
+
+        TextAreaOutput.clear();
+        
+        //load query for Count of Appointments by type
+        AppointmentDOA appointmentDOA = new AppointmentDOA(DBConnection.getConnection());
+        ObservableList<Appointment> appointments = appointmentDOA.findAll();
+        
+        Map<String, Long> appointmentsMap = appointments.stream()
+            .collect(Collectors.groupingBy(Appointment::getType, Collectors.counting()));
+        
+        appointmentsMap.forEach((key, value)-> TextAreaOutput.appendText(String.format("%s: %d\r\n",key, value)));
+        
     }
     
     public void clickMenuReportsItemSchedulePerConsultant(ActionEvent event) throws IOException{
-        //TODO: clear output on textarea
-        //TODO: load query for Sheduled Items Per Consultant
-    }
+
+        TextAreaOutput.clear();
         
-    public void clickMenuReportsItemActiveCustomers(ActionEvent event) throws IOException{
-        //TODO: clear output on textarea
-        //TODO: load query for the Number of Active Customers
+        //load query for items per consultant
+        AppointmentDOA appointmentDOA = new AppointmentDOA(DBConnection.getConnection());
+        ObservableList<Appointment> appointments = appointmentDOA.findAll();
+        
+        UserDAO userDAO = new UserDAO(DBConnection.getConnection());
+        ObservableList<User> users = userDAO.findAll();
+        
+        Map<Integer, Long> appointmentsMap = appointments.stream()
+            .collect(Collectors.groupingBy(Appointment::getUserId, Collectors.counting()));
+        
+        appointmentsMap.forEach((key, value)-> TextAreaOutput.appendText(String.format("%s: %d\r\n",users.get(key-1).getUserName(), value)));
+        
     }
     
+    public void clickMenuReportsItemActiveCustomers(ActionEvent event) throws IOException{
+        //clear output on textarea
+        TextAreaOutput.clear();
+        String Active = "Active";
+        
+        //load query for the Number of Active Customers
+        CustomerDAO customerDAO = new CustomerDAO(DBConnection.getConnection());
+        ObservableList<Customer> Customers = customerDAO.findAll();
+        
+        int count = 0;
+        
+        for(int i =0; i < Customers.size(); i ++){
+            if(Customers.get(i).getActive() == 1){
+                count++;
+            }
+        }
+        if(!(Locale.getDefault()==Locale.US)){
+            ResourceBundle rb = ResourceBundle.getBundle("locale/c195", Locale.getDefault());
+            Active = rb.getString(Active);
+        }
+        TextAreaOutput.setText(String.format("%s: %s", Active, count));
+    }
+    
+
+
+    private void LoadLocales(ResourceBundle rb) {
+        
+        rb = ResourceBundle.getBundle("locale/c195", Locale.getDefault());
+        ButtonGoBack.setText(rb.getString(ButtonGoBack.getText()));
+    
+        MenuButtonReports.setText(rb.getString(MenuButtonReports.getText()));
+        MenuReportsItemNumberOfAppointmentsByType.setText(rb.getString(MenuReportsItemNumberOfAppointmentsByType.getText()));
+        MenuReportsItemSchedulePerConsultant.setText(rb.getString(MenuReportsItemSchedulePerConsultant.getText()));
+        MenuReportsItemActiveCustomers.setText(rb.getString(MenuReportsItemActiveCustomers.getText()));
+        
+    }
+     
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+        if(!(Locale.getDefault()==Locale.US)){
+            rb = ResourceBundle.getBundle("locale/c195", Locale.getDefault());
+            LoadLocales(rb); 
+        }
     }    
-    
+
 }

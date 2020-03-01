@@ -5,14 +5,20 @@
  */
 package Model;
 
+import Utils.DataTransferObject;
+import java.sql.Timestamp;
 import java.util.Calendar;
 import java.util.Locale;
+import java.util.Optional;
+import java.util.ResourceBundle;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 
 /**
  *
  * @author CDuffy
  */
-public class Appointment {
+public class Appointment implements DataTransferObject{
     private int appointmentId;
     private int customerId;
     private int userId;
@@ -22,35 +28,146 @@ public class Appointment {
     private String contact;
     private String type;
     
-    //TODO: must convert from UTC to Local and back in get/set
-    private Calendar startTime;
-    private Calendar endTime;
-    private Calendar createdDate;
-    private Calendar lastUpdate;
+    private Timestamp startTime;
+    private Timestamp endTime;
+    private Timestamp createdDate;
+    private Timestamp lastUpdate;
     
-    //TODO: limit String Size
     private String createdBy; //VARCHAR(255)
     private String url; //VARCHAR(255)
     private String title; //VARCHAR(40)
     private String lastUpdateBy; //VARCHAR(40)
-    //new appointmentobject
-    public Appointment(String description, String location, String contact, String type, Calendar startTime, Calendar endTime, String url, String title) {
-        this.description = description;
-        this.location = location;
-        this.contact = contact;
-        this.type = type;
-        this.startTime = startTime;
-        this.endTime = endTime;
-        this.url = url;
-        this.title = title;
-        
+
+    public int getAppointmentId() {
+        return appointmentId;
     }
+
+    public void setAppointmentId(int appointmentId) {
+        this.appointmentId = appointmentId;
+    }
+
+    public int getCustomerId() {
+        return customerId;
+    }
+
+    public void setCustomerId(int customerId) {
+        this.customerId = customerId;
+    }
+
+    public int getUserId() {
+        return userId;
+    }
+
+    public void setUserId(int userId) {
+        this.userId = userId;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
+    }
+
+    public String getContact() {
+        return contact;
+    }
+
+    public void setContact(String contact) {
+        this.contact = contact;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public Timestamp getStartTime() {
+        return startTime;
+    }
+
+    public void setStartTime(Timestamp startTime) {
+        this.startTime = startTime;
+    }
+
+    public Timestamp getEndTime() {
+        return endTime;
+    }
+
+    public void setEndTime(Timestamp endTime) {
+            this.endTime = endTime;
+    }
+
+    public Timestamp getCreatedDate() {
+        return createdDate;
+    }
+
+    public void setCreatedDate(Timestamp createdDate) {
+        this.createdDate = createdDate;
+    }
+
+    public Timestamp getLastUpdate() {
+        return lastUpdate;
+    }
+
+    public void setLastUpdate(Timestamp lastUpdate) {
+        this.lastUpdate = lastUpdate;
+    }
+
+    public String getCreatedBy() {
+        return createdBy;
+    }
+
+    public void setCreatedBy(String createdBy) {
+        this.createdBy = createdBy;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getLastUpdateBy() {
+        return lastUpdateBy;
+    }
+
+    public void setLastUpdateBy(String lastUpdateBy) {
+        this.lastUpdateBy = lastUpdateBy;
+    }
+
     
-    //db appointment object
-    
+
     public Appointment() {
 
         
+    }
+
+    @Override
+    public long getId() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
 

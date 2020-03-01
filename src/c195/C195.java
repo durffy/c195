@@ -7,12 +7,14 @@ package c195;
 
 import Model.Customer;
 import Model.DAO.CustomerDAO;
-import Model.DBConnection;
+import Utils.DBConnection;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.ResultSet;
 import java.time.LocalDateTime;
+import java.util.Locale;
+import java.util.ResourceBundle;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -24,6 +26,7 @@ import javafx.stage.Stage;
  * @author CDuffy
  */
 public class C195 extends Application {
+    
     
     @Override
     public void start(Stage stage) throws Exception {
@@ -39,10 +42,10 @@ public class C195 extends Application {
      * @param args the command line arguments
      */
     public static void main(String[] args) throws SQLException, Exception {
-
-        Connection connection = DBConnection.openConnection();
-
         
+        
+        
+        Connection connection = DBConnection.openConnection();
         launch(args);
         DBConnection.closeConnection();
         

@@ -9,6 +9,8 @@ import Utils.DataTransferObject;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.Date;
+import javafx.beans.property.SimpleStringProperty;
+
 
 /**
  *
@@ -28,11 +30,12 @@ public class Customer implements DataTransferObject {
     public long getId() {
         return customerId;
     }
-
+    
     public int getCustomerId() {
         return customerId;
     }
 
+    
     public void setCustomerId(int customerId) {
         this.customerId = customerId;
     }
@@ -40,7 +43,8 @@ public class Customer implements DataTransferObject {
     public String getCustomerName() {
         return customerName;
     }
-
+    
+    
     public void setCustomerName(String customerName) {
         this.customerName = customerName;
     }

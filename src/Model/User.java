@@ -5,23 +5,44 @@
  */
 package Model;
 
+import Utils.DataTransferObject;
+import java.sql.Timestamp;
 import java.util.Calendar;
 
 /**
  *
  * @author CDuffy
  */
-public class User {
+public class User implements DataTransferObject{
     
     private int userId;
-    private String userName;
+    private String userName = "test";
     private String password;
     private int active;
-    private Calendar createdate;
-    private Calendar lastUpdate;
+    private Timestamp createDate;
+    private Timestamp lastUpdate;
     private String createdBy;
     private String lastUpdateBy;
 
+    public User(int userId, String userName, String password, int active, Timestamp createDate, Timestamp lastUpdate, String createdBy, String lastUpdateBy) {
+        this.userId = userId;
+        this.userName = userName;
+        this.password = password;
+        this.active = active;
+        this.createDate = createDate;
+        this.lastUpdate = lastUpdate;
+        this.createdBy = createdBy;
+        this.lastUpdateBy = lastUpdateBy;
+    }
+
+    public User() {
+
+    }
+    
+    @Override
+    public long getId() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
     public int getUserId() {
         return userId;
     }
@@ -33,19 +54,18 @@ public class User {
     public String getUserName() {
         return userName;
     }
-
+    
     public void setUserName(String userName) {
         this.userName = userName;
     }
-
     public String getPassword() {
         return password;
     }
-
+    
     public void setPassword(String password) {
         this.password = password;
     }
-
+    
     public int getActive() {
         return active;
     }
@@ -54,19 +74,19 @@ public class User {
         this.active = active;
     }
 
-    public Calendar getCreatedate() {
-        return createdate;
+    public Timestamp getCreateDate() {
+        return createDate;
     }
 
-    public void setCreatedate(Calendar createdate) {
-        this.createdate = createdate;
+    public void setCreateDate(Timestamp createDate) {
+        this.createDate = createDate;
     }
 
-    public Calendar getLastUpdate() {
+    public Timestamp getLastUpdate() {
         return lastUpdate;
     }
 
-    public void setLastUpdate(Calendar lastUpdate) {
+    public void setLastUpdate(Timestamp lastUpdate) {
         this.lastUpdate = lastUpdate;
     }
 
@@ -85,7 +105,5 @@ public class User {
     public void setLastUpdateBy(String lastUpdateBy) {
         this.lastUpdateBy = lastUpdateBy;
     }
-    
-    
     
 }

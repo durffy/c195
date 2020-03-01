@@ -5,9 +5,18 @@
  */
 package Controller;
 
+import Model.Appointment;
+import Model.DAO.UserDAO;
+import Model.User;
+import Utils.DBConnection;
+import Utils.Login;
 import java.io.IOException;
 import java.net.URL;
+import java.util.Locale;
+import java.util.Optional;
 import java.util.ResourceBundle;
+import java.util.Set;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -29,30 +38,80 @@ public class LoginViewController implements Initializable {
     @FXML private PasswordField PasswordField;
     @FXML private Button ButtonLogin;
     @FXML private Button ButtonCancel;
-    @FXML private ToggleGroup ToggleGroupLanguage;
-    @FXML private RadioButton RadioButtonEnglish;
-    @FXML private RadioButton RadioButtonSpanish;
+    @FXML private Label LabelMainHeader;
+    
+    UserDAO userDAO = new UserDAO(DBConnection.getConnection());        
+    ObservableList<User> users = userDAO.findAll();
     
     
     public void clickButtonLogin(ActionEvent event) throws IOException{
         
-        //check username and password against the db
-        //if true, load the Calendarview
-        if(true){
-            Parent root = FXMLLoader.load(getClass().getResource("/View/CalendarView.fxml"));
-            Scene scene = new Scene(root);
+        boolean successfulLogin = false;
+        
+        for(User user : users){
+            if(TextFieldUsername.getText().contains(TextFieldUsername.getText()) && PasswordField.getText().contains(user.getPassword())){
+
+                Login.setUser(user);
+                successfulLogin = true;
+                Parent root = FXMLLoader.load(getClass().getResource("/View/CalendarView.fxml"));
+                Scene scene = new Scene(root);
+
+                Stage window = (Stage) ((Node)event.getSource()).getScene().getWindow();
+                window.setScene(scene);
+                window.show();
+
+            }
+        }
+
+        if(!successfulLogin){
             
-            Stage window = (Stage) ((Node)event.getSource()).getScene().getWindow();
-            window.setScene(scene);
-            window.show();
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Credential Failure");
+            alert.setContentText("The username and password did not match");
+                    
+            if(!(Locale.getDefault()==Locale.US)){
+                ResourceBundle rb = ResourceBundle.getBundle("locale/c195", Locale.getDefault());
+                alert.setTitle(rb.getString(alert.getTitle()));
+                alert.setContentText(rb.getString(alert.getContentText()));
+            }
+            
+            alert.showAndWait();
+            
         }
     }
     
-    public void clickButtonCancel(){
+    public void clickButtonCancel(ActionEvent event) throws IOException{
         
-        //prompt are you sure
-        //close program
+
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Closure Confirmation");
+        alert.setContentText("Do you want to cancel the login?");
+
+        if(!(Locale.getDefault()==Locale.US)){
+            ResourceBundle rb = ResourceBundle.getBundle("locale/c195", Locale.getDefault());
+            LoadLocales(rb); 
+            alert.setTitle(alert.getTitle());
+            alert.setContentText(alert.getContentText());
+        }
+
+        Optional<ButtonType> result = alert.showAndWait();
         
+        // check for confirmation, check which tab is selected, check which item in the tab is selected
+        if(result.get() == ButtonType.OK){
+            Stage stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
+            stage.close();
+        }else {
+            
+        }
+    }
+
+    private void LoadLocales(ResourceBundle rb) {
+        
+        LabelMainHeader.setText(rb.getString(LabelMainHeader.getText()));
+        TextFieldUsername.setPromptText(rb.getString(TextFieldUsername.getPromptText()));
+        PasswordField.setPromptText(rb.getString(PasswordField.getPromptText()));
+        ButtonLogin.setText(rb.getString(ButtonLogin.getText()));
+        ButtonCancel.setText(rb.getString(ButtonCancel.getText()));
     }
     
     /**
@@ -60,9 +119,12 @@ public class LoginViewController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+        
+        if(!(Locale.getDefault()==Locale.US)){
+            rb = ResourceBundle.getBundle("locale/c195", Locale.getDefault());
+            LoadLocales(rb); 
+        }
+
     }
-    
-    
     
 }
